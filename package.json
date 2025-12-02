@@ -43,18 +43,34 @@
     "build": "npm run build --workspaces --if-present",
     "dev": "npm run dev --workspaces --if-present",
     "clean": "npm run clean --workspaces --if-present && rimraf node_modules",
-    "typecheck": "npm run typecheck --workspaces --if-present",
+    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "lint": "eslint \"{utils,hooks,primitives,theme}/src/**/*.{ts,tsx}\" --max-warnings 50 --ignore-pattern \"**/classNameUtils.ts\" --ignore-pattern \"**/navigationUtils.tsx\" --ignore-pattern \"**/perfObserverUtils.ts\" --ignore-pattern \"**/renderUtils.tsx\" --ignore-pattern \"**/windowUtils.ts\" --ignore-pattern \"**/a11yDev.ts\" --ignore-pattern \"**/accessibilityUtils.ts\" --ignore-pattern \"**/chartExport.ts\" --ignore-pattern \"**/fieldMappers.ts\"",
+    "lint:fix": "eslint \"{utils,hooks,primitives,theme}/src/**/*.{ts,tsx}\" --fix --ignore-pattern \"**/classNameUtils.ts\" --ignore-pattern \"**/navigationUtils.tsx\" --ignore-pattern \"**/perfObserverUtils.ts\" --ignore-pattern \"**/renderUtils.tsx\" --ignore-pattern \"**/windowUtils.ts\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "test:ci": "vitest run --reporter=verbose",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,md,json}\""
+    "format:check": "prettier --check \"**/*.{ts,tsx,md,json}\"",
+    "validate": "npm run typecheck && npm run lint && npm run test",
+    "prepublishOnly": "npm run build && npm run validate"
   },
   "devDependencies": {
     "@types/node": "^20.16.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.48.1",
+    "@typescript-eslint/parser": "^8.48.1",
+    "@vitest/ui": "^4.0.14",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "happy-dom": "^20.0.11",
     "prettier": "^3.3.0",
     "rimraf": "^6.0.0",
     "tsup": "^8.3.0",
-    "typescript": "^5.6.0"
+    "typescript": "^5.6.0",
+    "vitest": "^4.0.14"
   }
 }
-
