@@ -1,0 +1,32 @@
+# pnpm workspace configuration for Globalsoft Components monorepo
+packages:
+  # Core packages (utils, hooks, primitives, theme)
+  - 'packages/utils'
+  - 'packages/hooks'
+  - 'packages/primitives'
+  - 'packages/theme'
+  
+  # UI Components
+  - 'packages/components/ui/*'
+  
+  # Form Components
+  - 'packages/components/form/*'
+  
+  # Navigation Components
+  - 'packages/components/navigation/*'
+  
+  # Chart Components
+  - 'packages/components/charts/*'
+  
+  # Table Components
+  - 'packages/components/tables/*'
+  
+  # Layout Components
+  - 'packages/components/layout/*'
+  
+  # Documentation site (GS-Dev standalone)
+  - 'packages/docs'
+  
+  # Examples and playground
+  - 'packages/examples'
+
