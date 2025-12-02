@@ -1,0 +1,88 @@
+{
+  "name": "@globalsoft/utils",
+  "version": "1.0.0",
+  "description": "Utility functions for Globalsoft Components - debugging, accessibility, dates, strings, validation and more",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./debugUtils": "./dist/debugUtils.js",
+    "./accessibilityUtils": "./dist/accessibilityUtils.js",
+    "./dateUtils": "./dist/dateUtils.js",
+    "./stringUtils": "./dist/stringUtils.js",
+    "./validationUtils": "./dist/validationUtils.js",
+    "./arrayUtils": "./dist/arrayUtils.js",
+    "./tableUtils": "./dist/tableUtils.js",
+    "./domUtils": "./dist/domUtils.js",
+    "./navigationUtils": "./dist/navigationUtils.js",
+    "./renderUtils": "./dist/renderUtils.js",
+    "./windowUtils": "./dist/windowUtils.js",
+    "./commonUtils": "./dist/commonUtils.js",
+    "./chartExport": "./dist/chartExport.js",
+    "./dateParsers": "./dist/dateParsers.js",
+    "./dotnetDateUtils": "./dist/dotnetDateUtils.js",
+    "./fieldMappers": "./dist/fieldMappers.js",
+    "./perfObserverUtils": "./dist/perfObserverUtils.js",
+    "./a11yDev": "./dist/a11yDev.js",
+    "./testUtils": "./dist/testUtils.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rimraf dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "utils",
+    "utilities",
+    "helpers",
+    "debug",
+    "accessibility",
+    "a11y",
+    "dates",
+    "strings",
+    "validation",
+    "globalsoft"
+  ],
+  "author": {
+    "name": "Carlos Braga",
+    "email": "carlos.braga@grupoglobalsoft.pt"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carlos-gs99/GSPackages.git",
+    "directory": "utils"
+  },
+  "homepage": "https://carlos-gs99.github.io/GSPackages",
+  "bugs": {
+    "url": "https://github.com/carlos-gs99/GSPackages/issues"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.48",
+    "rimraf": "^5.0.5",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  },
+  "sideEffects": false
+}
+
