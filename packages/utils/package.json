@@ -1,0 +1,119 @@
+{
+  "name": "@gs-style/utils",
+  "version": "1.0.0",
+  "description": "Utility functions for GS Style components - debugging, accessibility, dates, strings, validation and more",
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": {
+      "import": "./index.ts",
+      "types": "./index.ts"
+    },
+    "./debugUtils": {
+      "import": "./debugUtils.ts",
+      "types": "./debugUtils.ts"
+    },
+    "./accessibilityUtils": {
+      "import": "./accessibilityUtils.ts",
+      "types": "./accessibilityUtils.ts"
+    },
+    "./dateUtils": {
+      "import": "./dateUtils.ts",
+      "types": "./dateUtils.ts"
+    },
+    "./stringUtils": {
+      "import": "./stringUtils.ts",
+      "types": "./stringUtils.ts"
+    },
+    "./validationUtils": {
+      "import": "./validationUtils.ts",
+      "types": "./validationUtils.ts"
+    },
+    "./arrayUtils": {
+      "import": "./arrayUtils.ts",
+      "types": "./arrayUtils.ts"
+    },
+    "./tableUtils": {
+      "import": "./tableUtils.ts",
+      "types": "./tableUtils.ts"
+    },
+    "./domUtils": {
+      "import": "./domUtils.ts",
+      "types": "./domUtils.ts"
+    },
+    "./navigationUtils": {
+      "import": "./navigationUtils.tsx",
+      "types": "./navigationUtils.tsx"
+    },
+    "./renderUtils": {
+      "import": "./renderUtils.tsx",
+      "types": "./renderUtils.tsx"
+    },
+    "./windowUtils": {
+      "import": "./windowUtils.ts",
+      "types": "./windowUtils.ts"
+    },
+    "./commonUtils": {
+      "import": "./commonUtils.ts",
+      "types": "./commonUtils.ts"
+    },
+    "./chartExport": {
+      "import": "./chartExport.ts",
+      "types": "./chartExport.ts"
+    },
+    "./dateParsers": {
+      "import": "./dateParsers.ts",
+      "types": "./dateParsers.ts"
+    },
+    "./dotnetDateUtils": {
+      "import": "./dotnetDateUtils.ts",
+      "types": "./dotnetDateUtils.ts"
+    },
+    "./fieldMappers": {
+      "import": "./fieldMappers.ts",
+      "types": "./fieldMappers.ts"
+    },
+    "./perfObserverUtils": {
+      "import": "./perfObserverUtils.ts",
+      "types": "./perfObserverUtils.ts"
+    },
+    "./a11yDev": {
+      "import": "./a11yDev.ts",
+      "types": "./a11yDev.ts"
+    },
+    "./testUtils": {
+      "import": "./testUtils.ts",
+      "types": "./testUtils.ts"
+    }
+  },
+  "files": [
+    "*.ts",
+    "*.tsx",
+    "index.ts",
+    "README.md"
+  ],
+  "keywords": [
+    "utils",
+    "utilities",
+    "helpers",
+    "debug",
+    "accessibility",
+    "a11y",
+    "dates",
+    "strings",
+    "validation",
+    "gs-style"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/gs-style.git",
+    "directory": "packages/utils"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "license": "MIT",
+  "sideEffects": false
+}
+
