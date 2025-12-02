@@ -48,16 +48,16 @@ const dividirNomeCompleto = (nomeCompleto: string): { firstName: string; lastNam
   const partes = nomeCompleto.trim().split(/\s+/);
   
   if (partes.length === 1) {
-    return { firstName: partes[0], lastName: '' };
+    return { firstName: partes[0] || '', lastName: '' };
   }
   
   if (partes.length === 2) {
-    return { firstName: partes[0], lastName: partes[1] };
+    return { firstName: partes[0] || '', lastName: partes[1] || '' };
   }
   
   // Se tiver mais de 2 partes, primeiro nome é a primeira parte, resto é sobrenome
   return {
-    firstName: partes[0],
+    firstName: partes[0] || '',
     lastName: partes.slice(1).join(' ')
   };
 };
@@ -208,7 +208,7 @@ const parseObservacoesString = (
       // Fisioterapeuta
       else if (linhaLimpa.startsWith('Fisioterapeuta:')) {
         const match = linhaLimpa.match(finalConfig.patterns.fisioterapeuta);
-        if (match) {
+        if (match && match[1] && match[2]) {
           observacao.fisioterapeuta = {
             codigo: match[1],
             nome: match[2]
@@ -273,7 +273,7 @@ const extrairNomeUtilizador = (data: ObservacoesParseadas | null): string | null
   }
 
   // Retorna o nome do utilizador da primeira observação
-  return data.observacoes[0].utilizador || null;
+  return data.observacoes[0]?.utilizador || null;
 };
 
 /**

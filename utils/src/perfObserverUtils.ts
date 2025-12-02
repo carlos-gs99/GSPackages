@@ -25,7 +25,7 @@ export const setPerfMonitoringEnabledFlag = (enabled: boolean): void => {
 
 export const startPerfMonitoring = (): void => {
   if (typeof window === 'undefined' || typeof performance === 'undefined') return;
-  if (import.meta.env.MODE !== 'development') return;
+  if (import.meta.env && import.meta.env.MODE !== 'development') return;
 
   // Se já estiver a correr, reiniciar
   if (lcpObserver) {
@@ -37,12 +37,14 @@ export const startPerfMonitoring = (): void => {
     const navigationEntries = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
     if (navigationEntries.length > 0) {
       const nav = navigationEntries[0];
-      // eslint-disable-next-line no-console
-      console.log('[Perf] Navigation timing:', {
-        type: nav.type,
-        domContentLoaded: `${nav.domContentLoadedEventEnd.toFixed(2)}ms`,
-        load: `${nav.loadEventEnd.toFixed(2)}ms`,
-      });
+      if (nav) {
+        // eslint-disable-next-line no-console
+        console.log('[Perf] Navigation timing:', {
+          type: nav.type,
+          domContentLoaded: `${nav.domContentLoadedEventEnd.toFixed(2)}ms`,
+          load: `${nav.loadEventEnd.toFixed(2)}ms`,
+        });
+      }
     }
 
     if ('PerformanceObserver' in window) {

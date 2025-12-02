@@ -345,6 +345,9 @@ export const infiniteLoopDebugger = {
         observer.disconnect();
       };
     }
+    
+    // Retornar função vazia se não houver window/performance
+    return () => {};
   },
 
   /**

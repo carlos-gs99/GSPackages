@@ -4,7 +4,40 @@
 
 import type { ColumnDef } from '@tanstack/react-table';
 import { PaginationState, SortingState } from '@tanstack/react-table';
-import { MedicosLstParams, UtentesLstParams } from 'lib/types';
+
+// Types locais (anteriormente de lib/types)
+export interface MedicosLstParams extends Record<string, unknown> {
+  draw: number;
+  columns: Array<{
+    data: string;
+    name: string;
+    searchable: boolean;
+    orderable: boolean;
+    search: { value: string; regex: boolean };
+  }>;
+  order: Array<{ column: number; dir: 'asc' | 'desc' }>;
+  start: number;
+  length: number;
+  search: { value: string; regex: boolean };
+  lstFiltroBox: string;
+}
+
+export interface UtentesLstParams extends Record<string, unknown> {
+  draw: number;
+  columns: Array<{
+    data: string;
+    name: string;
+    searchable: boolean;
+    orderable: boolean;
+    search: { value: string; regex: boolean };
+  }>;
+  order: Array<{ column: number; dir: 'asc' | 'desc' }>;
+  start: number;
+  length: number;
+  search: { value: string; regex: boolean };
+  action: string;
+  lstFiltroBox: string;
+}
 
 /**
  * Interface para parâmetros da GSTable
@@ -325,7 +358,7 @@ export function convertToMedicosLstParams(
   customFilters?: Record<string, unknown>
 ): MedicosLstParams {
   // Criar configuração das colunas
-  const columns = medicosColumns.map((column, index) => ({
+  const columns = medicosColumns.map((column, _index) => ({
     data: column,
     name: '',
     searchable: true,
@@ -337,7 +370,7 @@ export function convertToMedicosLstParams(
   }));
 
   // Configurar ordenação
-  const order = sorting.length > 0 ? [{
+  const order = sorting.length > 0 && sorting[0] ? [{
     column: sorting[0].id === 'c_medico' ? 1 : medicosColumns.indexOf(sorting[0].id),
     dir: sorting[0].desc ? 'desc' as const : 'asc' as const
   }] : [{
@@ -424,7 +457,7 @@ export function convertToUtentesLstParams(
 ): UtentesLstParams {
   // Criar configuração das colunas
   const baseCols = overrideColumns && overrideColumns.length > 0 ? overrideColumns : utentesColumns;
-  const columns = baseCols.map((column, index) => ({
+  const columns = baseCols.map((column, _index) => ({
     data: column,
     name: '',
     searchable: true,
@@ -436,7 +469,7 @@ export function convertToUtentesLstParams(
   }));
 
   // Configurar ordenação
-  const order = sorting.length > 0 ? [{
+  const order = sorting.length > 0 && sorting[0] ? [{
     column: sorting[0].id === 'c_utente' ? 1 : baseCols.indexOf(sorting[0].id),
     dir: sorting[0].desc ? 'desc' as const : 'asc' as const
   }] : [{

@@ -8,13 +8,13 @@ export const convertApiDateToInputFormat = (dateString: string | null | undefine
   
   // Verifica se é o formato "/Date(timestamp)/" (incluindo valores negativos)
   const dateMatch = dateString.match(/\/Date\((-?\d+)\)\//);
-  if (dateMatch) {
-    const timestamp = parseInt(dateMatch[1]);
+  if (dateMatch && dateMatch[1]) {
+    const timestamp = parseInt(dateMatch[1], 10);
     const date = new Date(timestamp);
     
     // Verifica se a data é válida (incluindo datas antes de 1970)
     if (!isNaN(date.getTime())) {
-      return date.toISOString().split('T')[0]; // Retorna YYYY-MM-DD
+      return date.toISOString().split('T')[0] || ''; // Retorna YYYY-MM-DD
     }
   }
   
@@ -22,7 +22,7 @@ export const convertApiDateToInputFormat = (dateString: string | null | undefine
   try {
     const date = new Date(dateString);
     if (!isNaN(date.getTime())) {
-      return date.toISOString().split('T')[0];
+      return date.toISOString().split('T')[0] || '';
     }
   } catch (error) {
     console.warn('Erro ao converter data:', dateString, error);
@@ -41,8 +41,8 @@ export const convertApiDateToDate = (dateString: string | null | undefined): Dat
   
   // Verifica se é o formato "/Date(timestamp)/" (incluindo valores negativos)
   const dateMatch = dateString.match(/\/Date\((-?\d+)\)\//);
-  if (dateMatch) {
-    const timestamp = parseInt(dateMatch[1]);
+  if (dateMatch && dateMatch[1]) {
+    const timestamp = parseInt(dateMatch[1], 10);
     const date = new Date(timestamp);
     
     // Verifica se a data é válida (incluindo datas antes de 1970)
@@ -103,9 +103,9 @@ export const parseDateString = (dateString: string | null | undefined): Date | n
     const parts = dateString.split('/');
     if (parts.length !== 3) return null;
     
-    const day = parseInt(parts[0], 10);
-    const month = parseInt(parts[1], 10) - 1; // Mês é 0-indexado no JavaScript
-    const year = parseInt(parts[2], 10);
+    const day = parseInt(parts[0]!, 10);
+    const month = parseInt(parts[1]!, 10) - 1; // Mês é 0-indexado no JavaScript
+    const year = parseInt(parts[2]!, 10);
     
     const date = new Date(year, month, day);
     
@@ -184,7 +184,13 @@ export const isDDMMYYYYFormat = (value: string): boolean => {
 export const parseDDMMYYYY = (value: string): Date | null => {
   if (!isDDMMYYYYFormat(value)) return null;
   
-  const [day, month, year] = value.split('/').map(Number);
+  const parts = value.split('/').map(Number);
+  const day = parts[0];
+  const month = parts[1];
+  const year = parts[2];
+  
+  if (day === undefined || month === undefined || year === undefined) return null;
+  
   const date = new Date(year, month - 1, day);
   
   // Verifica se a data é válida

@@ -55,14 +55,14 @@ export function parseDotNetDate(dotnetDate: string | null | undefined): Date | n
   try {
     // Check for JSON.NET format: /Date(timestamp)/
     const jsonNetMatch = dotnetDate.match(/^\/Date\((\d+)\)\/$/);
-    if (jsonNetMatch) {
+    if (jsonNetMatch && jsonNetMatch[1]) {
       const timestamp = parseInt(jsonNetMatch[1], 10);
       return new Date(timestamp);
     }
     
     // Check for JSON.NET format with timezone: /Date(timestamp+0000)/
     const jsonNetTzMatch = dotnetDate.match(/^\/Date\((\d+)([+-]\d{4})\)\/$/);
-    if (jsonNetTzMatch) {
+    if (jsonNetTzMatch && jsonNetTzMatch[1]) {
       const timestamp = parseInt(jsonNetTzMatch[1], 10);
       // Note: timezone offset is ignored as JavaScript Date uses local timezone
       return new Date(timestamp);
@@ -123,7 +123,8 @@ export function formatToDotNetDateTime(
   if (useUtc) {
     // UTC format: yyyy-MM-ddTHH:mm:ssZ
     const isoString = date.toISOString();
-    return includeTimezone ? isoString.split('.')[0] + 'Z' : isoString.split('.')[0];
+    const datePart = isoString.split('.')[0];
+    return includeTimezone ? (datePart ? datePart + 'Z' : null) : (datePart || null);
   } else {
     // Local format: yyyy-MM-ddTHH:mm:ss
     const year = date.getFullYear();

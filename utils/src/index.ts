@@ -3,11 +3,11 @@
 // ==========================================
 
 // Class Name Utilities
-export * from './classNameUtils';
+// export * from './classNameUtils';  // ⚠️ DESABILITADO: Tem dependência em '../lib/types/design'
 
 // Debug Utilities
 export * from './debugUtils';
-export * from './perfObserverUtils';
+// export * from './perfObserverUtils';  // ⚠️ DESABILITADO: Tem problema com import.meta.env em builds
 
 // Accessibility Utilities
 export * from './accessibilityUtils';
@@ -28,7 +28,7 @@ export * from './stringUtils';
 export * from './validationUtils';
 
 // Render Utilities
-export * from './renderUtils';
+// export * from './renderUtils';  // ⚠️ DESABILITADO: Tem dependência em componentes (GSChip, GSIcon)
 
 // DOM Utilities
 export * from './domUtils';
@@ -38,11 +38,11 @@ export * from './tableUtils';
 export * from './fieldMappers';
 
 // Navigation Utilities
-export * from './navigationUtils';
-export { default as ScrollToTop } from './navigationUtils';
+// export * from './navigationUtils';  // ⚠️ DESABILITADO: Tem dependência em 'layout/nav/types' e react-router-dom
+// export { default as ScrollToTop } from './navigationUtils';
 
 // Window Utilities
-export * from './windowUtils';
+// export * from './windowUtils';  // ⚠️ DESABILITADO: Tem dependência em '../components/os-windowing/WindowManagerContext'
 
 // Common Utilities
 export * from './commonUtils';

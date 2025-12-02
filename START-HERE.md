@@ -30,6 +30,8 @@ Abrir terminal **nesta pasta** (`GSPackages/`):
 npm install
 ```
 
+**Nota:** Vais ver alguns warnings de packages deprecated. **É normal!** São de sub-dependências de ferramentas de desenvolvimento e **não afetam** os packages publicados. Ver [SOBRE-WARNINGS.md](./SOBRE-WARNINGS.md) para mais detalhes.
+
 Aguardar instalação (~30 segundos).
 
 ---
@@ -49,6 +51,8 @@ dist/index.d.ts     XXkb
 ```
 
 ✅ **Package utils está pronto!**
+
+**Nota:** 2 utils foram temporariamente excluídos (`classNameUtils`, `renderUtils`) porque têm dependências de componentes. Ver [utils/EXCLUDED-UTILS.md](./utils/EXCLUDED-UTILS.md) para detalhes. Os restantes 18 utils estão todos disponíveis!
 
 ---
 

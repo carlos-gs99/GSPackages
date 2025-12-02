@@ -236,7 +236,7 @@ export const useFocusTrap = (isActive: boolean) => {
   React.useEffect(() => {
     if (!isActive || !containerRef.current) {
       hasInitialFocusSet.current = false;
-      return;
+      return () => {}; // Return cleanup vazio
     }
 
     // Salvar elemento ativo anterior APENAS na primeira vez
@@ -340,7 +340,7 @@ export const useFocusTrap = (isActive: boolean) => {
 export const useScreenReaderAnnouncement = () => {
   const [announcement, setAnnouncement] = React.useState<string>('');
 
-  const announce = (message: string, priority: 'polite' | 'assertive' = 'polite') => {
+  const announce = (message: string, _priority: 'polite' | 'assertive' = 'polite') => {
     setAnnouncement(message);
     
     // Limpar após um tempo para permitir novos anúncios

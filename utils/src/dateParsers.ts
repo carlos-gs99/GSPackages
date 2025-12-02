@@ -21,7 +21,7 @@ export function dotNetToJs(dotNetDate: string | null | undefined): Date | null {
   // Regex para extrair timestamp: /Date(1234567890000)/ ou /Date(1234567890000+0100)/
   const match = dotNetDate.match(/\/Date\((-?\d+)([+-]\d{4})?\)\//);
   
-  if (!match) return null;
+  if (!match || !match[1]) return null;
   
   const timestamp = parseInt(match[1], 10);
   
@@ -87,7 +87,7 @@ export function formattedToDotNet(formatted: string | null | undefined): string 
   // Parse DD-MM-YYYY
   const match = formatted.match(/^(\d{2})-(\d{2})-(\d{4})$/);
   
-  if (!match) return null;
+  if (!match || !match[1] || !match[2] || !match[3]) return null;
   
   const day = parseInt(match[1], 10);
   const month = parseInt(match[2], 10) - 1; // 0-based

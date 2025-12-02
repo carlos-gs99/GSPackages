@@ -35,7 +35,7 @@ const groupByFields = <T>(array: Array<T>, f: (item: T) => unknown[]): Array<T[]
   });
 
   return Object.keys(groups).map((group) => {
-    return groups[group];
+    return groups[group]!; // Non-null assertion - garantido que existe pelo loop acima
   });
 };
 
