@@ -1,5 +1,5 @@
 {
-  "name": "@globalsoft/utils",
+  "name": "@carlos-gs99/utils",
   "version": "1.0.0",
   "description": "Utility functions for Globalsoft Components - debugging, accessibility, dates, strings, validation and more",
   "type": "module",
@@ -71,8 +71,7 @@
     "url": "https://github.com/carlos-gs99/GSPackages/issues"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "public"
+    "registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
     "react": "^18.0.0",

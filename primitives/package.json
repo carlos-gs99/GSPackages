@@ -1,5 +1,5 @@
 {
-  "name": "@globalsoft/primitives",
+  "name": "@carlos-gs99/primitives",
   "version": "1.0.0",
   "description": "Headless primitive components for Globalsoft Components - ButtonBase, Overlay, FocusTrap, Popper",
   "type": "module",
@@ -55,8 +55,7 @@
     "url": "https://github.com/carlos-gs99/GSPackages/issues"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "public"
+    "registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
     "react": "^18.0.0",

@@ -1,5 +1,5 @@
 {
-  "name": "@globalsoft/hooks",
+  "name": "@carlos-gs99/hooks",
   "version": "1.0.0",
   "description": "React hooks for Globalsoft Components - translation, dropdowns, autocomplete, performance monitoring and more",
   "type": "module",
@@ -66,8 +66,7 @@
     "url": "https://github.com/carlos-gs99/GSPackages/issues"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "public"
+    "registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
     "react": "^18.0.0",

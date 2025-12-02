@@ -1,5 +1,5 @@
 {
-  "name": "@globalsoft/theme",
+  "name": "@carlos-gs99/theme",
   "version": "1.0.0",
   "description": "Design tokens and theming system for Globalsoft Components",
   "type": "module",
@@ -48,8 +48,7 @@
     "url": "https://github.com/carlos-gs99/GSPackages/issues"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "public"
+    "registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
     "react": "^18.0.0"
