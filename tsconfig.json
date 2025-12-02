@@ -26,7 +26,6 @@
   "include": [
     "utils/src/**/*",
     "hooks/src/**/*",
-    "primitives/src/**/*",
     "theme/src/**/*"
   ],
   "exclude": [
@@ -38,6 +37,9 @@
     "**/utils/src/navigationUtils.tsx",
     "**/utils/src/perfObserverUtils.ts",
     "**/utils/src/renderUtils.tsx",
-    "**/utils/src/windowUtils.ts"
+    "**/utils/src/windowUtils.ts",
+    "**/hooks/src/useAutocompleter.ts",
+    "**/hooks/src/usePageSize.ts",
+    "primitives/src/ButtonBase.tsx"
   ]
 }
