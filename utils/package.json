@@ -75,10 +75,17 @@
     "access": "public"
   },
   "peerDependencies": {
-    "react": "^18.0.0"
+    "react": "^18.0.0",
+    "@tanstack/react-table": "^8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@tanstack/react-table": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/react": "^18.2.48",
+    "@tanstack/react-table": "^8.20.5",
     "rimraf": "^5.0.5",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3"
