@@ -1,8 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
 import { ButtonBase } from '@carlos-gs99/primitives';
-import { useTranslation } from '@carlos-gs99/hooks';
 import { useDebug, generateAriaAttributes, useFocusManagement } from '@carlos-gs99/utils';
+import { useTranslation } from '@carlos-gs99/hooks';
 import styles from './styles.module.css';
 import { GS_BUTTON_NAMESPACE, registerGSButtonI18n } from './i18n';
 import type { GSButtonProps, GSButtonColor } from './types';
@@ -14,7 +14,9 @@ interface RippleInstance {
   size: number;
 }
 
-type PointerEventLike = React.PointerEvent<HTMLButtonElement>;
+type HTMLElementOrNull = HTMLElement | null;
+
+type PointerEventLike = React.PointerEvent<HTMLElement>;
 
 const isPointerDeviceClick = (event: PointerEventLike) => {
   return event.pointerType === 'mouse' || event.pointerType === 'pen' || event.pointerType === 'touch';
@@ -30,9 +32,9 @@ const spinnerColorMap: Record<GSButtonColor, 'primary' | 'neutral' | 'success' |
   neutral: 'neutral',
 };
 
-const GSButtonInner = (
-  props: GSButtonProps,
-  forwardedRef: React.Ref<HTMLButtonElement>,
+const GSButtonInner = <T extends React.ElementType = 'button'>(
+  props: GSButtonProps<T>,
+  forwardedRef: React.Ref<React.ElementRef<T>>,
 ) => {
   const {
     children,
@@ -56,12 +58,16 @@ const GSButtonInner = (
     ariaHaspopup,
     ariaCurrent,
     keyboardShortcut,
+    as: asProp,
     className,
     disabled,
-    type = 'button',
+    role: roleProp,
+    tabIndex: tabIndexProp,
+    type: typeProp,
     onClick,
     onKeyDown,
     onPointerDown,
+    href,
     ...rest
   } = props;
 
@@ -70,12 +76,33 @@ const GSButtonInner = (
     registerGSButtonI18n(i18n);
   }, [i18n]);
 
-  const debugTools = useDebug('GSButton', debug);
+  const debugTools = useDebug('GSButton', Boolean(debug));
   React.useEffect(() => {
-    debugTools.log('render', { variant, color, size, loading, disabled });
-  }, [debugTools, variant, color, size, loading, disabled]);
+    debugTools.log('render');
+  }, [debugTools]);
 
+  React.useEffect(() => {
+    debugTools.log('props', {
+      variant,
+      color,
+      size,
+      fullWidth,
+      loading,
+      disabled,
+      ripple,
+      rounded,
+      gradient,
+      as: asProp ?? 'button',
+    });
+  }, [variant, color, size, fullWidth, loading, disabled, ripple, rounded, gradient, asProp, debugTools]);
+
+  const componentAs = (asProp ?? 'button') as React.ElementType;
+  const isNativeButton = componentAs === 'button';
   const isDisabled = Boolean(disabled || loading);
+
+  const resolvedRole = isNativeButton ? roleProp : roleProp ?? 'button';
+  const resolvedTabIndex = isNativeButton ? tabIndexProp : tabIndexProp ?? 0;
+  const resolvedType = isNativeButton ? (typeProp ?? 'button') : undefined;
 
   const rippleCounter = React.useRef(0);
   const rippleTimeouts = React.useRef<number[]>([]);
@@ -83,12 +110,12 @@ const GSButtonInner = (
 
   const { focusRef } = useFocusManagement();
   const assignRefs = React.useCallback(
-    (node: HTMLButtonElement | null) => {
-      (focusRef as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+    (node: HTMLElementOrNull) => {
+      (focusRef as React.MutableRefObject<HTMLElementOrNull>).current = node;
       if (typeof forwardedRef === 'function') {
-        forwardedRef(node);
+        forwardedRef(node as React.ElementRef<T>);
       } else if (forwardedRef && 'current' in forwardedRef) {
-        (forwardedRef as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+        (forwardedRef as React.MutableRefObject<HTMLElementOrNull>).current = node;
       }
     },
     [focusRef, forwardedRef],
@@ -132,7 +159,7 @@ const GSButtonInner = (
   );
 
   const handleClick = React.useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
+    (event: React.MouseEvent<HTMLElement>) => {
       if (isDisabled) {
         event.preventDefault();
         event.stopPropagation();
@@ -144,10 +171,16 @@ const GSButtonInner = (
   );
 
   const handleKeyDown = React.useCallback(
-    (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    (event: React.KeyboardEvent<HTMLElement>) => {
       onKeyDown?.(event);
+      if (event.defaultPrevented || isDisabled) return;
+
+      if (!isNativeButton && (event.key === ' ' || event.key === 'Enter')) {
+        event.preventDefault();
+        event.currentTarget.click();
+      }
     },
-    [onKeyDown]
+    [onKeyDown, isDisabled, isNativeButton]
   );
 
   const ariaAttributes = React.useMemo(
@@ -162,9 +195,9 @@ const GSButtonInner = (
         current: ariaCurrent,
         disabled: isDisabled,
         busy: loading,
-        role: 'button',
+        role: resolvedRole,
       }),
-    [ariaLabel, ariaDescribedBy, ariaPressed, ariaExpanded, ariaControls, ariaHaspopup, ariaCurrent, isDisabled, loading, t, i18n.language]
+    [ariaLabel, ariaDescribedBy, ariaPressed, ariaExpanded, ariaControls, ariaHaspopup, ariaCurrent, isDisabled, loading, resolvedRole, t, i18n.language]
   );
 
   const buttonClassName = clsx(styles.button, fullWidth && styles.fullWidth, className);
@@ -177,10 +210,9 @@ const GSButtonInner = (
     'data-gradient': gradient ? 'true' : undefined,
     'data-rounded': rounded === 'full' ? 'full' : rounded ? 'pill' : undefined,
     'data-loading': loading ? 'true' : undefined,
-    'data-debug': debug ? 'true' : undefined,
   } as Record<string, string | undefined>;
 
-  // Inline spinner component
+  // Inline spinner component (replaces deprecated GSSpinner)
   const InlineButtonSpinner: React.FC<{
     size: 'sm' | 'md';
     color: 'primary' | 'neutral' | 'success' | 'warning' | 'danger' | 'info';
@@ -198,7 +230,7 @@ const GSButtonInner = (
 
     return (
       <div
-        className={clsx(styles.spinner, className)}
+        className={clsx('gs-inline-button-spinner', className)}
         role="status"
         aria-label="Loading"
         style={{
@@ -209,7 +241,7 @@ const GSButtonInner = (
         }}
         data-gs="InlineButtonSpinner"
       >
-        <span className={styles.srOnly}>Loading...</span>
+        <span className="gs-sr-only">Loading...</span>
       </div>
     );
   };
@@ -218,6 +250,7 @@ const GSButtonInner = (
     <InlineButtonSpinner
       size={size === 'sm' ? 'sm' : 'md'}
       color={spinnerColorMap[color]}
+      className={styles.spinner}
     />
   );
 
@@ -237,16 +270,20 @@ const GSButtonInner = (
 
   return (
     <ButtonBase
-      ref={assignRefs}
-      as="button"
+      ref={assignRefs as React.Ref<React.ElementRef<T>>}
+      as={componentAs}
       className={buttonClassName}
-      disabled={isDisabled}
-      type={type}
+      disabled={isNativeButton ? isDisabled : undefined}
+      aria-disabled={!isNativeButton && isDisabled ? true : undefined}
+      role={resolvedRole}
+      tabIndex={resolvedTabIndex}
+      type={resolvedType}
       onPointerDown={handlePointerDown}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       {...ariaAttributes}
       {...datasetAttributes}
+      {...(!isNativeButton && href ? { href } : {})}
       {...rest}
     >
       {content}
@@ -276,8 +313,13 @@ const GSButtonInner = (
   );
 };
 
-export const GSButton = React.forwardRef(GSButtonInner);
+type GSButtonComponent = (<T extends React.ElementType = 'button'>(
+  props: GSButtonProps<T> & { ref?: React.Ref<React.ElementRef<T>> },
+) => React.ReactElement | null) & { displayName?: string };
+
+// Type assertion to resolve generic forwardRef issues with DTS build
+export const GSButton = React.forwardRef(GSButtonInner as any) as GSButtonComponent;
+
 GSButton.displayName = 'GSButton';
 
 export default GSButton;
-

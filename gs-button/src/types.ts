@@ -10,65 +10,66 @@ export const GS_BUTTON_VARIANTS: readonly GSButtonVariant[] = ['solid', 'outline
 export const GS_BUTTON_COLORS: readonly GSButtonColor[] = ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'neutral'];
 export const GS_BUTTON_SIZES: readonly GSButtonSize[] = ['sm', 'md', 'lg'];
 
-export interface GSButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color'> {
-  /** Button visual variant */
+export interface GSButtonCommonProps {
+  /** Variante visual do botão. */
   variant?: GSButtonVariant;
-  
-  /** Color semantic palette */
+  /** Paleta de cor semântica. */
   color?: GSButtonColor;
-  
-  /** Size scale */
+  /** Escala de tamanho. */
   size?: GSButtonSize;
-  
-  /** Expand to full width */
+  /** Expande o botão para ocupar a largura total. */
   fullWidth?: boolean;
-  
-  /** Loading state (blocks interactions, shows spinner) */
+  /** Estado de carregamento que bloqueia interacções e exibe spinner. */
   loading?: boolean;
-  
-  /** Spinner position during loading */
+  /** Posição do spinner durante carregamento. */
   loadingPosition?: GSButtonLoadingPosition;
-  
-  /** Icon before content */
+  /** Elemento visual apresentado antes do conteúdo. */
   startIcon?: React.ReactNode;
-  
-  /** Icon after content */
+  /** Elemento visual apresentado depois do conteúdo. */
   endIcon?: React.ReactNode;
-  
-  /** Enable debug mode */
+  /** Activa logs padronizados de debug. */
   debug?: boolean;
-  
-  /** Enable ripple effect on click */
+  /** Activa efeito ripple no clique. */
   ripple?: boolean;
-  
-  /** Rounded style (pill or circular) */
+  /** Controla o estilo arredondado (pill ou circular). */
   rounded?: GSButtonRounded;
-  
-  /** Enable gradient (solid variants only) */
+  /** Activa gradiente (apenas variantes solid). */
   gradient?: boolean;
-  
-  /** Alternative aria-label for screen readers */
+  /** Label alternativo para leitores de ecrã. */
   ariaLabel?: string;
-  
-  /** IDs of describing elements */
+  /** IDs de elementos que descrevem o botão. */
   ariaDescribedBy?: string;
-  
-  /** ARIA toggle state */
+  /** Estado ARIA de toggle. */
   ariaPressed?: boolean;
-  
-  /** ARIA expanded state (dropdowns, accordions) */
+  /** Estado ARIA expandido (dropdowns, accordions). */
   ariaExpanded?: boolean;
-  
-  /** ID of controlled element */
+  /** ID do elemento controlado. */
   ariaControls?: string;
-  
-  /** Indicates associated popup */
+  /** Indica presença de popup associado. */
   ariaHaspopup?: boolean | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
-  
-  /** Current state (e.g., active page) */
+  /** Estado actual (ex.: página active). */
   ariaCurrent?: boolean | 'page' | 'step' | 'location' | 'date' | 'time';
-  
-  /** Keyboard shortcut hint announced to screen readers */
+  /** Dica de atalho de teclado anunciada a screen readers. */
   keyboardShortcut?: string;
 }
 
+type PropsToOmit = keyof GSButtonCommonProps | 'as' | 'color' | 'size';
+
+export type GSButtonProps<T extends React.ElementType = 'button'> = GSButtonCommonProps & {
+  /** Elemento a renderizar (ex.: 'a'). */
+  as?: T;
+  /** Destino externo quando renderizado como âncora. */
+  href?: string;
+  /** Conteúdo do botão. */
+  children?: React.ReactNode;
+} & Omit<React.ComponentPropsWithoutRef<T>, PropsToOmit>;
+
+export interface GSButtonGroupProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+  variant?: GSButtonVariant;
+  color?: GSButtonColor;
+  size?: GSButtonSize;
+  orientation?: 'horizontal' | 'vertical';
+  spacing?: 'none' | 'sm' | 'md';
+  fullWidth?: boolean;
+}

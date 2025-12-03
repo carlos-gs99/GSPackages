@@ -1,0 +1,1051 @@
+/* GSSelect Styles - GS Style Implementation */
+
+.select {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.selectLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-foreground);
+  line-height: var(--line-height-tight);
+}
+
+.selectLabel--required::after {
+  content: ' *';
+  color: var(--color-danger-500);
+}
+
+/* FIELD is the actual visual container (like GSInput wrapper) */
+.selectField {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-md, 0.375rem);
+  background-color: var(--background-surface);
+  color: var(--text-primary);
+  font-size: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  /* Padronizado com GSInput */
+  --gs-input-height: 2.25rem;
+  min-height: var(--gs-input-height);
+  height: var(--gs-input-height);
+  box-sizing: border-box;
+}
+
+.selectField:hover {
+  border-color: var(--color-neutral-300);
+}
+
+.selectField:focus-within {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 2px var(--color-primary-700);
+}
+
+/* Disabled field styling (CSS Module class) - matches GSInput wrapper.disabled */
+.selectField.disabled {
+  background-color: var(--color-neutral-700) !important;
+  border-color: var(--color-neutral-300) !important;
+  color: var(--text-disabled, #9ca3af) !important;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.selectField.disabled .selectInput {
+  background-color: transparent;
+  color: var(--text-disabled, #9ca3af);
+}
+
+/* Hide icons in disabled field */
+.selectField.disabled .selectIcon,
+.selectField.disabled .selectValidationIcon,
+.selectField.disabled .selectLoadingSpinner,
+.selectField.disabled .selectClearButton {
+  display: none;
+}
+
+/* Dim decorators in disabled field */
+.selectField.disabled .selectStartDecorator,
+.selectField.disabled .selectEndDecorator {
+  opacity: 0.6;
+}
+
+.selectField.loading {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+/* INPUT is just the text display (no border, no background) */
+.selectInput {
+  flex: 1;
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  cursor: inherit;
+  /* Padronizado com GSInput */
+  padding: 0.5rem 0.75rem;
+  margin: 0;
+  outline: none;
+}
+
+/* Padding adjustments happen at size level, icons are absolutely positioned */
+
+/* Error state on input text (just color, no border) */
+.selectInput--error {
+  color: var(--color-danger-700);
+}
+
+.selectIcon {
+  position: absolute;
+  /* Ajustado para considerar padding do input (0.75rem = 12px) + espaço para ícone */
+  right: 0.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-neutral-500);
+  pointer-events: none;
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Open state - rotate icon */
+.selectContainer.open .selectIcon {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.selectHelperText {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-tight);
+  color: var(--color-neutral-600);
+  margin-top: var(--space-1);
+}
+
+.selectHelperText--error {
+  color: var(--color-danger-600);
+}
+
+.selectPlaceholder {
+  color: var(--color-neutral-300);
+}
+
+/* Sizes - Padronizado com GSInput */
+.selectContainer.sizeSm .selectField {
+  --gs-input-height: 2rem;
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.selectContainer.sizeMd .selectField {
+  --gs-input-height: 2.25rem;
+  font-size: var(--font-size-base, 1rem);
+}
+
+.selectContainer.sizeLg .selectField {
+  --gs-input-height: 2.75rem;
+  font-size: var(--font-size-lg, 1.125rem);
+}
+
+
+/* Variants - CSS Modules (like GSInput) */
+.selectContainer.variantOutlined .selectField {
+  border: 1px solid var(--color-neutral-200);
+}
+
+.selectContainer.variantFilled .selectField {
+  background-color: var(--background-level1);
+  border: 1px solid transparent;
+}
+
+.selectContainer.variantSoft .selectField {
+  background-color: var(--background-level1);
+  border: 1px solid var(--color-neutral-200);
+}
+
+.selectContainer.variantSoft.colorPrimary .selectField {
+  background-color: var(--color-primary-700);
+  color: var(--color-primary-700);
+}
+.selectContainer.variantSoft.colorSecondary .selectField {
+  background-color: var(--color-secondary-700);
+  color: var(--color-secondary-700);
+}
+.selectContainer.variantSoft.colorSuccess .selectField {
+  background-color: var(--color-success-700);
+  color: var(--color-success-700);
+}
+.selectContainer.variantSoft.colorDanger .selectField {
+  background-color: var(--color-danger-700);
+  color: var(--color-danger-700);
+}
+.selectContainer.variantSoft.colorWarning .selectField {
+  background-color: var(--color-warning-700);
+  color: var(--color-warning-700);
+}
+.selectContainer.variantSoft.colorInfo .selectField {
+  background-color: var(--color-info-700);
+  color: var(--color-info-700);
+}
+.selectContainer.variantSoft.colorNeutral .selectField {
+  background-color: var(--color-neutral-800);
+  color: var(--color-neutral-700);
+}
+
+.selectContainer.variantSolid .selectField {
+  border: 2px solid var(--color-neutral-200);
+  background-color: var(--background-body);
+}
+
+.selectContainer.variantSolid.colorPrimary .selectField {
+  border-color: var(--color-primary-500);
+}
+.selectContainer.variantSolid.colorSecondary .selectField {
+  border-color: var(--color-secondary-500);
+}
+.selectContainer.variantSolid.colorSuccess .selectField {
+  border-color: var(--color-success-500);
+}
+.selectContainer.variantSolid.colorDanger .selectField {
+  border-color: var(--color-danger-500);
+}
+.selectContainer.variantSolid.colorWarning .selectField {
+  border-color: var(--color-warning-500);
+}
+.selectContainer.variantSolid.colorInfo .selectField {
+  border-color: var(--color-info-500);
+}
+.selectContainer.variantSolid.colorNeutral .selectField {
+  border-color: var(--color-neutral-500);
+}
+
+.selectContainer.variantPlain .selectField {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* Colors - CSS Modules (like GSInput) */
+/* Primary */
+.selectContainer.colorPrimary .selectField:hover {
+  border-color: var(--color-primary-300);
+}
+.selectContainer.colorPrimary .selectField:focus-within {
+  border-color: var(--color-primary, #3b82f6);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+.selectContainer.colorPrimary .selectOption--selected {
+  background-color: var(--color-primary-400);
+  /* color: var(--color-primary-700); */
+}
+.selectContainer.colorPrimary .selectOption:hover {
+  background-color: var(--color-primary-500);
+}
+
+/* Secondary */
+.selectContainer.colorSecondary .selectField:hover {
+  border-color: var(--color-secondary-300);
+}
+.selectContainer.colorSecondary .selectField:focus-within {
+  border-color: var(--color-secondary-500);
+  box-shadow: 0 0 0 2px var(--color-secondary-700);
+}
+.selectContainer.colorSecondary .selectOption--selected {
+  background-color: var(--color-secondary-700);
+  color: var(--color-secondary-700);
+}
+.selectContainer.colorSecondary .selectOption:hover {
+  background-color: var(--color-secondary-700);
+}
+
+/* Success */
+.selectContainer.colorSuccess .selectField:hover {
+  border-color: var(--color-success-300);
+}
+.selectContainer.colorSuccess .selectField:focus-within {
+  border-color: var(--color-success-500);
+  box-shadow: 0 0 0 2px var(--color-success-700);
+}
+.selectContainer.colorSuccess .selectOption--selected {
+  background-color: var(--color-success-700);
+  color: var(--color-success-700);
+}
+.selectContainer.colorSuccess .selectOption:hover {
+  background-color: var(--color-success-700);
+}
+
+/* Warning */
+.selectContainer.colorWarning .selectField:hover {
+  border-color: var(--color-warning-300);
+}
+.selectContainer.colorWarning .selectField:focus-within {
+  border-color: var(--color-warning-500);
+  box-shadow: 0 0 0 2px var(--color-warning-700);
+}
+.selectContainer.colorWarning .selectOption--selected {
+  background-color: var(--color-warning-700);
+  color: var(--color-warning-700);
+}
+.selectContainer.colorWarning .selectOption:hover {
+  background-color: var(--color-warning-700);
+}
+
+/* Danger */
+.selectContainer.colorDanger .selectField:hover {
+  border-color: var(--color-danger-300);
+}
+.selectContainer.colorDanger .selectField:focus-within {
+  border-color: var(--color-danger-500);
+  box-shadow: 0 0 0 2px var(--color-danger-700);
+}
+.selectContainer.colorDanger .selectOption--selected {
+  background-color: var(--color-danger-700);
+  color: var(--color-danger-700);
+}
+.selectContainer.colorDanger .selectOption:hover {
+  background-color: var(--color-danger-700);
+}
+
+/* Info */
+.selectContainer.colorInfo .selectField:hover {
+  border-color: var(--color-info-300);
+}
+.selectContainer.colorInfo .selectField:focus-within {
+  border-color: var(--color-info-500);
+  box-shadow: 0 0 0 2px var(--color-info-700);
+}
+.selectContainer.colorInfo .selectOption--selected {
+  background-color: var(--color-info-700);
+  color: var(--color-info-700);
+}
+.selectContainer.colorInfo .selectOption:hover {
+  background-color: var(--color-info-700);
+}
+
+/* Neutral */
+.selectContainer.colorNeutral .selectField:hover {
+  border-color: var(--color-neutral-300);
+}
+.selectContainer.colorNeutral .selectField:focus-within {
+  border-color: var(--color-neutral-500);
+  box-shadow: 0 0 0 2px var(--color-neutral-700);
+}
+.selectContainer.colorNeutral .selectOption--selected {
+  background-color: var(--color-neutral-800);
+  color: var(--color-neutral-700);
+}
+.selectContainer.colorNeutral .selectOption:hover {
+  background-color: var(--color-neutral-700);
+}
+
+/* Width Modes - CSS Modules */
+/* Container base - DEFAULT */
+.selectContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* Min width (default) - 200px minimum */
+.selectContainer.widthMin {
+  min-width: 200px;
+  width: auto;
+}
+
+.selectContainer.widthMin .selectField,
+.selectContainer.widthMin .selectTriggerWrapper {
+  min-width: 200px;
+}
+
+/* Auto width - fit content */
+.selectContainer.widthAuto {
+  min-width: unset;
+  width: auto;
+}
+
+.selectContainer.widthAuto .selectField {
+  width: auto;
+  min-width: 150px;
+}
+
+.selectContainer.widthAuto .selectTriggerWrapper {
+  width: auto;
+  flex: 1;
+}
+
+/* Compact width - fit content, no minimum width */
+.selectContainer.widthCompact {
+  min-width: unset;
+  width: auto;
+}
+
+.selectContainer.widthCompact .selectField {
+  width: auto;
+  min-width: unset;
+}
+
+.selectContainer.widthCompact .selectTriggerWrapper {
+  width: auto;
+  flex: 1;
+}
+
+/* Full width */
+.selectContainer.widthFull,
+.selectContainer.fullWidth {
+  width: 100% !important;
+  min-width: unset !important;
+}
+
+.selectContainer.widthFull .selectField,
+.selectContainer.widthFull .selectTriggerWrapper,
+.selectContainer.fullWidth .selectField,
+.selectContainer.fullWidth .selectTriggerWrapper {
+  width: 100%;
+  flex: 1;
+}
+
+/* Multiple select */
+.selectInput[multiple] {
+  padding-right: var(--space-3);
+}
+
+.selectInput[multiple] + .selectIcon {
+  display: none;
+}
+
+/* Dropdown */
+.selectDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: var(--space-1);
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 1000;
+  
+  /* Animations - only opacity and scale to not conflict with alignment transform */
+  animation: dropdownFadeIn 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: top center;
+}
+
+/* Dropdown opening upwards */
+.selectDropdown--upward {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: var(--space-1);
+  transform-origin: bottom center;
+}
+
+/* Animation keyframes - no translateY to avoid conflict with alignment */
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    scale: 0.97;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+/* Option */
+.selectOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  color: var(--color-foreground);
+  font-size: var(--font-size-sm);
+}
+
+.selectOption:hover {
+  background-color: var(--color-neutral-800);
+  color: var(--text-on-primary);
+}
+
+.selectOption:focus {
+  outline: none;
+  background-color: var(--color-primary-700);
+  color: var(--text-on-primary);
+}
+
+.selectOption--selected {
+  background-color: var(--color-primary-700);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-on-primary);
+}
+
+.selectOption--selected:hover {
+  background-color: var(--color-primary-700);
+}
+
+.selectOption--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.selectOptionCheck {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  padding-left: 0.5rem;
+}
+
+.selectContainer.colorPrimary .selectOptionCheck {
+  color: var(--color-primary-700);
+}
+.selectContainer.colorSecondary .selectOptionCheck {
+  color: var(--color-secondary-500);
+}
+.selectContainer.colorSuccess .selectOptionCheck {
+  color: var(--color-success-500);
+}
+.selectContainer.colorDanger .selectOptionCheck {
+  color: var(--color-danger-500);
+}
+.selectContainer.colorWarning .selectOptionCheck {
+  color: var(--color-warning-500);
+}
+.selectContainer.colorInfo .selectOptionCheck {
+  color: var(--color-info-500);
+}
+.selectContainer.colorNeutral .selectOptionCheck {
+  color: var(--color-neutral-600);
+}
+
+/* Container (already defined above with width rules) */
+
+.selectWrapper {
+  position: relative;
+}
+
+/* Trigger Wrapper (for validation icon outside) */
+.selectTriggerWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+/* Label Container */
+.selectLabelContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1, 0.25rem);
+  margin-bottom: 0.25rem;
+}
+
+/* Label */
+.selectLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-foreground);
+  line-height: var(--line-height-tight);
+  transition: color 0.2s ease;
+}
+
+.selectLabelRequired::after {
+  content: ' *';
+  color: var(--color-danger-500);
+}
+
+.selectHelperIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary, #6b7280);
+  cursor: help;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.selectHelperIcon:hover {
+  color: var(--color-primary-500);
+}
+
+/* Error and Helper Text */
+.selectError {
+  font-size: var(--font-size-xs);
+  color: var(--color-danger-600);
+  margin-top: var(--space-1);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.selectHelper {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-600);
+  margin-top: var(--space-1);
+}
+
+/* Empty State */
+.selectEmptyState {
+  padding: var(--space-4) var(--space-3);
+  text-align: center;
+  color: var(--color-neutral-500);
+  font-size: var(--font-size-sm);
+}
+
+/* Loading State (Async) */
+.selectLoadingState {
+  padding: var(--space-4) var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--color-neutral-600);
+  font-size: var(--font-size-sm);
+}
+
+/* Error State (Async) */
+.selectErrorState {
+  padding: var(--space-4) var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--color-danger-600);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+/* Clear Button */
+.selectClearButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  margin: 0 0.125rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-neutral-500);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+}
+
+/* When clear button is inside (positioned in field) - absolute positioning */
+.selectField .selectClearButton {
+  position: absolute;
+  /* Default: close to chevron when no validation icon */
+  right: 2rem; /* ~32px - space for chevron */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  pointer-events: auto;
+}
+
+/* When validation icon is also inside - push clear button further left */
+.selectField.selectField--withValidationIcon .selectClearButton {
+  right: 3.5rem; /* ~56px - space for validation + chevron */
+}
+
+/* When clear button is outside (in wrapper) */
+.selectTriggerWrapper > .selectClearButton {
+  position: static;
+  transform: none;
+  z-index: auto;
+}
+
+.selectClearButton:hover {
+  background-color: var(--color-neutral-800);
+  color: var(--color-neutral-700);
+}
+
+.selectClearButton:focus {
+  outline: calc(2px * var(--outline-enabled, 1)) solid var(--color-primary-500);
+  outline-offset: calc(2px * var(--outline-enabled, 1));
+}
+
+/* Loading Spinner */
+.selectLoadingSpinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+}
+
+/* When loading spinner is inside (positioned like icon) */
+.selectField .selectLoadingSpinner {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0;
+  pointer-events: none;
+}
+
+/* When loading spinner is outside (in wrapper) */
+.selectTriggerWrapper > .selectLoadingSpinner {
+  position: static;
+  transform: none;
+  pointer-events: auto;
+}
+
+.inlineLoading {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.inlineLoading :global([data-gs-el='title']),
+.inlineLoading :global([data-gs-el='description']),
+.inlineLoading :global([data-gs-el='actions']),
+.inlineLoading :global([data-gs-el='content']) {
+  display: none !important;
+}
+
+.inlineLoadingNoText :global([data-gs-el='message']) {
+  display: none !important;
+}
+
+.dropdownLoading {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.dropdownLoading :global([data-gs-el='title']),
+.dropdownLoading :global([data-gs-el='description']),
+.dropdownLoading :global([data-gs-el='actions']),
+.dropdownLoading :global([data-gs-el='content']) {
+  display: none !important;
+}
+
+/* Decorators */
+.selectStartDecorator,
+.selectEndDecorator {
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  color: var(--color-neutral-600);
+}
+
+/* Validation Icon */
+.selectValidationIcon {
+  /* When inside trigger: position before chevron icon */
+  position: absolute;
+  right: 2rem; /* ~32px - space for chevron (16px) + gap */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  cursor: help;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.selectValidationIcon[role="alert"] {
+  cursor: help;
+  pointer-events: auto;
+}
+
+.selectValidationIcon:hover {
+  opacity: 0.8;
+}
+
+/* When outside trigger: reset to normal flow */
+.selectTriggerWrapper > .selectValidationIcon {
+  position: static;
+  transform: none;
+  margin: 0;
+  pointer-events: auto;
+}
+
+.selectValidationIcon--error {
+  color: var(--color-danger-500);
+}
+
+.selectValidationIcon--success {
+  color: var(--color-success-500);
+}
+
+.selectValidationIcon--warning {
+  color: var(--color-warning-500);
+}
+
+/* Focused option (keyboard navigation) - uses container color */
+.selectOption--focused {
+  outline: none;
+}
+
+.selectContainer.colorPrimary .selectOption--focused {
+  background-color: var(--color-primary-500);
+  color: var(--text-on-primary);
+}
+.selectContainer.colorSecondary .selectOption--focused {
+  background-color: var(--color-secondary-700);
+}
+.selectContainer.colorSuccess .selectOption--focused {
+  background-color: var(--color-success-700);
+}
+.selectContainer.colorDanger .selectOption--focused {
+  background-color: var(--color-danger-700);
+}
+.selectContainer.colorWarning .selectOption--focused {
+  background-color: var(--color-warning-700);
+}
+.selectContainer.colorInfo .selectOption--focused {
+  background-color: var(--color-info-700);
+}
+.selectContainer.colorNeutral .selectOption--focused {
+  background-color: var(--color-neutral-800);
+}
+
+/* Validation states - CSS Modules */
+.selectContainer.error .selectField {
+  border-color: var(--color-danger-500);
+}
+
+.selectContainer.success .selectField {
+  border-color: var(--color-success-500);
+}
+
+.selectContainer.warning .selectField {
+  border-color: var(--color-warning-500);
+}
+
+/* Loading state - CSS Modules */
+.selectContainer.loading .selectField {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+/* ============================================ */
+/* OPTION GROUPS                                */
+/* ============================================ */
+
+.selectGroupLabel {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-600);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: var(--color-neutral-50);
+  border-bottom: 1px solid var(--color-neutral-200);
+  
+  /* Sticky positioning - MUI Joy style */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  
+  /* Ensure it stays above options */
+  backdrop-filter: blur(4px);
+  background-color: rgba(249, 250, 251, 0.95);
+}
+
+/* Dark mode support for sticky headers */
+@media (prefers-color-scheme: dark) {
+  .selectGroupLabel {
+    background-color: rgba(31, 41, 55, 0.95);
+    border-bottom-color: var(--color-neutral-700);
+    color: var(--color-neutral-300);
+  }
+}
+
+/* First group label - no top padding in dropdown */
+.selectGroup:first-child .selectGroupLabel {
+  border-top-left-radius: var(--radius-sm);
+  border-top-right-radius: var(--radius-sm);
+}
+
+/* Options inside groups */
+.selectGroup .selectOption {
+  padding-left: var(--space-4);
+}
+
+/* ============================================ */
+/* SEARCH/FILTER                                */
+/* ============================================ */
+
+.selectSearchWrapper {
+  position: relative;
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--color-neutral-200);
+  background-color: var(--color-background);
+  
+  /* Sticky at top of dropdown */
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.selectSearchInput {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  padding-left: var(--space-8);
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-size: var(--font-size-sm);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.selectSearchInput:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 2px var(--color-primary-700);
+  outline: calc(2px * var(--outline-enabled, 1)) solid var(--color-primary-500);
+  outline-offset: calc(2px * var(--outline-enabled, 1));
+}
+
+.selectSearchInput::placeholder {
+  color: var(--color-neutral-300);
+}
+
+.selectSearchClear {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-neutral-500);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selectSearchClear:hover {
+  background-color: var(--color-neutral-800);
+  color: var(--color-neutral-700);
+}
+
+.selectSearchClear:focus {
+  outline: calc(2px * var(--outline-enabled, 1)) solid var(--color-primary-500);
+  outline-offset: calc(2px * var(--outline-enabled, 1));
+}
+
+/* ============================================ */
+/* MULTI-SELECT CHIPS                           */
+/* ============================================ */
+
+.selectInput--multiple {
+  padding: 0.25rem;
+  min-height: 2.5rem;
+  height: auto;
+}
+
+.selectChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.selectChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.375rem;
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-700);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+  max-width: 200px;
+}
+
+.selectChipLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selectChipRemove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  color: var(--color-primary-600);
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.selectChipRemove:hover {
+  color: var(--color-primary-800);
+}
+
+.selectChipRemove:focus {
+  outline: calc(2px * var(--outline-enabled, 1)) solid var(--color-primary-500);
+  outline-offset: calc(1px * var(--outline-enabled, 1));
+  border-radius: var(--radius-sm);
+}
+
+/* Option checkbox (multi-select) */
+.selectOptionCheckbox {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+  color: var(--color-neutral-300);
+  font-size: 18px;
+}
+
+/* Checkbox colors in multi-select - CSS Modules */
+.selectContainer.colorPrimary .selectOptionCheckbox--checked {
+  color: var(--color-primary-500);
+}
+.selectContainer.colorSecondary .selectOptionCheckbox--checked {
+  color: var(--color-secondary-500);
+}
+.selectContainer.colorSuccess .selectOptionCheckbox--checked {
+  color: var(--color-success-500);
+}
+.selectContainer.colorDanger .selectOptionCheckbox--checked {
+  color: var(--color-danger-500);
+}
+.selectContainer.colorWarning .selectOptionCheckbox--checked {
+  color: var(--color-warning-500);
+}
+.selectContainer.colorInfo .selectOptionCheckbox--checked {
+  color: var(--color-info-500);
+}
+.selectContainer.colorNeutral .selectOptionCheckbox--checked {
+  color: var(--color-neutral-600);
+}

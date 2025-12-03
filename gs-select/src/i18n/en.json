@@ -1,0 +1,18 @@
+{
+  "label": "Select",
+  "placeholder": "Select an option",
+  "noOptions": "No options available",
+  "loading": "Loading options...",
+  "search": "Search...",
+  "aria": {
+    "select": "Select field",
+    "expanded": "Expanded",
+    "collapsed": "Collapsed",
+    "required": "Required field",
+    "clear": "Clear selection",
+    "open": "Open dropdown",
+    "close": "Close dropdown",
+    "selected": "Selected",
+    "helperText": "Helper text"
+  }
+}

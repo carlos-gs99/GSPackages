@@ -5,11 +5,10 @@ import pt from './i18n/pt.json';
 export const GS_BUTTON_NAMESPACE = 'gsbutton';
 
 export function registerGSButtonI18n(instance: i18n) {
-  if (!instance.hasResourceBundle('en', GS_BUTTON_NAMESPACE)) {
-    instance.addResourceBundle('en', GS_BUTTON_NAMESPACE, en);
-  }
-  if (!instance.hasResourceBundle('pt', GS_BUTTON_NAMESPACE)) {
-    instance.addResourceBundle('pt', GS_BUTTON_NAMESPACE, pt);
-  }
+	try {
+		instance.addResourceBundle('en', GS_BUTTON_NAMESPACE, en as any, true, true);
+		instance.addResourceBundle('pt', GS_BUTTON_NAMESPACE, pt as any, true, true);
+	} catch (_e) {
+		// ignore in non-bundled environments
+	}
 }
-

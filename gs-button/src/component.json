@@ -1,0 +1,63 @@
+{
+  "name": "GSButton",
+  "version": "2.0.0",
+  "description": "Botao agnostico com variantes GS, ripple opcional e estado de carregamento integrado. Sem dependencias em react-router-dom.",
+  "category": "ui",
+  "tier": "platinum",
+  "status": "stable",
+  "dependencies": {
+    "gs-components": [
+    ],
+    "gs-primitives": [
+      "ButtonBase"
+    ],
+    "gs-utils": [
+      "debugUtils",
+      "accessibilityUtils"
+    ],
+    "external": [
+      "react",
+      "react-i18next",
+      "clsx"
+    ]
+  },
+  "provides": {
+    "components": [
+      "GSButton",
+      "GSButtonGroup"
+    ],
+    "types": [
+      "GSButtonProps",
+      "GSButtonVariant",
+      "GSButtonColor",
+      "GSButtonSize",
+      "GSButtonGroupProps"
+    ]
+  },
+  "exports": {
+    "main": "./GSButton.tsx",
+    "types": "./types.ts",
+    "styles": "./styles.module.css",
+    "i18n": "./i18n"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-i18next": "^15.0.0"
+  },
+  "features": {
+    "a11y": true,
+    "i18n": true,
+    "tested": true,
+    "storybook": false,
+    "testCoverage": 85
+  },
+  "tags": [
+    "button",
+    "cta",
+    "action",
+    "ui"
+  ],
+  "bundleSize": "6KB"
+}
+

@@ -1,0 +1,18 @@
+{
+  "label": "Seleção",
+  "placeholder": "Selecionar uma opção",
+  "noOptions": "Nenhuma opção disponível",
+  "loading": "A carregar opções...",
+  "search": "Procurar...",
+  "aria": {
+    "select": "Campo de seleção",
+    "expanded": "Expandido",
+    "collapsed": "Recolhido",
+    "required": "Campo obrigatório",
+    "clear": "Limpar seleção",
+    "open": "Abrir lista",
+    "close": "Fechar lista",
+    "selected": "Selecionado",
+    "helperText": "Texto de ajuda"
+  }
+}
