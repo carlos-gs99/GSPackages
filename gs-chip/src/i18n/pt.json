@@ -1,0 +1,9 @@
+{
+  "label": "Chip",
+  "aria": {
+    "chip": "Chip",
+    "deletable": "Chip removível",
+    "deleteButton": "Remover chip"
+  }
+}
+
