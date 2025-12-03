@@ -1,0 +1,153 @@
+.skeleton {
+  display: block;
+  background-color: var(--color-neutral-200);
+  border-radius: var(--radius-sm);
+  position: relative;
+  overflow: hidden;
+  color: transparent !important;
+  user-select: none;
+}
+
+.skeleton * {
+  visibility: hidden;
+}
+
+.skeletonLine {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Variants */
+
+.skeleton--text {
+  border-radius: var(--radius-sm);
+  width: 100%;
+}
+
+.skeleton--circular {
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+}
+
+.skeleton--rectangular {
+  border-radius: 0;
+  width: 100%;
+}
+
+.skeleton--rounded {
+  border-radius: var(--radius-md);
+  width: 100%;
+}
+
+/* Sizes */
+
+.skeleton--text.skeleton--sm {
+  height: 14px;
+}
+
+.skeleton--text.skeleton--md {
+  height: 16px;
+}
+
+.skeleton--text.skeleton--lg {
+  height: 20px;
+}
+
+.skeleton--circular.skeleton--sm {
+  width: 32px;
+  height: 32px;
+}
+
+.skeleton--circular.skeleton--md {
+  width: 48px;
+  height: 48px;
+}
+
+.skeleton--circular.skeleton--lg {
+  width: 64px;
+  height: 64px;
+}
+
+.skeleton--rectangular.skeleton--sm,
+.skeleton--rounded.skeleton--sm {
+  height: 80px;
+}
+
+.skeleton--rectangular.skeleton--md,
+.skeleton--rounded.skeleton--md {
+  height: 140px;
+}
+
+.skeleton--rectangular.skeleton--lg,
+.skeleton--rounded.skeleton--lg {
+  height: 200px;
+}
+
+/* Animations */
+
+.skeleton--animation-pulse {
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeleton--animation-wave::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-neutral-100) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: skeletonWave 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonWave {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Group */
+
+.skeletonGroup {
+  display: flex;
+}
+
+.skeletonGroup--vertical {
+  flex-direction: column;
+}
+
+.skeletonGroup--horizontal {
+  flex-direction: row;
+  align-items: center;
+}
+
+.skeletonGroup--gap-sm {
+  gap: var(--space-2, 0.5rem);
+}
+
+.skeletonGroup--gap-md {
+  gap: var(--space-3, 0.75rem);
+}
+
+.skeletonGroup--gap-lg {
+  gap: var(--space-4, 1rem);
+}
+

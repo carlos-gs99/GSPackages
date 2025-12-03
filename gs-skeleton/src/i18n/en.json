@@ -1,0 +1,8 @@
+{
+  "loading": "Loading...",
+  "aria": {
+    "skeleton": "Loading placeholder",
+    "skeletonGroup": "Loading content"
+  }
+}
+

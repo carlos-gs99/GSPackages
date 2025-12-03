@@ -1,0 +1,8 @@
+{
+  "loading": "A carregar...",
+  "aria": {
+    "skeleton": "Placeholder de carregamento",
+    "skeletonGroup": "Conteúdo a carregar"
+  }
+}
+
