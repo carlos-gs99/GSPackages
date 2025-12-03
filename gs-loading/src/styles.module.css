@@ -1,0 +1,211 @@
+.root {
+  position: relative;
+  width: 100%;
+  min-height: 8rem;
+  display: grid;
+  place-items: center;
+  padding: var(--space-8, 2rem);
+  color: var(--text-primary, #111827);
+  background-color: transparent;
+  transition: opacity 160ms ease;
+  pointer-events: auto;
+}
+
+.root[data-align='start'] {
+  justify-items: start;
+}
+
+.root[data-mode='section'] {
+  border-radius: var(--radius-lg, 0.5rem);
+  height: 100%;
+}
+
+.root[data-spinner-size='sm'] {
+  min-height: 4rem;
+  padding: var(--space-4, 1rem);
+}
+
+.root[data-spinner-size='sm'] .content {
+  gap: var(--space-2, 0.5rem);
+}
+
+.root[data-spinner-size='md'] {
+  min-height: 6rem;
+  padding: var(--space-6, 1.5rem);
+}
+
+.root[data-spinner-size='md'] .content {
+  gap: var(--space-3, 0.75rem);
+}
+
+.root[data-spinner-size='lg'] {
+  min-height: 8rem;
+  padding: var(--space-8, 2rem);
+}
+
+.root[data-mode='viewport'] {
+  min-height: min(100vh, var(--viewport-height, 100vh));
+}
+
+.root[data-mode='fullscreen'] {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  padding: clamp(var(--space-8, 2rem), 4vw, var(--space-12, 3rem));
+  min-height: 100vh;
+}
+
+.root[data-variant='surface'] {
+  background-color: var(--background-body, #ffffff);
+  border-radius: var(--radius-xl, 1rem);
+  box-shadow: var(--shadow-xl, 0 20px 25px -5px rgba(0, 0, 0, 0.1));
+}
+
+.root[data-variant='inset'] {
+  background-color: rgba(248, 250, 252, 0.92);
+  border-radius: var(--radius-lg, 0.5rem);
+  box-shadow: inset 0 0 0 1px rgba(203, 213, 225, 0.4);
+}
+
+.root[data-align='start'] .content {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: auto;
+  background: rgba(17, 24, 39, 0.55);
+  opacity: 0.7;
+}
+
+.content {
+  position: relative;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-4, 1rem);
+  max-width: min(32rem, 90vw);
+  width: min(32rem, 100%);
+  pointer-events: auto;
+}
+
+.content[data-align='start'] {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.illustration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(8rem, 30vw, 14rem);
+  height: clamp(6rem, 24vw, 10rem);
+  margin-bottom: var(--space-2, 0.5rem);
+}
+
+.illustration svg,
+.illustration img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.spinnerWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.spinner {
+  border-radius: 50%;
+  animation: gsLoadingSpinnerSpin 1s linear infinite;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@keyframes gsLoadingSpinnerSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.title {
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: var(--font-size-lg, 1.125rem);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.description,
+.message,
+.children {
+  font-size: var(--font-size-md, 1rem);
+  color: var(--text-secondary, #6b7280);
+  margin: 0;
+}
+
+.message {
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.actions {
+  margin-top: var(--space-3, 0.75rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3, 0.75rem);
+  justify-content: center;
+}
+
+.content[data-align='start'] .actions {
+  justify-content: flex-start;
+}
+
+.root[data-variant='transparent'] {
+  padding: 0;
+  min-height: 0;
+  border-radius: inherit;
+  background: transparent;
+}
+
+.root[data-variant='transparent'] .content {
+  gap: var(--space-3, 0.75rem);
+  width: auto;
+  max-width: 100%;
+}
+
+.root[data-variant='transparent'] .spinnerWrapper {
+  width: auto;
+}
+
+.root[data-mode='section'][data-variant='transparent'] {
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .root {
+    padding: var(--space-6, 1.5rem);
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2, 0.5rem);
+  }
+}
+
