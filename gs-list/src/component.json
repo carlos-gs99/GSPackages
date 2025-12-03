@@ -1,0 +1,86 @@
+{
+  "name": "GSList",
+  "version": "1.0.0",
+  "description": "Componente de lista reutilizável para exibir items, opções e conteúdo. Usado internamente por dropdowns e pode ser usado standalone.",
+  "category": "ui",
+  "tier": "platinum",
+  "status": "stable",
+  
+  "dependencies": {
+    "gs-components": [],
+    "gs-primitives": [],
+    "gs-utils": [
+      "debugUtils"
+    ],
+    "gs-hooks": [
+      "useTranslation"
+    ],
+    "external": [
+      "react",
+      "react-router-dom",
+      "react-i18next",
+      "clsx"
+    ]
+  },
+  
+  "provides": {
+    "components": [
+      "GSList",
+      "GSList.Header",
+      "GSList.Item",
+      "GSList.Separator",
+      "GSList.Footer"
+    ],
+    "types": [
+      "GSListProps",
+      "GSListHeaderProps",
+      "GSListItemProps",
+      "GSListSeparatorProps",
+      "GSListFooterProps",
+      "GSListItemVariant"
+    ],
+    "hooks": [],
+    "utils": []
+  },
+  
+  "exports": {
+    "main": "./GSList.tsx",
+    "types": "./types.ts",
+    "styles": "./styles.module.css",
+    "i18n": "./i18n/"
+  },
+  
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-router-dom": "^6.0.0",
+    "react-i18next": "^13.0.0",
+    "@gs-style/theme": "^1.0.0"
+  },
+  
+  "features": {
+    "a11y": true,
+    "i18n": true,
+    "tested": false,
+    "storybook": false,
+    "testCoverage": 0
+  },
+  
+  "tags": [
+    "list",
+    "menu",
+    "items",
+    "navigation",
+    "compound-components"
+  ],
+  
+  "bundleSize": "8KB",
+  
+  "usedBy": [
+    "GSDropdownSimple",
+    "SidebarNotifications",
+    "SidebarUserMenu",
+    "GSChart",
+    "GSAutocompleter"
+  ]
+}
+
