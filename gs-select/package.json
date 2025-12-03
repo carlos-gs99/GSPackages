@@ -47,8 +47,7 @@
     "@carlos-gs99/primitives": "workspace:*",
     "@carlos-gs99/gs-icon": "workspace:*",
     "@carlos-gs99/gs-button": "workspace:*",
-    "@carlos-gs99/gs-loading": "workspace:*",
-    "@carlos-gs99/gs-tooltip": "workspace:*"
+    "@carlos-gs99/gs-loading": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.2.48",

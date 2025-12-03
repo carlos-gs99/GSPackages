@@ -99,7 +99,6 @@ function registerGSSelectI18n(instance) {
 var import_primitives = require("@carlos-gs99/primitives");
 var import_gs_loading = require("@carlos-gs99/gs-loading");
 var import_gs_icon = require("@carlos-gs99/gs-icon");
-var import_gs_tooltip = require("@carlos-gs99/gs-tooltip");
 
 // src/styles.module.css
 var styles_default = {};
@@ -765,26 +764,20 @@ var GSSelectComponent = (props, ref) => {
   };
   const renderValidationIcon = () => {
     if (error) {
-      return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-        import_gs_tooltip.GSTooltip,
-        {
-          content: error,
-          placement: "top",
-          trigger: "hover",
-          enterDelay: 200,
-          color: "danger",
-          children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-            "span",
-            {
-              className: (0, import_clsx.default)(styles_default.selectValidationIcon, styles_default["selectValidationIcon--error"]),
-              "data-gs-el": "validationIcon",
-              role: "alert",
-              "aria-label": error,
-              tabIndex: 0,
-              children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_gs_icon.GSIcon, { name: "alert-circle", size: "sm" })
-            }
-          )
-        }
+      return (
+        /* TODO: GSTooltip not migrated yet */
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+          "span",
+          {
+            className: (0, import_clsx.default)(styles_default.selectValidationIcon, styles_default["selectValidationIcon--error"]),
+            "data-gs-el": "validationIcon",
+            role: "alert",
+            "aria-label": error,
+            tabIndex: 0,
+            title: error,
+            children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_gs_icon.GSIcon, { name: "alert-circle", size: "sm" })
+          }
+        )
       );
     }
     if (!showValidationIcon || !(hasSuccess || hasWarning)) {
@@ -1207,23 +1200,16 @@ var GSSelectComponent = (props, ref) => {
                 children: label
               }
             ),
-            helperText && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-              import_gs_tooltip.GSTooltip,
+            helperText && /* TODO: GSTooltip not migrated yet */
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+              "span",
               {
-                content: helperText,
-                placement: "top",
-                trigger: "hover",
-                enterDelay: 200,
-                children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-                  "span",
-                  {
-                    className: styles_default.selectHelperIcon,
-                    "aria-label": t("aria.helperText"),
-                    role: "button",
-                    tabIndex: 0,
-                    children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_gs_icon.GSIcon, { name: "help-circle", size: "sm" })
-                  }
-                )
+                className: styles_default.selectHelperIcon,
+                "aria-label": t("aria.helperText"),
+                role: "button",
+                tabIndex: 0,
+                title: helperText,
+                children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_gs_icon.GSIcon, { name: "help-circle", size: "sm" })
               }
             )
           ] }),

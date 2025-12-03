@@ -14,7 +14,7 @@ import { GS_SELECT_NAMESPACE, registerGSSelectI18n } from "./i18n";
 import { ButtonBase } from "@carlos-gs99/primitives";
 import { GSLoading } from "@carlos-gs99/gs-loading";
 import { GSIcon } from "@carlos-gs99/gs-icon";
-import { GSTooltip } from "@carlos-gs99/gs-tooltip";
+// import { GSTooltip } from "@carlos-gs99/gs-tooltip"; // TODO: gs-tooltip não migrado ainda
 import type { GSSelectProps, GSSelectOption } from "./types";
 import styles from "./styles.module.css";
 
@@ -954,23 +954,17 @@ const GSSelectComponent = (
     // Always show error icon when there's an error (with tooltip)
     if (error) {
       return (
-        <GSTooltip
-          content={error}
-          placement="top"
-          trigger="hover"
-          enterDelay={200}
-          color="danger"
+        /* TODO: GSTooltip not migrated yet */
+        <span
+          className={clsx(styles.selectValidationIcon, styles["selectValidationIcon--error"])}
+          data-gs-el="validationIcon"
+          role="alert"
+          aria-label={error}
+          tabIndex={0}
+          title={error}
         >
-          <span
-            className={clsx(styles.selectValidationIcon, styles["selectValidationIcon--error"])}
-            data-gs-el="validationIcon"
-            role="alert"
-            aria-label={error}
-            tabIndex={0}
-          >
-            <GSIcon name="alert-circle" size="sm" />
-          </span>
-        </GSTooltip>
+          <GSIcon name="alert-circle" size="sm" />
+        </span>
       );
     }
 
@@ -1468,21 +1462,16 @@ const GSSelectComponent = (
               {label}
             </label>
             {helperText && (
-              <GSTooltip
-                content={helperText}
-                placement="top"
-                trigger="hover"
-                enterDelay={200}
+              /* TODO: GSTooltip not migrated yet */
+              <span
+                className={styles.selectHelperIcon}
+                aria-label={t('aria.helperText')}
+                role="button"
+                tabIndex={0}
+                title={helperText}
               >
-                <span
-                  className={styles.selectHelperIcon}
-                  aria-label={t('aria.helperText')}
-                  role="button"
-                  tabIndex={0}
-                >
-                  <GSIcon name="help-circle" size="sm" />
-                </span>
-              </GSTooltip>
+                <GSIcon name="help-circle" size="sm" />
+              </span>
             )}
           </div>
         )}

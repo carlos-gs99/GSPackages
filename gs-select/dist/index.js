@@ -68,7 +68,6 @@ function registerGSSelectI18n(instance) {
 import { ButtonBase } from "@carlos-gs99/primitives";
 import { GSLoading } from "@carlos-gs99/gs-loading";
 import { GSIcon } from "@carlos-gs99/gs-icon";
-import { GSTooltip } from "@carlos-gs99/gs-tooltip";
 
 // src/styles.module.css
 var styles_default = {};
@@ -734,26 +733,20 @@ var GSSelectComponent = (props, ref) => {
   };
   const renderValidationIcon = () => {
     if (error) {
-      return /* @__PURE__ */ jsx(
-        GSTooltip,
-        {
-          content: error,
-          placement: "top",
-          trigger: "hover",
-          enterDelay: 200,
-          color: "danger",
-          children: /* @__PURE__ */ jsx(
-            "span",
-            {
-              className: clsx(styles_default.selectValidationIcon, styles_default["selectValidationIcon--error"]),
-              "data-gs-el": "validationIcon",
-              role: "alert",
-              "aria-label": error,
-              tabIndex: 0,
-              children: /* @__PURE__ */ jsx(GSIcon, { name: "alert-circle", size: "sm" })
-            }
-          )
-        }
+      return (
+        /* TODO: GSTooltip not migrated yet */
+        /* @__PURE__ */ jsx(
+          "span",
+          {
+            className: clsx(styles_default.selectValidationIcon, styles_default["selectValidationIcon--error"]),
+            "data-gs-el": "validationIcon",
+            role: "alert",
+            "aria-label": error,
+            tabIndex: 0,
+            title: error,
+            children: /* @__PURE__ */ jsx(GSIcon, { name: "alert-circle", size: "sm" })
+          }
+        )
       );
     }
     if (!showValidationIcon || !(hasSuccess || hasWarning)) {
@@ -1176,23 +1169,16 @@ var GSSelectComponent = (props, ref) => {
                 children: label
               }
             ),
-            helperText && /* @__PURE__ */ jsx(
-              GSTooltip,
+            helperText && /* TODO: GSTooltip not migrated yet */
+            /* @__PURE__ */ jsx(
+              "span",
               {
-                content: helperText,
-                placement: "top",
-                trigger: "hover",
-                enterDelay: 200,
-                children: /* @__PURE__ */ jsx(
-                  "span",
-                  {
-                    className: styles_default.selectHelperIcon,
-                    "aria-label": t("aria.helperText"),
-                    role: "button",
-                    tabIndex: 0,
-                    children: /* @__PURE__ */ jsx(GSIcon, { name: "help-circle", size: "sm" })
-                  }
-                )
+                className: styles_default.selectHelperIcon,
+                "aria-label": t("aria.helperText"),
+                role: "button",
+                tabIndex: 0,
+                title: helperText,
+                children: /* @__PURE__ */ jsx(GSIcon, { name: "help-circle", size: "sm" })
               }
             )
           ] }),
