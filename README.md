@@ -27,21 +27,21 @@
 
 | Package | Description |
 |---------|-------------|
-| [`@globalsoft/utils`](./utils) | Utility functions (debug, accessibility, dates, strings) |
-| [`@globalsoft/hooks`](./hooks) | React hooks (translation, dropdown, autocomplete) |
-| [`@globalsoft/primitives`](./primitives) | Headless components (ButtonBase, Overlay, FocusTrap) |
-| [`@globalsoft/theme`](./theme) | Design tokens and CSS variables |
+| [`@carlos-gs99/utils`](./utils) | Utility functions (debug, accessibility, dates, strings) |
+| [`@carlos-gs99/hooks`](./hooks) | React hooks (translation, dropdown, autocomplete) |
+| [`@carlos-gs99/primitives`](./primitives) | Headless components (ButtonBase, Overlay, FocusTrap) |
+| [`@carlos-gs99/theme`](./theme) | Design tokens and CSS variables |
 
 ### UI Components
 
 | Package | Description |
 |---------|-------------|
-| [`@globalsoft/gs-button`](./gs-button) | Button with variants, loading, ripple |
-| [`@globalsoft/gs-input`](./gs-input) | Input with validation, decorators |
-| [`@globalsoft/gs-select`](./gs-select) | Advanced select with search, multi-select |
-| [`@globalsoft/gs-list`](./gs-list) | Versatile list component |
-| [`@globalsoft/gs-table`](./gs-table) | Advanced data table with filters |
-| [`@globalsoft/gs-chart`](./gs-chart) | Native SVG charts |
+| [`@carlos-gs99/gs-icon`](./gs-icon) | Material Design Icons wrapper |
+| [`@carlos-gs99/gs-badge`](./gs-badge) | Badge with counter and variants |
+| [`@carlos-gs99/gs-button`](./gs-button) | Button with variants, loading, ripple (coming soon) |
+| [`@carlos-gs99/gs-input`](./gs-input) | Input with validation, decorators (coming soon) |
+| [`@carlos-gs99/gs-select`](./gs-select) | Advanced select with search, multi-select (coming soon) |
+| [`@carlos-gs99/gs-table`](./gs-table) | Advanced data table with filters (coming soon) |
 
 [**See all 40+ components →**](./docs/COMPONENTS.md)
 
@@ -51,10 +51,10 @@
 
 ```bash
 # Install core packages
-npm install @globalsoft/utils @globalsoft/hooks @globalsoft/theme
+npm install @carlos-gs99/utils @carlos-gs99/hooks @carlos-gs99/theme
 
 # Install components you need
-npm install @globalsoft/gs-button @globalsoft/gs-input @globalsoft/gs-select
+npm install @carlos-gs99/gs-icon @carlos-gs99/gs-badge
 ```
 
 ---
@@ -62,25 +62,16 @@ npm install @globalsoft/gs-button @globalsoft/gs-input @globalsoft/gs-select
 ## 💻 Quick Start
 
 ```tsx
-import { GSButton } from '@globalsoft/gs-button';
-import { GSInput } from '@globalsoft/gs-input';
-import '@globalsoft/theme/tokens.css';
+import { GSIcon } from '@carlos-gs99/gs-icon';
+import { GSBadge } from '@carlos-gs99/gs-badge';
+import '@carlos-gs99/theme/tokens.css';
 
 function App() {
   return (
     <div>
-      <GSInput 
-        label="Email" 
-        type="email" 
-        clearable 
-      />
-      <GSButton 
-        variant="solid" 
-        color="primary" 
-        ripple
-      >
-        Submit
-      </GSButton>
+      <GSBadge badgeContent={5} color="danger">
+        <GSIcon name="bell" size="lg" color="primary" />
+      </GSBadge>
     </div>
   );
 }
@@ -115,6 +106,18 @@ npm run lint               # Lint code
 
 ---
 
+## 📚 Documentation
+
+Comprehensive documentation is available in the [`docs/`](./docs) folder:
+
+- **[Guides](./docs/guides/)** - Setup, publishing, and configuration guides
+- **[Progress](./docs/progress/)** - Migration progress and audit reports
+- **[Historical](./docs/historical/)** - Past fixes and corrections
+
+See [`docs/README.md`](./docs/README.md) for the complete index.
+
+---
+
 ## 📄 License
 
 MIT © [Carlos Braga](mailto:carlos.braga@grupoglobalsoft.pt)
@@ -130,5 +133,5 @@ MIT © [Carlos Braga](mailto:carlos.braga@grupoglobalsoft.pt)
 
 ---
 
-**Made with ❤️ by Globalsoft**
+**Made by Globalsoft**
 
