@@ -1,0 +1,11 @@
+{
+  "aria": {
+    "checked": "Selecionado",
+    "unchecked": "Não selecionado",
+    "required": "Campo obrigatório"
+  },
+  "states": {
+    "loading": "Carregando..."
+  }
+}
+

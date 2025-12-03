@@ -1,0 +1,11 @@
+{
+  "aria": {
+    "checked": "Checked",
+    "unchecked": "Unchecked",
+    "required": "Required field"
+  },
+  "states": {
+    "loading": "Loading..."
+  }
+}
+
