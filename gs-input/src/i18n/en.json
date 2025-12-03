@@ -1,0 +1,9 @@
+{
+  "label": "Input",
+  "aria": {
+    "clear": "Clear input",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
+  }
+}
+
