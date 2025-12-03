@@ -1,0 +1,889 @@
+/* ============================================
+   GSTooltip - Tooltip Component Styles
+   Inspired by Base UI + MUI Joy Design
+   ============================================
+
+   Features:
+   - 12 Placements (top, bottom, left, right + start/end)
+   - 3 Sizes (sm, md, lg)
+   - 7 Colors (primary, secondary, success, warning, danger, info, neutral)
+   - 3 Variants (solid, outlined, soft)
+   - Optional arrow with auto-coloring
+   - Smooth animations with cubic-bezier
+   - Dark mode support
+   - Backdrop blur for soft variant
+   - Viewport-aware positioning
+   - Joy UI inspired spacing and shadows
+
+   References:
+   - https://base-ui.com/react/components/tooltip
+   - https://mui.com/joy-ui/react-tooltip/
+   ============================================ */
+
+/* Base Tooltip */
+.tooltip {
+  /* Spacing Variables (Joy UI inspired) */
+  --tooltip-padding-sm: 0.25rem 0.5rem;
+  --tooltip-padding-md: 0.375rem 0.625rem;
+  --tooltip-padding-lg: 0.5rem 0.875rem;
+
+  /* Font Sizes (Joy UI scale) */
+  --tooltip-font-size-sm: 0.75rem;      /* 12px */
+  --tooltip-font-size-md: 0.8125rem;    /* 13px */
+  --tooltip-font-size-lg: 0.875rem;     /* 14px */
+
+  /* Border & Shadow */
+  --tooltip-border-radius-sm: 0.25rem;  /* 4px */
+  --tooltip-border-radius-md: 0.375rem; /* 6px */
+  --tooltip-border-radius-lg: 0.5rem;   /* 8px */
+  --tooltip-arrow-size: 8px;
+
+  /* Shadows (Joy UI inspired) */
+  --tooltip-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.12);
+  --tooltip-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --tooltip-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.18);
+
+  /* Base Styles */
+  position: absolute;
+  max-width: 300px;
+  border-radius: var(--tooltip-border-radius-md);
+  box-shadow: var(--tooltip-shadow-md);
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  word-wrap: break-word;
+  font-family: var(--font-family-body, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, sans-serif);
+  font-weight: 500;
+  line-height: 1.5;
+  z-index: var(--z-tooltip, 10700);
+  letter-spacing: 0.01em;
+}
+
+/* Content */
+.tooltipContent {
+  position: relative;
+  z-index: 1;
+}
+
+/* Soft variant - subtle backdrop blur (Joy UI inspired) */
+.tooltipVariantSoft {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Typography enhancements */
+.tooltip strong {
+  font-weight: 600;
+}
+
+.tooltip code {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+}
+
+/* Sizes */
+.tooltipSm {
+  padding: var(--tooltip-padding-sm);
+  font-size: var(--tooltip-font-size-sm);
+  border-radius: var(--tooltip-border-radius-sm);
+  box-shadow: var(--tooltip-shadow-sm);
+}
+
+.tooltipMd {
+  padding: var(--tooltip-padding-md);
+  font-size: var(--tooltip-font-size-md);
+  border-radius: var(--tooltip-border-radius-md);
+  box-shadow: var(--tooltip-shadow-md);
+}
+
+.tooltipLg {
+  padding: var(--tooltip-padding-lg);
+  font-size: var(--tooltip-font-size-lg);
+  border-radius: var(--tooltip-border-radius-lg);
+  box-shadow: var(--tooltip-shadow-lg);
+}
+
+/* ============================================
+   Variants - Solid
+   ============================================ */
+
+.tooltipVariantSolid {
+  color: white;
+  border: 1px solid transparent;
+}
+
+/* Solid - Primary */
+.tooltipVariantSolid.tooltipColorPrimary {
+  background-color: var(--color-primary-600, #0066cc);
+  border: 1px solid var(--color-primary-700, #0052a3);
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.25);
+}
+
+/* Solid - Secondary */
+.tooltipVariantSolid.tooltipColorSecondary {
+  background-color: var(--color-secondary-600, #6c757d);
+  border: 1px solid var(--color-secondary-700, #565e64);
+  box-shadow: 0 2px 8px rgba(108, 117, 125, 0.25);
+}
+
+/* Solid - Success */
+.tooltipVariantSolid.tooltipColorSuccess {
+  background-color: var(--color-success-600, #28a745);
+  border: 1px solid var(--color-success-700, #1e7e34);
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.25);
+}
+
+/* Solid - Warning */
+.tooltipVariantSolid.tooltipColorWarning {
+  background-color: var(--color-warning-600, #ffc107);
+  border: 1px solid var(--color-warning-700, #d39e00);
+  color: var(--color-gray-900, #212529);
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.25);
+}
+
+/* Solid - Danger */
+.tooltipVariantSolid.tooltipColorDanger {
+  background-color: var(--color-danger-600, #dc3545);
+  border: 1px solid var(--color-danger-700, #bd2130);
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.25);
+}
+
+/* Solid - Info */
+.tooltipVariantSolid.tooltipColorInfo {
+  background-color: var(--color-info-600, #17a2b8);
+  border: 1px solid var(--color-info-700, #117a8b);
+  box-shadow: 0 2px 8px rgba(23, 162, 184, 0.25);
+}
+
+/* Solid - Neutral (Joy UI inspired - darker, more elegant) */
+.tooltipVariantSolid.tooltipColorNeutral {
+  background-color: var(--color-gray-900, #212529);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   Variants - Outlined
+   ============================================ */
+
+.tooltipVariantOutlined {
+  background-color: white;
+  border: 1px solid;
+}
+
+/* Outlined - Primary */
+.tooltipVariantOutlined.tooltipColorPrimary {
+  border: 1.5px solid var(--color-primary-500, #0073e6);
+  color: var(--color-primary-700, #0052a3);
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.15);
+}
+
+/* Outlined - Secondary */
+.tooltipVariantOutlined.tooltipColorSecondary {
+  border: 1.5px solid var(--color-secondary-500, #868e96);
+  color: var(--color-secondary-700, #565e64);
+  box-shadow: 0 2px 8px rgba(108, 117, 125, 0.15);
+}
+
+/* Outlined - Success */
+.tooltipVariantOutlined.tooltipColorSuccess {
+  border: 1.5px solid var(--color-success-500, #34c759);
+  color: var(--color-success-700, #1e7e34);
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.15);
+}
+
+/* Outlined - Warning */
+.tooltipVariantOutlined.tooltipColorWarning {
+  border: 1.5px solid var(--color-warning-500, #ffcc00);
+  color: var(--color-warning-800, #856404);
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.15);
+}
+
+/* Outlined - Danger */
+.tooltipVariantOutlined.tooltipColorDanger {
+  border: 1.5px solid var(--color-danger-500, #ff3b30);
+  color: var(--color-danger-700, #bd2130);
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.15);
+}
+
+/* Outlined - Info */
+.tooltipVariantOutlined.tooltipColorInfo {
+  border: 1.5px solid var(--color-info-500, #0dcaf0);
+  color: var(--color-info-700, #117a8b);
+  box-shadow: 0 2px 8px rgba(23, 162, 184, 0.15);
+}
+
+/* Outlined - Neutral */
+.tooltipVariantOutlined.tooltipColorNeutral {
+  border: 1.5px solid var(--color-gray-400, #ced4da);
+  color: var(--color-gray-800, #343a40);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   Variants - Soft
+   ============================================ */
+
+.tooltipVariantSoft {
+  border: 1px solid transparent;
+}
+
+/* Soft - Primary (Joy UI inspired) */
+.tooltipVariantSoft.tooltipColorPrimary {
+  background-color: var(--color-primary-50, #e6f2ff);
+  border: 1px solid var(--color-primary-200, #99cbff);
+  color: var(--color-primary-800, #003d7a);
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.1);
+}
+
+/* Soft - Secondary */
+.tooltipVariantSoft.tooltipColorSecondary {
+  background-color: var(--color-secondary-50, #f8f9fa);
+  border: 1px solid var(--color-secondary-200, #d3d9df);
+  color: var(--color-secondary-900, #212529);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Soft - Success */
+.tooltipVariantSoft.tooltipColorSuccess {
+  background-color: var(--color-success-50, #ecfdf5);
+  border: 1px solid var(--color-success-200, #c3e6cb);
+  color: var(--color-success-800, #155724);
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.1);
+}
+
+/* Soft - Warning */
+.tooltipVariantSoft.tooltipColorWarning {
+  background-color: var(--color-warning-50, #fffbeb);
+  border: 1px solid var(--color-warning-200, #ffe69c);
+  color: var(--color-warning-900, #664d03);
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.1);
+}
+
+/* Soft - Danger */
+.tooltipVariantSoft.tooltipColorDanger {
+  background-color: var(--color-danger-50, #fef2f2);
+  border: 1px solid var(--color-danger-200, #f5c6cb);
+  color: var(--color-danger-800, #721c24);
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.1);
+}
+
+/* Soft - Info */
+.tooltipVariantSoft.tooltipColorInfo {
+  background-color: var(--color-info-50, #ecfeff);
+  border: 1px solid var(--color-info-200, #bee5eb);
+  color: var(--color-info-800, #0c5460);
+  box-shadow: 0 2px 8px rgba(23, 162, 184, 0.1);
+}
+
+/* Soft - Neutral */
+.tooltipVariantSoft.tooltipColorNeutral {
+  background-color: var(--color-gray-50, #fafafa);
+  border: 1px solid var(--color-gray-300, #dee2e6);
+  color: var(--color-gray-900, #212529);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================
+   Arrow Base (Base UI + Joy UI inspired)
+   ============================================ */
+
+.tooltipArrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* Arrow sizes based on tooltip size */
+.tooltipSm .tooltipArrow {
+  --tooltip-arrow-size: 6px;
+}
+
+.tooltipMd .tooltipArrow {
+  --tooltip-arrow-size: 8px;
+}
+
+.tooltipLg .tooltipArrow {
+  --tooltip-arrow-size: 10px;
+}
+
+/* ============================================
+   Arrow Positioning - Top
+   ============================================ */
+
+.tooltipPlacementTop .tooltipArrow,
+.tooltipPlacementTopStart .tooltipArrow,
+.tooltipPlacementTopEnd .tooltipArrow {
+  bottom: calc(var(--tooltip-arrow-size) * -1);
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: var(--tooltip-arrow-size) var(--tooltip-arrow-size) 0 var(--tooltip-arrow-size);
+}
+
+.tooltipPlacementTopStart .tooltipArrow {
+  left: 0.8rem;
+  transform: none;
+}
+
+.tooltipPlacementTopEnd .tooltipArrow {
+  left: auto;
+  right: 0.8rem;
+  transform: none;
+}
+
+/* ============================================
+   Arrow Positioning - Bottom
+   ============================================ */
+
+.tooltipPlacementBottom .tooltipArrow,
+.tooltipPlacementBottomStart .tooltipArrow,
+.tooltipPlacementBottomEnd .tooltipArrow {
+  top: calc(var(--tooltip-arrow-size) * -1);
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 var(--tooltip-arrow-size) var(--tooltip-arrow-size) var(--tooltip-arrow-size);
+}
+
+.tooltipPlacementBottomStart .tooltipArrow {
+  left: 0.8rem;
+  transform: none;
+}
+
+.tooltipPlacementBottomEnd .tooltipArrow {
+  left: auto;
+  right: 0.8rem;
+  transform: none;
+}
+
+/* ============================================
+   Arrow Positioning - Left
+   ============================================ */
+
+.tooltipPlacementLeft .tooltipArrow,
+.tooltipPlacementLeftStart .tooltipArrow,
+.tooltipPlacementLeftEnd .tooltipArrow {
+  right: calc(var(--tooltip-arrow-size) * -1);
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: var(--tooltip-arrow-size) 0 var(--tooltip-arrow-size) var(--tooltip-arrow-size);
+}
+
+.tooltipPlacementLeftStart .tooltipArrow {
+  top: 0.8rem;
+  transform: none;
+}
+
+.tooltipPlacementLeftEnd .tooltipArrow {
+  top: auto;
+  bottom: 0.8rem;
+  transform: none;
+}
+
+/* ============================================
+   Arrow Positioning - Right
+   ============================================ */
+
+.tooltipPlacementRight .tooltipArrow,
+.tooltipPlacementRightStart .tooltipArrow,
+.tooltipPlacementRightEnd .tooltipArrow {
+  left: calc(var(--tooltip-arrow-size) * -1);
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: var(--tooltip-arrow-size) var(--tooltip-arrow-size) var(--tooltip-arrow-size) 0;
+}
+
+.tooltipPlacementRightStart .tooltipArrow {
+  top: 0.8rem;
+  transform: none;
+}
+
+.tooltipPlacementRightEnd .tooltipArrow {
+  top: auto;
+  bottom: 0.8rem;
+  transform: none;
+}
+
+/* ============================================
+   Arrow Colors - Solid Variant
+   ============================================ */
+
+.tooltipVariantSolid.tooltipColorPrimary .tooltipArrow {
+  border-color: var(--color-primary-600, #0066cc) transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantSolid.tooltipColorPrimary .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantSolid.tooltipColorPrimary .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantSolid.tooltipColorPrimary .tooltipArrow {
+  border-color: transparent transparent var(--color-primary-600, #0066cc) transparent;
+}
+.tooltipPlacementLeft.tooltipVariantSolid.tooltipColorPrimary .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantSolid.tooltipColorPrimary .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantSolid.tooltipColorPrimary .tooltipArrow {
+  border-color: transparent transparent transparent var(--color-primary-600, #0066cc);
+}
+.tooltipPlacementRight.tooltipVariantSolid.tooltipColorPrimary .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantSolid.tooltipColorPrimary .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantSolid.tooltipColorPrimary .tooltipArrow {
+  border-color: transparent var(--color-primary-600, #0066cc) transparent transparent;
+}
+
+/* Success */
+.tooltipVariantSolid.tooltipColorSuccess .tooltipArrow {
+  border-color: var(--color-success-600, #28a745) transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantSolid.tooltipColorSuccess .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantSolid.tooltipColorSuccess .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantSolid.tooltipColorSuccess .tooltipArrow {
+  border-color: transparent transparent var(--color-success-600, #28a745) transparent;
+}
+.tooltipPlacementLeft.tooltipVariantSolid.tooltipColorSuccess .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantSolid.tooltipColorSuccess .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantSolid.tooltipColorSuccess .tooltipArrow {
+  border-color: transparent transparent transparent var(--color-success-600, #28a745);
+}
+.tooltipPlacementRight.tooltipVariantSolid.tooltipColorSuccess .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantSolid.tooltipColorSuccess .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantSolid.tooltipColorSuccess .tooltipArrow {
+  border-color: transparent var(--color-success-600, #28a745) transparent transparent;
+}
+
+/* Danger */
+.tooltipVariantSolid.tooltipColorDanger .tooltipArrow {
+  border-color: var(--color-danger-600, #dc3545) transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantSolid.tooltipColorDanger .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantSolid.tooltipColorDanger .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantSolid.tooltipColorDanger .tooltipArrow {
+  border-color: transparent transparent var(--color-danger-600, #dc3545) transparent;
+}
+.tooltipPlacementLeft.tooltipVariantSolid.tooltipColorDanger .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantSolid.tooltipColorDanger .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantSolid.tooltipColorDanger .tooltipArrow {
+  border-color: transparent transparent transparent var(--color-danger-600, #dc3545);
+}
+.tooltipPlacementRight.tooltipVariantSolid.tooltipColorDanger .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantSolid.tooltipColorDanger .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantSolid.tooltipColorDanger .tooltipArrow {
+  border-color: transparent var(--color-danger-600, #dc3545) transparent transparent;
+}
+
+/* Secondary */
+.tooltipVariantSolid.tooltipColorSecondary .tooltipArrow {
+  border-color: var(--color-secondary-600, #6c757d) transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantSolid.tooltipColorSecondary .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantSolid.tooltipColorSecondary .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantSolid.tooltipColorSecondary .tooltipArrow {
+  border-color: transparent transparent var(--color-secondary-600, #6c757d) transparent;
+}
+.tooltipPlacementLeft.tooltipVariantSolid.tooltipColorSecondary .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantSolid.tooltipColorSecondary .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantSolid.tooltipColorSecondary .tooltipArrow {
+  border-color: transparent transparent transparent var(--color-secondary-600, #6c757d);
+}
+.tooltipPlacementRight.tooltipVariantSolid.tooltipColorSecondary .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantSolid.tooltipColorSecondary .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantSolid.tooltipColorSecondary .tooltipArrow {
+  border-color: transparent var(--color-secondary-600, #6c757d) transparent transparent;
+}
+
+/* Warning */
+.tooltipVariantSolid.tooltipColorWarning .tooltipArrow {
+  border-color: var(--color-warning-600, #ffc107) transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantSolid.tooltipColorWarning .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantSolid.tooltipColorWarning .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantSolid.tooltipColorWarning .tooltipArrow {
+  border-color: transparent transparent var(--color-warning-600, #ffc107) transparent;
+}
+.tooltipPlacementLeft.tooltipVariantSolid.tooltipColorWarning .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantSolid.tooltipColorWarning .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantSolid.tooltipColorWarning .tooltipArrow {
+  border-color: transparent transparent transparent var(--color-warning-600, #ffc107);
+}
+.tooltipPlacementRight.tooltipVariantSolid.tooltipColorWarning .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantSolid.tooltipColorWarning .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantSolid.tooltipColorWarning .tooltipArrow {
+  border-color: transparent var(--color-warning-600, #ffc107) transparent transparent;
+}
+
+/* Info */
+.tooltipVariantSolid.tooltipColorInfo .tooltipArrow {
+  border-color: var(--color-info-600, #17a2b8) transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantSolid.tooltipColorInfo .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantSolid.tooltipColorInfo .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantSolid.tooltipColorInfo .tooltipArrow {
+  border-color: transparent transparent var(--color-info-600, #17a2b8) transparent;
+}
+.tooltipPlacementLeft.tooltipVariantSolid.tooltipColorInfo .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantSolid.tooltipColorInfo .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantSolid.tooltipColorInfo .tooltipArrow {
+  border-color: transparent transparent transparent var(--color-info-600, #17a2b8);
+}
+.tooltipPlacementRight.tooltipVariantSolid.tooltipColorInfo .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantSolid.tooltipColorInfo .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantSolid.tooltipColorInfo .tooltipArrow {
+  border-color: transparent var(--color-info-600, #17a2b8) transparent transparent;
+}
+
+/* Neutral */
+.tooltipVariantSolid.tooltipColorNeutral .tooltipArrow {
+  border-color: var(--color-gray-900, #212529) transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantSolid.tooltipColorNeutral .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantSolid.tooltipColorNeutral .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantSolid.tooltipColorNeutral .tooltipArrow {
+  border-color: transparent transparent var(--color-gray-900, #212529) transparent;
+}
+.tooltipPlacementLeft.tooltipVariantSolid.tooltipColorNeutral .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantSolid.tooltipColorNeutral .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantSolid.tooltipColorNeutral .tooltipArrow {
+  border-color: transparent transparent transparent var(--color-gray-900, #212529);
+}
+.tooltipPlacementRight.tooltipVariantSolid.tooltipColorNeutral .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantSolid.tooltipColorNeutral .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantSolid.tooltipColorNeutral .tooltipArrow {
+  border-color: transparent var(--color-gray-900, #212529) transparent transparent;
+}
+
+/* ============================================
+   Arrow Colors - Outlined Variant
+   ============================================ */
+
+.tooltipVariantOutlined .tooltipArrow {
+  border-color: white transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantOutlined .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantOutlined .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantOutlined .tooltipArrow {
+  border-color: transparent transparent white transparent;
+}
+.tooltipPlacementLeft.tooltipVariantOutlined .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantOutlined .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantOutlined .tooltipArrow {
+  border-color: transparent transparent transparent white;
+}
+.tooltipPlacementRight.tooltipVariantOutlined .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantOutlined .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantOutlined .tooltipArrow {
+  border-color: transparent white transparent transparent;
+}
+
+/* ============================================
+   Arrow Colors - Soft Variant
+   ============================================ */
+
+/* Soft Primary */
+.tooltipVariantSoft.tooltipColorPrimary .tooltipArrow {
+  border-color: var(--color-primary-50, #e6f2ff) transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantSoft.tooltipColorPrimary .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantSoft.tooltipColorPrimary .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantSoft.tooltipColorPrimary .tooltipArrow {
+  border-color: transparent transparent var(--color-primary-50, #e6f2ff) transparent;
+}
+.tooltipPlacementLeft.tooltipVariantSoft.tooltipColorPrimary .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantSoft.tooltipColorPrimary .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantSoft.tooltipColorPrimary .tooltipArrow {
+  border-color: transparent transparent transparent var(--color-primary-50, #e6f2ff);
+}
+.tooltipPlacementRight.tooltipVariantSoft.tooltipColorPrimary .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantSoft.tooltipColorPrimary .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantSoft.tooltipColorPrimary .tooltipArrow {
+  border-color: transparent var(--color-primary-50, #e6f2ff) transparent transparent;
+}
+
+/* Soft Secondary */
+.tooltipVariantSoft.tooltipColorSecondary .tooltipArrow {
+  border-color: var(--color-secondary-50, #f8f9fa) transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantSoft.tooltipColorSecondary .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantSoft.tooltipColorSecondary .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantSoft.tooltipColorSecondary .tooltipArrow {
+  border-color: transparent transparent var(--color-secondary-50, #f8f9fa) transparent;
+}
+.tooltipPlacementLeft.tooltipVariantSoft.tooltipColorSecondary .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantSoft.tooltipColorSecondary .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantSoft.tooltipColorSecondary .tooltipArrow {
+  border-color: transparent transparent transparent var(--color-secondary-50, #f8f9fa);
+}
+.tooltipPlacementRight.tooltipVariantSoft.tooltipColorSecondary .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantSoft.tooltipColorSecondary .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantSoft.tooltipColorSecondary .tooltipArrow {
+  border-color: transparent var(--color-secondary-50, #f8f9fa) transparent transparent;
+}
+
+/* Soft Success */
+.tooltipVariantSoft.tooltipColorSuccess .tooltipArrow {
+  border-color: var(--color-success-50, #ecfdf5) transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantSoft.tooltipColorSuccess .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantSoft.tooltipColorSuccess .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantSoft.tooltipColorSuccess .tooltipArrow {
+  border-color: transparent transparent var(--color-success-50, #ecfdf5) transparent;
+}
+.tooltipPlacementLeft.tooltipVariantSoft.tooltipColorSuccess .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantSoft.tooltipColorSuccess .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantSoft.tooltipColorSuccess .tooltipArrow {
+  border-color: transparent transparent transparent var(--color-success-50, #ecfdf5);
+}
+.tooltipPlacementRight.tooltipVariantSoft.tooltipColorSuccess .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantSoft.tooltipColorSuccess .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantSoft.tooltipColorSuccess .tooltipArrow {
+  border-color: transparent var(--color-success-50, #ecfdf5) transparent transparent;
+}
+
+/* Soft Warning */
+.tooltipVariantSoft.tooltipColorWarning .tooltipArrow {
+  border-color: var(--color-warning-50, #fffbeb) transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantSoft.tooltipColorWarning .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantSoft.tooltipColorWarning .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantSoft.tooltipColorWarning .tooltipArrow {
+  border-color: transparent transparent var(--color-warning-50, #fffbeb) transparent;
+}
+.tooltipPlacementLeft.tooltipVariantSoft.tooltipColorWarning .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantSoft.tooltipColorWarning .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantSoft.tooltipColorWarning .tooltipArrow {
+  border-color: transparent transparent transparent var(--color-warning-50, #fffbeb);
+}
+.tooltipPlacementRight.tooltipVariantSoft.tooltipColorWarning .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantSoft.tooltipColorWarning .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantSoft.tooltipColorWarning .tooltipArrow {
+  border-color: transparent var(--color-warning-50, #fffbeb) transparent transparent;
+}
+
+/* Soft Danger */
+.tooltipVariantSoft.tooltipColorDanger .tooltipArrow {
+  border-color: var(--color-danger-50, #fef2f2) transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantSoft.tooltipColorDanger .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantSoft.tooltipColorDanger .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantSoft.tooltipColorDanger .tooltipArrow {
+  border-color: transparent transparent var(--color-danger-50, #fef2f2) transparent;
+}
+.tooltipPlacementLeft.tooltipVariantSoft.tooltipColorDanger .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantSoft.tooltipColorDanger .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantSoft.tooltipColorDanger .tooltipArrow {
+  border-color: transparent transparent transparent var(--color-danger-50, #fef2f2);
+}
+.tooltipPlacementRight.tooltipVariantSoft.tooltipColorDanger .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantSoft.tooltipColorDanger .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantSoft.tooltipColorDanger .tooltipArrow {
+  border-color: transparent var(--color-danger-50, #fef2f2) transparent transparent;
+}
+
+/* Soft Info */
+.tooltipVariantSoft.tooltipColorInfo .tooltipArrow {
+  border-color: var(--color-info-50, #ecfeff) transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantSoft.tooltipColorInfo .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantSoft.tooltipColorInfo .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantSoft.tooltipColorInfo .tooltipArrow {
+  border-color: transparent transparent var(--color-info-50, #ecfeff) transparent;
+}
+.tooltipPlacementLeft.tooltipVariantSoft.tooltipColorInfo .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantSoft.tooltipColorInfo .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantSoft.tooltipColorInfo .tooltipArrow {
+  border-color: transparent transparent transparent var(--color-info-50, #ecfeff);
+}
+.tooltipPlacementRight.tooltipVariantSoft.tooltipColorInfo .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantSoft.tooltipColorInfo .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantSoft.tooltipColorInfo .tooltipArrow {
+  border-color: transparent var(--color-info-50, #ecfeff) transparent transparent;
+}
+
+/* Soft Neutral */
+.tooltipVariantSoft.tooltipColorNeutral .tooltipArrow {
+  border-color: var(--color-gray-50, #fafafa) transparent transparent transparent;
+}
+.tooltipPlacementBottom.tooltipVariantSoft.tooltipColorNeutral .tooltipArrow,
+.tooltipPlacementBottomStart.tooltipVariantSoft.tooltipColorNeutral .tooltipArrow,
+.tooltipPlacementBottomEnd.tooltipVariantSoft.tooltipColorNeutral .tooltipArrow {
+  border-color: transparent transparent var(--color-gray-50, #fafafa) transparent;
+}
+.tooltipPlacementLeft.tooltipVariantSoft.tooltipColorNeutral .tooltipArrow,
+.tooltipPlacementLeftStart.tooltipVariantSoft.tooltipColorNeutral .tooltipArrow,
+.tooltipPlacementLeftEnd.tooltipVariantSoft.tooltipColorNeutral .tooltipArrow {
+  border-color: transparent transparent transparent var(--color-gray-50, #fafafa);
+}
+.tooltipPlacementRight.tooltipVariantSoft.tooltipColorNeutral .tooltipArrow,
+.tooltipPlacementRightStart.tooltipVariantSoft.tooltipColorNeutral .tooltipArrow,
+.tooltipPlacementRightEnd.tooltipVariantSoft.tooltipColorNeutral .tooltipArrow {
+  border-color: transparent var(--color-gray-50, #fafafa) transparent transparent;
+}
+
+/* ============================================
+   Animations (Joy UI inspired)
+   ============================================ */
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(-2px);
+  }
+  to {
+    opacity: 0.8;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes tooltipSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+}
+
+.tooltipPositioned {
+  animation: tooltipFadeIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Placement-specific animations */
+.tooltipPlacementTop.tooltipPositioned,
+.tooltipPlacementTopStart.tooltipPositioned,
+.tooltipPlacementTopEnd.tooltipPositioned {
+  transform-origin: bottom center;
+}
+
+.tooltipPlacementBottom.tooltipPositioned,
+.tooltipPlacementBottomStart.tooltipPositioned,
+.tooltipPlacementBottomEnd.tooltipPositioned {
+  transform-origin: top center;
+}
+
+.tooltipPlacementLeft.tooltipPositioned,
+.tooltipPlacementLeftStart.tooltipPositioned,
+.tooltipPlacementLeftEnd.tooltipPositioned {
+  transform-origin: right center;
+}
+
+.tooltipPlacementRight.tooltipPositioned,
+.tooltipPlacementRightStart.tooltipPositioned,
+.tooltipPlacementRightEnd.tooltipPositioned {
+  transform-origin: left center;
+}
+
+/* ============================================
+   Dark Mode Support (Joy UI inspired)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  /* Outlined variant - dark background */
+  .tooltipVariantOutlined {
+    background-color: var(--color-gray-900, #1a1d1f);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .tooltipVariantOutlined.tooltipColorPrimary {
+    border-color: var(--color-primary-400, #3399ff);
+    color: var(--color-primary-300, #66b3ff);
+  }
+
+  .tooltipVariantOutlined.tooltipColorNeutral {
+    border-color: var(--color-gray-600, #6c757d);
+    color: var(--color-gray-200, #e9ecef);
+  }
+
+  /* Soft variant - adjust brightness for dark mode */
+  .tooltipVariantSoft.tooltipColorPrimary {
+    background-color: rgba(0, 102, 204, 0.15);
+    border-color: rgba(0, 102, 204, 0.3);
+    color: var(--color-primary-300, #66b3ff);
+  }
+
+  .tooltipVariantSoft.tooltipColorNeutral {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: var(--color-gray-100, #f8f9fa);
+  }
+
+  /* Solid neutral in dark mode */
+  .tooltipVariantSolid.tooltipColorNeutral {
+    background-color: var(--color-gray-700, #495057);
+    border-color: var(--color-gray-600, #6c757d);
+  }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+
+.tooltip[aria-hidden="true"] {
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+.tooltip[aria-hidden="false"] {
+  visibility: visible !important;
+}
+
+/* ============================================
+   Interactive States (Joy UI inspired)
+   ============================================ */
+
+/* Focus visible states */
+.tooltip:focus-visible {
+  outline: calc(2px * var(--outline-enabled, 1)) solid var(--color-primary-500, #0073e6);
+  outline-offset: calc(2px * var(--outline-enabled, 1));
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+/* Max width utilities */
+.tooltipMaxWxs {
+  max-width: 200px;
+}
+
+.tooltipMaxWsm {
+  max-width: 250px;
+}
+
+.tooltipMaxWmd {
+  max-width: 300px;
+}
+
+.tooltipMaxWlg {
+  max-width: 400px;
+}
+
+.tooltipMaxWxl {
+  max-width: 500px;
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+
+@media print {
+  .tooltip {
+    display: none !important;
+  }
+}
+
+/* ============================================
+   Reduced Motion Support
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip {
+    animation: none !important;
+    transition: opacity 0.1s ease-out, visibility 0.1s ease-out !important;
+  }
+
+  .tooltipArrow {
+    filter: none;
+  }
+}
