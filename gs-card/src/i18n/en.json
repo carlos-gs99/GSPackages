@@ -1,0 +1,28 @@
+{
+  "label": "Card",
+  "header": "Header",
+  "body": "Body",
+  "footer": "Footer",
+  "loading": "Loading...",
+  "disabled": "Disabled",
+  "selected": "Selected",
+  "clickToSelect": "Click to select",
+  "imageLoading": "Loading image...",
+  "imageError": "Failed to load image",
+  "expand": "Expand",
+  "collapse": "Collapse",
+  "aria": {
+    "card": "Card",
+    "cardHeader": "Card header",
+    "cardBody": "Card body",
+    "cardFooter": "Card footer",
+    "loading": "Loading content",
+    "disabled": "Card is disabled",
+    "selected": "Card is selected",
+    "clickable": "Clickable card",
+    "image": "Card image",
+    "expandCard": "Expand card",
+    "collapseCard": "Collapse card",
+    "collapsibleHeader": "Click to expand or collapse"
+  }
+}

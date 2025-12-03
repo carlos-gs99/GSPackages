@@ -1,0 +1,165 @@
+@layer components {
+  .avatar {
+    --gs-avatar-size: 2.5rem;
+    --gs-avatar-bg: var(--color-neutral-200, #e5e7eb);
+    --gs-avatar-color: var(--color-neutral-700, #374151);
+    --gs-avatar-radius: 50%;
+    --gs-avatar-font-size: calc(var(--gs-avatar-size) * 0.4);
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--gs-avatar-width, var(--gs-avatar-size));
+    height: var(--gs-avatar-height, var(--gs-avatar-size));
+    min-width: var(--gs-avatar-width, var(--gs-avatar-size));
+    min-height: var(--gs-avatar-height, var(--gs-avatar-size));
+    border-radius: var(--gs-avatar-radius);
+    background-color: var(--gs-avatar-bg);
+    color: var(--gs-avatar-color);
+    overflow: hidden;
+    font-weight: var(--font-weight-semibold, 600);
+    text-transform: uppercase;
+    user-select: none;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+
+  .avatar[data-size='sm'] {
+    --gs-avatar-size: 2rem;
+  }
+
+  .avatar[data-size='md'] {
+    --gs-avatar-size: 2.5rem;
+  }
+
+  .avatar[data-size='lg'] {
+    --gs-avatar-size: 3rem;
+  }
+
+  .avatar[data-size='xl'] {
+    --gs-avatar-size: 3.5rem;
+  }
+
+  .avatar[data-rounded='none'] {
+    --gs-avatar-radius: 0;
+  }
+
+  .avatar[data-rounded='sm'] {
+    --gs-avatar-radius: var(--radius-sm, 4px);
+  }
+
+  .avatar[data-rounded='md'] {
+    --gs-avatar-radius: var(--radius-md, 8px);
+  }
+
+  .avatar[data-rounded='lg'] {
+    --gs-avatar-radius: var(--radius-lg, 12px);
+  }
+
+  .avatar[data-rounded='xl'] {
+    --gs-avatar-radius: var(--radius-xl, 16px);
+  }
+
+  .avatar[data-rounded='circle'] {
+    --gs-avatar-radius: 50%;
+  }
+
+  .avatar[data-color='primary'] {
+    --gs-avatar-bg: var(--color-primary-100, #dbeafe);
+    --gs-avatar-color: var(--color-primary-700, #1d4ed8);
+  }
+
+  .avatar[data-color='secondary'] {
+    --gs-avatar-bg: var(--color-neutral-200, #e5e7eb);
+    --gs-avatar-color: var(--text-primary, #111827);
+  }
+
+  .avatar[data-color='success'] {
+    --gs-avatar-bg: var(--color-success-100, #dcfce7);
+    --gs-avatar-color: var(--color-success-700, #15803d);
+  }
+
+  .avatar[data-color='warning'] {
+    --gs-avatar-bg: var(--color-warning-100, #fef3c7);
+    --gs-avatar-color: var(--color-warning-700, #b45309);
+  }
+
+  .avatar[data-color='danger'] {
+    --gs-avatar-bg: var(--color-danger-100, #fee2e2);
+    --gs-avatar-color: var(--color-danger-700, #b91c1c);
+  }
+
+  .avatar[data-color='info'] {
+    --gs-avatar-bg: var(--color-info-100, #cffafe);
+    --gs-avatar-color: var(--color-info-700, #0369a1);
+  }
+
+  .avatar[data-color='neutral'] {
+    --gs-avatar-bg: var(--color-neutral-200, #e5e7eb);
+    --gs-avatar-color: var(--color-neutral-800, #1f2937);
+  }
+
+  .avatar[data-state='disabled'] {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .avatar[data-state='loading']::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    animation: gs-avatar-shimmer 1.5s infinite;
+  }
+
+  .avatar[data-state='error'],
+  .avatar[data-state='error'] .fallback {
+    --gs-avatar-bg: var(--color-danger-100, #fee2e2);
+    --gs-avatar-color: var(--color-danger-700, #b91c1c);
+  }
+
+  .avatar:focus-visible {
+    outline: 2px solid var(--focus-outline, #2563eb);
+    outline-offset: 2px;
+  }
+
+  .image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+
+  .image[data-status='idle'] {
+    opacity: 0;
+  }
+
+  .image[data-status='loaded'] {
+    opacity: 1;
+  }
+
+  .image[data-status='error'] {
+    opacity: 0;
+  }
+
+  .fallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: var(--gs-avatar-font-size);
+    letter-spacing: 0.04em;
+  }
+
+  @keyframes gs-avatar-shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}

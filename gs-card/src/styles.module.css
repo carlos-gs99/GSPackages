@@ -1,0 +1,774 @@
+/* GS Card - Componente de cartão usando CSS Modules */
+
+/* === CARD PRINCIPAL === */
+.card {
+  position: relative;
+  display: grid;
+  grid-auto-rows: auto;
+  grid-auto-flow: row;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: var(--background-surface);
+  background-clip: border-box;
+  border: var(--border-width) solid var(--border-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all 150ms ease-in-out;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Card collapsible usa flexbox em vez de grid */
+.card--collapsible {
+  display: flex !important;
+  flex-direction: column;
+  /* Grid não funciona bem com collapse dinâmico */
+}
+
+/* Card com body expande para preencher espaço */
+.card > .body {
+  grid-row: auto;
+  flex-grow: 1;
+}
+
+/* Body collapsible NÃO expande */
+.body--collapsible {
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+.card:focus-within {
+  outline: calc(2px * var(--outline-enabled)) solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* === VARIANTES === */
+.card--default {
+  background-color: var(--background-level1);
+  border: var(--border-width) solid var(--border-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.card--outlined {
+  background-color: var(--background-level1);
+  border: var(--border-width) solid var(--border-primary);
+  box-shadow: none;
+}
+
+.card--soft {
+  background-color: var(--background-level1);
+  border: none;
+  box-shadow: none;
+}
+
+.card--elevated {
+  background-color: var(--background-level1);
+  box-shadow: var(--shadow-lg);
+}
+
+.card--plain {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* === NÍVEIS DE HIERARQUIA === */
+.card--level-body {
+  background-color: var(--background-body);
+}
+
+.card--level-surface {
+  background-color: var(--background-surface);
+}
+
+.card--level-level1 {
+  background-color: var(--background-level1);
+}
+
+.card--level-level2 {
+  background-color: var(--background-level2);
+}
+
+.card--level-level3 {
+  background-color: var(--background-body);
+}
+
+/* === ELEMENTOS DO CARD === */
+.header {
+  padding: var(--space-4);
+  background-color: var(--background-body);
+  border-bottom: var(--border-width) solid var(--border-primary);
+  border-top-left-radius: var(--radius-md);
+  border-top-right-radius: var(--radius-md);
+}
+
+.body {
+  padding: var(--space-4);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Body collapsible será definido mais abaixo com todas as regras */
+
+.footer {
+  padding: var(--space-4);
+  background-color: transparent;
+  border-top: var(--border-width) solid var(--border-primary);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+/* === ELEMENTOS DE TEXTO === */
+.title {
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.text {
+  margin-bottom: var(--space-2);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.text:last-child {
+  margin-bottom: 0;
+}
+
+/* === IMAGENS === */
+.img {
+  width: 100%;
+  height: auto;
+  border-top-left-radius: var(--radius-md);
+  border-top-right-radius: var(--radius-md);
+}
+
+.img--bottom {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+/* === TAMANHOS === */
+.card--sm .header,
+.card--sm .body,
+.card--sm .footer {
+  padding: var(--space-2);
+}
+
+.card--lg .header,
+.card--lg .body,
+.card--lg .footer {
+  padding: var(--space-6);
+}
+
+/* === CORES (Nova funcionalidade - inspirado no GSJoySheet) === */
+/* Usado principalmente com variant="soft" para cards coloridos */
+
+.card--color-primary {
+  background-color: var(--color-primary-50);
+  border-color: var(--color-primary-200);
+  color: var(--color-primary-700);
+}
+
+.card--color-primary.card--soft {
+  background-color: var(--color-primary-50);
+  border: none;
+}
+
+.card--color-primary .header {
+  background-color: var(--color-primary-100);
+  border-color: var(--color-primary-200);
+}
+
+.card--color-secondary {
+  background-color: var(--color-secondary-50);
+  border-color: var(--color-secondary-200);
+  color: var(--color-secondary-700);
+}
+
+.card--color-secondary.card--soft {
+  background-color: var(--color-secondary-50);
+  border: none;
+}
+
+.card--color-secondary .header {
+  background-color: var(--color-secondary-100);
+  border-color: var(--color-secondary-200);
+}
+
+.card--color-success {
+  background-color: var(--color-success-50);
+  border-color: var(--color-success-200);
+  color: var(--color-success-700);
+}
+
+.card--color-success.card--soft {
+  background-color: var(--color-success-50);
+  border: none;
+}
+
+.card--color-success .header {
+  background-color: var(--color-success-100);
+  border-color: var(--color-success-200);
+}
+
+.card--color-warning {
+  background-color: var(--color-warning-50);
+  border-color: var(--color-warning-200);
+  color: var(--color-warning-700);
+}
+
+.card--color-warning.card--soft {
+  background-color: var(--color-warning-50);
+  border: none;
+}
+
+.card--color-warning .header {
+  background-color: var(--color-warning-100);
+  border-color: var(--color-warning-200);
+}
+
+.card--color-danger {
+  background-color: var(--color-danger-50);
+  border-color: var(--color-danger-200);
+  color: var(--color-danger-700);
+}
+
+.card--color-danger.card--soft {
+  background-color: var(--color-danger-50);
+  border: none;
+}
+
+.card--color-danger .header {
+  background-color: var(--color-danger-100);
+  border-color: var(--color-danger-200);
+}
+
+.card--color-info {
+  background-color: var(--color-info-50);
+  border-color: var(--color-info-200);
+  color: var(--color-info-700);
+}
+
+.card--color-info.card--soft {
+  background-color: var(--color-info-50);
+  border: none;
+}
+
+.card--color-info .header {
+  background-color: var(--color-info-100);
+  border-color: var(--color-info-200);
+}
+
+.card--color-neutral {
+  background-color: var(--background-surface);
+  border-color: var(--border-primary);
+  color: var(--text-primary);
+}
+
+.card--color-neutral.card--soft {
+  background-color: var(--background-surface);
+  border: none;
+}
+
+/* === HEADERS DIFERENCIADOS POR NÍVEL === */
+.card--level-body .header {
+  background-color: var(--background-body);
+}
+
+.card--level-surface .header {
+  background-color: var(--background-body);
+}
+
+.card--level-level1 .header {
+  background-color: var(--background-body);
+}
+
+.card--level-level2 .header {
+  background-color: var(--background-body);
+}
+
+.card--level-level3 .header {
+  background-color: var(--background-body);
+}
+
+/* === CARD GROUPS === */
+.group {
+  display: flex;
+  flex-direction: column;
+}
+
+.group > .card {
+  margin-bottom: var(--space-4);
+}
+
+.group > .card:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .group {
+    flex-direction: row;
+  }
+
+  .group > .card {
+    margin-bottom: 0;
+    margin-right: var(--space-4);
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .group > .card:last-child {
+    margin-right: 0;
+  }
+
+  .group > .card:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .group > .card:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+/* === CARD DECK === */
+.deck {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .deck {
+    flex-direction: row;
+  }
+
+  .deck > .card {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+/* === CARD COLUMNS === */
+.columns {
+  column-count: 1;
+  column-gap: var(--space-4);
+}
+
+.columns > .card {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: var(--space-4);
+  break-inside: avoid;
+}
+
+@media (min-width: 576px) {
+  .columns {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 992px) {
+  .columns {
+    column-count: 3;
+  }
+}
+
+@media (min-width: 1200px) {
+  .columns {
+    column-count: 4;
+  }
+}
+
+/* === INTERAÇÕES === */
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card--elevated:hover {
+  box-shadow: var(--shadow-xl);
+}
+
+/* === ESTADOS === */
+.card[data-disabled="true"] {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.card[data-loading="true"] {
+  position: relative;
+  pointer-events: none;
+}
+
+/* === CLICKABLE STATE === */
+.card--clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.card--clickable:active {
+  transform: scale(0.98);
+}
+
+.card--clickable:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* === SELECTED STATE === */
+.card--selected {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 2px var(--color-primary-100);
+  background-color: var(--color-primary-50);
+}
+
+.card--selected.card--outlined {
+  border-width: 2px;
+  border-color: var(--color-primary-500);
+}
+
+/* === ACTIVE EFFECT === */
+.card--active-effect:active {
+  transform: scale(0.98);
+  transition: transform 100ms ease-out;
+}
+
+/* === LOADING OVERLAY === */
+.loadingOverlay {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: color-mix(in srgb, var(--color-background) 82%, transparent);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px);
+  z-index: 10;
+}
+
+/* === FASE 2: CONTEÚDO VISUAL === */
+
+/* Aspect Ratio Support */
+/* container-type removido - estava a causar problemas com flex layouts dentro de cards */
+
+/* Quando aspect-ratio está ativo, ajustar grid */
+.card--aspect-ratio {
+  grid-auto-rows: minmax(0, 1fr); /* permite aspect-ratio funcionar */
+  overflow: hidden;
+  align-content: start;
+}
+
+/* Garantir que aspect-ratio funciona */
+.card--aspect-ratio > * {
+  min-height: 0; /* previne overflow */
+}
+
+/* Object-fit support para background */
+.card--image-background[style*="background-size: contain"] {
+  background-size: contain !important;
+}
+
+.card--image-background[style*="background-size: fill"] {
+  background-size: 100% 100% !important;
+}
+
+/* Horizontal Orientation */
+.card--horizontal {
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr;
+}
+
+.card--horizontal .contentWrapper {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 0; /* previne overflow */
+}
+
+/* Image Container */
+.imageContainer {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-neutral-100);
+}
+
+.imageContainer--bottom {
+  order: 999;
+}
+
+/* Quando aspect-ratio está ativo, imagem preenche tudo */
+.imageContainer--full {
+  height: 100%;
+  min-height: 0;
+}
+
+.card--aspect-ratio .imageContainer {
+  grid-row: 1 / -1; /* ocupa todas as linhas do grid */
+  height: 100%;
+}
+
+.card--horizontal .imageContainer {
+  border-top-right-radius: 0;
+  border-bottom-left-radius: var(--radius-md);
+}
+
+.card--horizontal .imageContainer--bottom {
+  border-top-right-radius: var(--radius-md);
+  border-bottom-left-radius: 0;
+}
+
+/* Image */
+.image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-top-left-radius: var(--radius-md);
+  border-top-right-radius: var(--radius-md);
+}
+
+.image--bottom {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+.card--horizontal .image {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: var(--radius-md);
+}
+
+/* Image Placeholder */
+.imagePlaceholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-neutral-100);
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(10px);
+  opacity: 0.5;
+}
+
+/* Image Error */
+.imageError {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-neutral-100);
+  color: var(--color-danger-500);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  padding: var(--space-2);
+}
+
+/* Background Image */
+.card--image-background {
+  position: relative;
+  min-height: 200px;
+  /* Background aplicado via inline style backgroundImage */
+}
+
+.card--image-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius-md);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.card--image-background .header,
+.card--image-background .body,
+.card--image-background .footer {
+  position: relative;
+  z-index: 1;
+  color: white;
+}
+
+.card--image-background .header {
+  background-color: transparent;
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.card--image-background .footer {
+  border-top-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Garantir que background cobre tudo */
+.card--image-background.card--soft,
+.card--image-background.card--plain {
+  background-color: transparent; /* não sobrescrever background-image */
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 640px) {
+  .card {
+    margin: 0 var(--space-1);
+  }
+
+  .card--sm .header,
+  .card--sm .body,
+  .card--sm .footer {
+    padding: var(--space-2);
+  }
+
+  /* Horizontal cards ficam verticais em mobile */
+  .card--horizontal {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .card--horizontal .imageContainer {
+    width: 100%;
+    border-top-right-radius: var(--radius-md);
+    border-bottom-left-radius: 0;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .card--horizontal .contentWrapper {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
+/* === HIGH CONTRAST MODE === */
+@media (prefers-contrast: high) {
+  .card {
+    border-width: 2px;
+  }
+
+  .card--outlined {
+    border-width: 3px;
+  }
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card--elevated:hover {
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+/* === PRINT STYLES === */
+@media print {
+  .card {
+    box-shadow: none;
+    border: 1px solid #000;
+    break-inside: avoid;
+  }
+}
+
+/* === FASE 3: COLLAPSE/EXPAND (ACCORDION) === */
+
+/* Header clicável quando collapsible */
+.card--collapsible .header,
+.card--collapsible__header {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-shrink: 0; /* Impede que o header seja comprimido */
+}
+
+.card--collapsible .header:hover {
+  background-color: var(--gray-50);
+}
+
+.card--collapsible .header:focus {
+  outline: 2px solid var(--border-focus);
+  outline-offset: -2px;
+}
+
+/* Ícone de expansão (chevron) */
+.expandIcon {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--text-secondary);
+  transition: transform 0.3s ease;
+}
+
+.expandIcon--expanded {
+  transform: rotate(180deg);
+}
+
+.expandIcon--start {
+  order: -1;
+}
+
+.expandIcon--end {
+  order: 1;
+}
+
+/* Body e Footer colapsáveis - ESTRATÉGIA: Animação via JS */
+.body--collapsible,
+.footer--collapsible {
+  overflow: hidden;
+  transition: height 0.3s ease-in-out;
+  /* Altura será controlada via JS inline style */
+}
+
+/* Animação desabilitada se usuário preferir reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .body--collapsible,
+  .footer--collapsible {
+    transition: none;
+  }
+  
+  .expandIcon {
+    transition: none;
+  }
+}

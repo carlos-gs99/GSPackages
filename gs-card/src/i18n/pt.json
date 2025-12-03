@@ -1,0 +1,28 @@
+{
+  "label": "Card",
+  "header": "Cabeçalho",
+  "body": "Corpo",
+  "footer": "Rodapé",
+  "loading": "Carregando...",
+  "disabled": "Desabilitado",
+  "selected": "Selecionado",
+  "clickToSelect": "Clique para selecionar",
+  "imageLoading": "Carregando imagem...",
+  "imageError": "Erro ao carregar imagem",
+  "expand": "Expandir",
+  "collapse": "Recolher",
+  "aria": {
+    "card": "Card",
+    "cardHeader": "Cabeçalho do card",
+    "cardBody": "Corpo do card",
+    "cardFooter": "Rodapé do card",
+    "loading": "Carregando conteúdo",
+    "disabled": "Card desabilitado",
+    "selected": "Card selecionado",
+    "clickable": "Card clicável",
+    "image": "Imagem do card",
+    "expandCard": "Expandir card",
+    "collapseCard": "Recolher card",
+    "collapsibleHeader": "Clique para expandir ou recolher"
+  }
+}

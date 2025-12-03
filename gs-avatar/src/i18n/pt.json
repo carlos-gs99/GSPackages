@@ -1,0 +1,10 @@
+{
+  "aria": {
+    "default": "Avatar",
+    "image": "Imagem de avatar de {{name}}",
+    "imageWithoutText": "Imagem de avatar",
+    "fallback": "Avatar com iniciais {{initials}}",
+    "loading": "A carregar imagem do avatar",
+    "error": "Falha ao carregar imagem do avatar"
+  }
+}
