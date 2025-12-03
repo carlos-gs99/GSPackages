@@ -1,0 +1,23 @@
+{
+  "progress": {
+    "label": "Progresso",
+    "loading": "Carregando...",
+    "complete": "Concluído",
+    "error": "Erro",
+    "aria": {
+      "progress": "Progresso",
+      "value": "Valor atual",
+      "max": "Valor máximo",
+      "percentage": "Percentagem concluída",
+      "loading": "Carregamento em progresso",
+      "completed": "Tarefa concluída",
+      "failed": "Falha na tarefa"
+    },
+    "states": {
+      "determinate": "Progresso",
+      "indeterminate": "Carregando",
+      "completed": "Concluído",
+      "error": "Erro"
+    }
+  }
+}

@@ -1,0 +1,70 @@
+.root {}
+
+.label {
+	margin-bottom: var(--space-2);
+	font-size: var(--font-size-sm);
+	color: var(--text-secondary);
+}
+
+.linearRoot {
+	height: var(--progress-thickness, 4px);
+	background-color: var(--progress-bg-color, var(--color-neutral-100));
+	border-radius: 9999px;
+	overflow: hidden;
+}
+
+.linearIndicator {
+	height: 100%;
+	width: var(--progress-percentage, 0%);
+	background-color: var(--progress-indicator-color, var(--color-primary-500));
+	border-radius: 9999px;
+	transition: width 300ms ease-in-out;
+}
+
+.circular {
+	width: var(--progress-size, 1.5rem);
+	height: var(--progress-size, 1.5rem);
+	border: var(--progress-thickness, 4px) solid var(--progress-bg-color, var(--color-neutral-100));
+	border-top: var(--progress-thickness, 4px) solid var(--progress-indicator-color, var(--color-primary-500));
+	border-radius: 50%;
+	animation: gsProgressSpin 1s linear infinite;
+}
+
+@keyframes gsProgressSpin {
+	to { transform: rotate(360deg); }
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 640px) {
+	.linearRoot {
+		height: calc(var(--progress-thickness, 4px) * 0.75);
+	}
+
+	.circular {
+		width: calc(var(--progress-size, 1.5rem) * 0.75);
+		height: calc(var(--progress-size, 1.5rem) * 0.75);
+	}
+}
+
+/* === HIGH CONTRAST MODE === */
+@media (prefers-contrast: high) {
+	.linearRoot {
+		background-color: var(--border-primary);
+	}
+
+	.circular {
+		border-color: calc(var(--outline-enabled) * 1px) solid var(--border-primary);
+		border-top-color: var(--color-primary-500);
+	}
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+	.linearIndicator {
+		transition: none;
+	}
+
+	.circular {
+		animation: none;
+	}
+}
