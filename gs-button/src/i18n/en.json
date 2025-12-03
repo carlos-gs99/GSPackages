@@ -1,0 +1,9 @@
+{
+  "label": "Button",
+  "aria": {
+    "loading": "Loading",
+    "spinner": "Loading indicator",
+    "keyboardShortcut": "Keyboard shortcut {shortcut}"
+  }
+}
+

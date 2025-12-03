@@ -1,0 +1,9 @@
+{
+  "label": "Botão",
+  "aria": {
+    "loading": "A carregar",
+    "spinner": "Indicador de carregamento",
+    "keyboardShortcut": "Atalho de teclado {shortcut}"
+  }
+}
+
