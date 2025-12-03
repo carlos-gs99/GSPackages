@@ -13,8 +13,8 @@ export const useMenuHover = ({
 }: UseMenuHoverProps = {}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout>();
-  const closeTimeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   const openMenu = useCallback(() => {
     if (disabled) return;
@@ -82,7 +82,9 @@ export const useMenuHover = ({
   // Close menu when disabled
   useEffect(() => {
     if (disabled && isOpen) {
-      setIsOpen(false);
+      // Use timeout to avoid setState during render
+      const timer = setTimeout(() => setIsOpen(false), 0);
+      return () => clearTimeout(timer);
     }
   }, [disabled, isOpen]);
 

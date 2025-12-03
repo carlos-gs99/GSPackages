@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export interface UseMenuViewportDetectionProps {
   popupRef: React.RefObject<HTMLElement>;
@@ -13,7 +13,7 @@ export const useMenuViewportDetection = ({
   level,
   onPositionAdjust,
 }: UseMenuViewportDetectionProps) => {
-  const detectionTimeoutRef = useRef<NodeJS.Timeout>();
+  const detectionTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     if (!isOpen || !popupRef.current || !onPositionAdjust) return;

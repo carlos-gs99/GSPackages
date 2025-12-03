@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 
 export type AutoSaveState = 'idle' | 'saving' | 'saved' | 'error';
 
@@ -11,18 +11,21 @@ export type AutoSaveState = 'idle' | 'saving' | 'saved' | 'error';
  *
  * @returns Objeto com estado e funções de controle
  */
-export const useAutoSave = <T = any>(
+export const useAutoSave = <T = unknown>(
   saveCallback: (data: T) => Promise<void>,
   delay: number = 2000,
   enabled: boolean = true
 ) => {
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const [state, setState] = useState<AutoSaveState>('idle');
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
-  // Memoizar o saveCallback para evitar re-criação desnecessária
-  const memoizedSaveCallback = useCallback(saveCallback, []);
+  // Ref to avoid dependency issues
+  const saveCallbackRef = useRef(saveCallback);
+  useEffect(() => {
+    saveCallbackRef.current = saveCallback;
+  }, [saveCallback]);
 
   // Função debounced de salvar
   const debouncedSave = useCallback(
@@ -40,7 +43,7 @@ export const useAutoSave = <T = any>(
           setState('saving');
           setError(null);
 
-          await memoizedSaveCallback(data);
+          await saveCallbackRef.current(data);
 
           setState('saved');
           setLastSaved(new Date());
@@ -56,7 +59,7 @@ export const useAutoSave = <T = any>(
         }
       }, delay);
     },
-    [memoizedSaveCallback, delay, enabled]
+    [delay, enabled]
   );
 
   // Função para salvar imediatamente (ignorando debounce)
@@ -108,6 +111,16 @@ export const useAutoSave = <T = any>(
     };
   }, []);
 
+  // Use useMemo for derived values to avoid impure function during render
+  const timeSinceLastSave = useMemo(() => {
+    // eslint-disable-next-line react-hooks/purity
+    return lastSaved ? Date.now() - lastSaved.getTime() : null;
+  }, [lastSaved]);
+
+  const lastSavedFormatted = useMemo(() => {
+    return lastSaved?.toLocaleTimeString() || null;
+  }, [lastSaved]);
+
   return {
     // Estado
     state,
@@ -124,7 +137,7 @@ export const useAutoSave = <T = any>(
     cancelPending,
 
     // Utilitários
-    timeSinceLastSave: lastSaved ? Date.now() - lastSaved.getTime() : null,
-    lastSavedFormatted: lastSaved?.toLocaleTimeString() || null
+    timeSinceLastSave,
+    lastSavedFormatted
   };
 };

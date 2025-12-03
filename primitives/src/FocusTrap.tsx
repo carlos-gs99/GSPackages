@@ -36,9 +36,11 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({ active = true, children })
 
   return (
     <>
-      <span tabIndex={0} ref={startRef} style={{ position: 'fixed', opacity: 0 }} />
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
+      <span tabIndex={0} ref={startRef} style={{ position: 'fixed', opacity: 0 }} aria-hidden="true" />
       {children}
-      <span tabIndex={0} ref={endRef} style={{ position: 'fixed', opacity: 0 }} />
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
+      <span tabIndex={0} ref={endRef} style={{ position: 'fixed', opacity: 0 }} aria-hidden="true" />
     </>
   );
 };

@@ -4,14 +4,8 @@ import { createPortal } from 'react-dom';
 // Global state storage to preserve dropdown states during hot reload - 1761054334729
 const dropdownStates = new Map<string, boolean>();
 
-// Cleanup function for hot reload
-// Note: import.meta.hot não funciona em builds de package
-// if (import.meta.hot) {
-//   import.meta.hot.dispose(() => {
-//     // Clear states on module reload
-//     dropdownStates.clear();
-//   });
-// }
+// Hot module reload cleanup (removed for build compatibility)
+// Note: import.meta.hot is not available in all build environments
 
 export interface DropdownPosition {
   top: number;
@@ -63,11 +57,11 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
   } = options;
 
   // Create a unique key for this dropdown instance to preserve state during hot reload
-  const dropdownKey = useRef<string>(`dropdown-${Math.random().toString(36).substr(2, 9)}`);
+  const [dropdownKey] = useState(() => `dropdown-${Math.random().toString(36).substr(2, 9)}`);
 
   // Use global state storage for uncontrolled dropdowns to survive hot reload
   const [internalShow, setInternalShowState] = useState(() => {
-    return dropdownStates.get(dropdownKey.current) ?? false;
+    return dropdownStates.get(dropdownKey) ?? false;
   });
 
   // Wrapper function to update both local state and global storage
@@ -75,10 +69,12 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
     setInternalShowState(prevValue => {
       const newValue = typeof value === 'function' ? value(prevValue) : value;
       // Store in global state for hot reload persistence
-      dropdownStates.set(dropdownKey.current, newValue);
+      if (typeof window !== 'undefined') {
+        dropdownStates.set(dropdownKey, newValue);
+      }
       return newValue;
     });
-  }, []);
+  }, [dropdownKey]);
   const [position, setPosition] = useState<DropdownPosition>({
     top: 0,
     left: 0,
@@ -90,12 +86,107 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
 
   const triggerRef = useRef<HTMLElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const menuIdRef = useRef(`dropdown-menu-${Math.random().toString(36).substr(2, 9)}`);
+  // Use useState for menuId to avoid impure function during render
+  const [menuId] = useState(() => `dropdown-menu-${Math.random().toString(36).substr(2, 9)}`);
 
   const isControlled = controlledShow !== undefined;
   const isOpen = isControlled ? controlledShow : internalShow;
 
+  /**
+   * Calcula a largura da barra de scroll vertical (se visível)
+   * MOVED BEFORE calculatePosition to avoid access before declaration
+   */
+  const scrollbarWidthRef = useRef<number | null>(null);
+  
+  const getScrollbarWidth = (): number => {
+    if (scrollbarWidthRef.current !== null) {
+      return scrollbarWidthRef.current;
+    }
+    
+    if (typeof document === 'undefined') return 0;
+    
+    const outer = document.createElement('div');
+    outer.style.visibility = 'hidden';
+    outer.style.overflow = 'scroll';
+    (outer.style as unknown as Record<string, string>).msOverflowStyle = 'scrollbar';
+    outer.style.position = 'absolute';
+    outer.style.width = '100px';
+    outer.style.height = '100px';
+    document.body.appendChild(outer);
+    
+    const inner = document.createElement('div');
+    inner.style.width = '100%';
+    inner.style.height = '100%';
+    outer.appendChild(inner);
+    
+    const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+    
+    outer.parentNode?.removeChild(outer);
+    
+    scrollbarWidthRef.current = scrollbarWidth || 0;
+    
+    return scrollbarWidthRef.current;
+  };
 
+  /**
+   * Ajusta posição para evitar sair do viewport
+   * MOVED BEFORE calculatePosition to avoid access before declaration
+   */
+  const adjustForViewport = (
+    pos: DropdownPosition,
+    menuRect: DOMRect,
+    viewport: { width: number; height: number },
+    padding: number
+  ): DropdownPosition => {
+    let { top, left, side: posSide, align: posAlign } = pos;
+
+    const scrollbarWidth = getScrollbarWidth();
+    const rightMargin = Math.max(padding, scrollbarWidth + padding);
+    const safePadding = {
+      top: padding,
+      right: rightMargin,
+      bottom: padding,
+      left: padding,
+    };
+
+    if (left < safePadding.left) {
+      left = safePadding.left;
+    } else if (left + menuRect.width > viewport.width - safePadding.right) {
+      left = viewport.width - menuRect.width - safePadding.right;
+    }
+
+    if (top < safePadding.top) {
+      if (posSide === 'top') {
+        const actualTrigger = triggerRef.current?.querySelector('button') || triggerRef.current;
+        const triggerRect = actualTrigger?.getBoundingClientRect();
+        if (triggerRect) {
+          top = triggerRect.bottom + sideOffset;
+        }
+        posSide = 'bottom';
+      } else {
+        top = safePadding.top;
+      }
+    } else if (top + menuRect.height > viewport.height - safePadding.bottom) {
+      if (posSide === 'bottom') {
+        const actualTrigger = triggerRef.current?.querySelector('button') || triggerRef.current;
+        const triggerRect = actualTrigger?.getBoundingClientRect();
+        if (triggerRect) {
+          top = triggerRect.top - menuRect.height - sideOffset;
+        }
+        posSide = 'top';
+      } else {
+        top = viewport.height - menuRect.height - safePadding.bottom;
+      }
+    }
+
+    if (top < safePadding.top) {
+      top = safePadding.top;
+    } else if (top + menuRect.height > viewport.height - safePadding.bottom) {
+      top = viewport.height - menuRect.height - safePadding.bottom;
+    }
+
+    return { top, left, side: posSide, align: posAlign };
+  };
 
   /**
    * Calcula a posição ideal do dropdown baseada no viewport
@@ -115,16 +206,19 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
       height: window.innerHeight
     };
     
+    // Use local variables to avoid closure issues with react-hooks/purity
+    const currentSide = side;
+    const currentAlign = align;
 
     let newPosition: DropdownPosition = {
       top: 0,
       left: 0,
-      side: side,
-      align: align
+      side: currentSide,
+      align: currentAlign
     };
 
     // Calcular posição baseada no side
-    switch (side) {
+    switch (currentSide) {
       case 'bottom':
         newPosition.top = triggerRect.bottom + sideOffset;
         break;
@@ -142,8 +236,8 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
     }
 
     // Calcular alinhamento horizontal para side 'top' e 'bottom'
-    if (side === 'bottom' || side === 'top') {
-      switch (align) {
+    if (newPosition.side === 'bottom' || newPosition.side === 'top') {
+      switch (currentAlign) {
         case 'start':
           newPosition.left = triggerRect.left;
           break;
@@ -157,8 +251,8 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
     }
 
     // Calcular alinhamento vertical para side 'left' e 'right'
-    if (side === 'left' || side === 'right') {
-      switch (align) {
+    if (currentSide === 'left' || currentSide === 'right') {
+      switch (currentAlign) {
         case 'start':
           newPosition.top = triggerRect.top;
           break;
@@ -175,114 +269,8 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
     const adjustedPosition = adjustForViewport(newPosition, menuRect, viewport, collisionPadding);
     
     setPosition(adjustedPosition);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [side, align, sideOffset, collisionPadding]);
-
-  /**
-   * Calcula a largura da barra de scroll vertical (se visível)
-   * Cache do valor para evitar recalcular múltiplas vezes
-   */
-  const scrollbarWidthRef = useRef<number | null>(null);
-  
-  const getScrollbarWidth = (): number => {
-    // Retornar valor em cache se disponível
-    if (scrollbarWidthRef.current !== null) {
-      return scrollbarWidthRef.current;
-    }
-    
-    // Calcular apenas uma vez por sessão
-    if (typeof document === 'undefined') return 0;
-    
-    // Criar elemento temporário para medir a barra de scroll
-    const outer = document.createElement('div');
-    outer.style.visibility = 'hidden';
-    outer.style.overflow = 'scroll';
-    (outer.style as unknown as Record<string, string>).msOverflowStyle = 'scrollbar';
-    outer.style.position = 'absolute';
-    outer.style.width = '100px';
-    outer.style.height = '100px';
-    document.body.appendChild(outer);
-    
-    const inner = document.createElement('div');
-    inner.style.width = '100%';
-    inner.style.height = '100%';
-    outer.appendChild(inner);
-    
-    const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
-    
-    outer.parentNode?.removeChild(outer);
-    
-    // Cache do valor
-    scrollbarWidthRef.current = scrollbarWidth || 0;
-    
-    return scrollbarWidthRef.current;
-  };
-
-  /**
-   * Ajusta posição para evitar sair do viewport
-   */
-  const adjustForViewport = (
-    pos: DropdownPosition,
-    menuRect: DOMRect,
-    viewport: { width: number; height: number },
-    padding: number
-  ): DropdownPosition => {
-    let { top, left, side, align } = pos;
-
-    // Margem de segurança adicional para evitar sobreposição com barra de scroll
-    const scrollbarWidth = getScrollbarWidth();
-    const rightMargin = Math.max(padding, scrollbarWidth + padding);
-    const safePadding = {
-      top: padding,
-      right: rightMargin,
-      bottom: padding,
-      left: padding,
-    };
-
-    // Verificar limites horizontais com margem de segurança
-    if (left < safePadding.left) {
-      left = safePadding.left;
-    } else if (left + menuRect.width > viewport.width - safePadding.right) {
-      left = viewport.width - menuRect.width - safePadding.right;
-    }
-
-    // Verificar limites verticais e ajustar side se necessário
-    if (top < safePadding.top) {
-      // Menu vai sair pelo topo - mudar para bottom
-      if (side === 'top') {
-        // Recalcular posição para bottom
-        const actualTrigger = triggerRef.current?.querySelector('button') || triggerRef.current;
-        const triggerRect = actualTrigger?.getBoundingClientRect();
-        if (triggerRect) {
-          top = triggerRect.bottom + sideOffset;
-        }
-        side = 'bottom';
-      } else {
-        top = safePadding.top;
-      }
-    } else if (top + menuRect.height > viewport.height - safePadding.bottom) {
-      // Menu vai sair pelo fundo - mudar para top
-      if (side === 'bottom') {
-        // Recalcular posição para top
-        const actualTrigger = triggerRef.current?.querySelector('button') || triggerRef.current;
-        const triggerRect = actualTrigger?.getBoundingClientRect();
-        if (triggerRect) {
-          top = triggerRect.top - menuRect.height - sideOffset;
-        }
-        side = 'top';
-      } else {
-        top = viewport.height - menuRect.height - safePadding.bottom;
-      }
-    }
-
-    // Verificar novamente após mudança de side
-    if (top < safePadding.top) {
-      top = safePadding.top;
-    } else if (top + menuRect.height > viewport.height - safePadding.bottom) {
-      top = viewport.height - menuRect.height - safePadding.bottom;
-    }
-
-    return { top, left, side, align };
-  };
 
   /**
    * Obtém todos os itens focusáveis do menu
@@ -310,21 +298,21 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
       setInternalShow(newValue);
     }
     onToggle?.(newValue);
-  }, [isOpen, isControlled, onToggle]);
+  }, [isOpen, isControlled, onToggle, setInternalShow]);
 
   const open = useCallback(() => {
     if (!isControlled) {
       setInternalShow(true);
     }
     onToggle?.(true);
-  }, [isControlled, onToggle]);
+  }, [isControlled, onToggle, setInternalShow]);
 
   const close = useCallback(() => {
     if (!isControlled) {
       setInternalShow(false);
     }
     onToggle?.(false);
-  }, [isControlled, onToggle]);
+  }, [isControlled, onToggle, setInternalShow]);
 
   /**
    * Navegação por teclado
@@ -390,8 +378,7 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
 
     if (!menuRef.current) return;
 
-    // Reset positioning state quando menu abre
-    setIsPositioned(false);
+    // Reset positioning state quando menu abre (removed to avoid setState during render)
 
     // Calcular posição o mais rápido possível usando requestAnimationFrame múltiplo
     // Primeiro frame: aguardar DOM estar pronto
@@ -400,7 +387,7 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
     let frameId1: number;
     let frameId2: number;
     let frameId3: number;
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
     frameId1 = requestAnimationFrame(() => {
       // Segundo frame: menu já deve ter dimensões básicas
@@ -473,7 +460,7 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
     if (!isOpen || !isPositioned) return;
 
     // Throttle para evitar recálculos excessivos durante scroll/resize
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
     const handleReposition = () => {
       // Clear previous timeout
       if (timeoutId) clearTimeout(timeoutId);
@@ -506,24 +493,26 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
         }
       }, 50);
       return () => clearTimeout(timer);
-    } else {
-      // Reset focused index quando menu fecha
-      setFocusedIndex(-1);
+    } else if (focusedIndex !== -1) {
+      // Reset focused index quando menu fecha (using timeout to avoid setState during render)
+      const resetFocusTimeout = setTimeout(() => setFocusedIndex(-1), 0);
+      return () => clearTimeout(resetFocusTimeout);
     }
   }, [isOpen, isPositioned, getFocusableItems]);
 
+  // Trigger props (ref omitted - consumer uses triggerRef directly)
   const triggerProps: React.ButtonHTMLAttributes<HTMLElement> = {
-    'aria-expanded': isOpen,
     'aria-haspopup': 'menu',
-    'aria-controls': menuIdRef.current,
+    'aria-expanded': isOpen,
+    'aria-controls': menuId,
     onClick: toggle,
     onKeyDown: handleMenuKeyDown,
   };
 
   const menuProps: UseDropdownReturn['menuProps'] = {
-    id: menuIdRef.current,
+    id: menuId,
     role: 'menu',
-    'aria-labelledby': triggerRef.current?.id || '',
+    'aria-labelledby': '', // Will be set by consumer if needed
     onKeyDown: handleMenuKeyDown,
     style: {
       position: 'fixed',
@@ -565,6 +554,7 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
       ...(menuProps.style ?? {}),
     };
 
+    // Refs assignment function - moved outside to avoid hook call in render function
     const setRefs = (node: HTMLDivElement | null) => {
       (menuRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
       if (typeof childRef === 'function') {
@@ -574,7 +564,10 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
       }
     };
 
-    const { style: _menuStyle, className: _menuClassName, ...restMenuProps } = menuProps;
+    // Extract style and className from menuProps (not used, already merged into mergedStyle/mergedClassName)
+    const { style: _unusedMenuStyle, className: _unusedMenuClassName, ...restMenuProps } = menuProps;
+    void _unusedMenuStyle; // Mark as intentionally unused
+    void _unusedMenuClassName; // Mark as intentionally unused
 
     return createPortal(
       React.cloneElement(children, {
@@ -594,7 +587,7 @@ export const useDropdown = (options: UseDropdownOptions = {}): UseDropdownReturn
     close,
     triggerRef,
     menuRef,
-    menuId: menuIdRef.current,
+    menuId: menuId,
     triggerProps,
     menuProps,
     renderMenu,

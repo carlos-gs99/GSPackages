@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 
 export interface SubmenuPosition {
   top: number;
@@ -44,6 +44,97 @@ export const useSubmenuPosition = (options: UseSubmenuPositionOptions = {}): Use
 
   const triggerRef = useRef<HTMLElement>(null);
   const submenuRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * Ajusta posição para evitar sair do viewport
+   * MOVED BEFORE calculatePosition to avoid "access before declaration" error
+   */
+  const adjustForViewport = (
+    pos: SubmenuPosition,
+    submenuRect: DOMRect,
+    viewport: { width: number; height: number },
+    padding: number
+  ): SubmenuPosition => {
+    let { top, left, side, align } = pos;
+
+    if (orientation === 'horizontal') {
+      // Modo horizontal: ajustar posição vertical e horizontal
+      
+      // Verificar limites verticais
+      if (top + submenuRect.height > viewport.height - padding) {
+        // Vai sair pelo fundo - mudar para cima
+        const trigger = triggerRef.current;
+        if (trigger) {
+          top = trigger.getBoundingClientRect().top - submenuRect.height - sideOffset;
+        }
+      }
+
+      // Verificar limites horizontais
+      if (left < padding) {
+        left = padding;
+      } else if (left + submenuRect.width > viewport.width - padding) {
+        left = viewport.width - submenuRect.width - padding;
+      }
+
+      // Verificar novamente após mudanças
+      if (top < padding) {
+        top = padding;
+      } else if (top + submenuRect.height > viewport.height - padding) {
+        top = viewport.height - submenuRect.height - padding;
+      }
+    } else {
+      // Modo vertical: lógica original
+      
+      // Verificar limites horizontais
+      if (side === 'right') {
+        // Se vai sair pela direita, mudar para esquerda
+        if (left + submenuRect.width > viewport.width - padding) {
+          side = 'left';
+          if (triggerRef.current) {
+            left = triggerRef.current.getBoundingClientRect().left - submenuRect.width - sideOffset;
+          }
+        }
+      } else {
+        // Se vai sair pela esquerda, mudar para direita
+        if (left < padding) {
+          side = 'right';
+          if (triggerRef.current) {
+            left = triggerRef.current.getBoundingClientRect().right + sideOffset;
+          }
+        }
+      }
+
+      // Verificar limites verticais
+      if (top < padding) {
+        // Vai sair pelo topo - mudar para bottom
+        align = 'bottom';
+        if (triggerRef.current) {
+          top = triggerRef.current.getBoundingClientRect().bottom - submenuRect.height;
+        }
+      } else if (top + submenuRect.height > viewport.height - padding) {
+        // Vai sair pelo fundo - mudar para top
+        align = 'top';
+        if (triggerRef.current) {
+          top = triggerRef.current.getBoundingClientRect().top;
+        }
+      }
+
+      // Verificar novamente após mudanças
+      if (top < padding) {
+        top = padding;
+      } else if (top + submenuRect.height > viewport.height - padding) {
+        top = viewport.height - submenuRect.height - padding;
+      }
+
+      if (left < padding) {
+        left = padding;
+      } else if (left + submenuRect.width > viewport.width - padding) {
+        left = viewport.width - submenuRect.width - padding;
+      }
+    }
+
+    return { top, left, side, align };
+  };
 
   /**
    * Calcula a posição ideal do submenu baseada no viewport
@@ -103,86 +194,7 @@ export const useSubmenuPosition = (options: UseSubmenuPositionOptions = {}): Use
     const adjustedPosition = adjustForViewport(newPosition, submenuRect, viewport, collisionPadding);
     
     setPosition(adjustedPosition);
-  }, [side, align, sideOffset, collisionPadding]);
-
-  /**
-   * Ajusta posição para evitar sair do viewport
-   */
-  const adjustForViewport = (
-    pos: SubmenuPosition,
-    submenuRect: DOMRect,
-    viewport: { width: number; height: number },
-    padding: number
-  ): SubmenuPosition => {
-    let { top, left, side, align } = pos;
-
-    if (orientation === 'horizontal') {
-      // Modo horizontal: ajustar posição vertical e horizontal
-      
-      // Verificar limites verticais
-      if (top + submenuRect.height > viewport.height - padding) {
-        // Vai sair pelo fundo - mudar para cima
-        top = triggerRef.current!.getBoundingClientRect().top - submenuRect.height - sideOffset;
-      }
-
-      // Verificar limites horizontais
-      if (left < padding) {
-        left = padding;
-      } else if (left + submenuRect.width > viewport.width - padding) {
-        left = viewport.width - submenuRect.width - padding;
-      }
-
-      // Verificar novamente após mudanças
-      if (top < padding) {
-        top = padding;
-      } else if (top + submenuRect.height > viewport.height - padding) {
-        top = viewport.height - submenuRect.height - padding;
-      }
-    } else {
-      // Modo vertical: lógica original
-      
-      // Verificar limites horizontais
-      if (side === 'right') {
-        // Se vai sair pela direita, mudar para esquerda
-        if (left + submenuRect.width > viewport.width - padding) {
-          side = 'left';
-          left = triggerRef.current!.getBoundingClientRect().left - submenuRect.width - sideOffset;
-        }
-      } else {
-        // Se vai sair pela esquerda, mudar para direita
-        if (left < padding) {
-          side = 'right';
-          left = triggerRef.current!.getBoundingClientRect().right + sideOffset;
-        }
-      }
-
-      // Verificar limites verticais
-      if (top < padding) {
-        // Vai sair pelo topo - mudar para bottom
-        align = 'bottom';
-        top = triggerRef.current!.getBoundingClientRect().bottom - submenuRect.height;
-      } else if (top + submenuRect.height > viewport.height - padding) {
-        // Vai sair pelo fundo - mudar para top
-        align = 'top';
-        top = triggerRef.current!.getBoundingClientRect().top;
-      }
-
-      // Verificar novamente após mudanças
-      if (top < padding) {
-        top = padding;
-      } else if (top + submenuRect.height > viewport.height - padding) {
-        top = viewport.height - submenuRect.height - padding;
-      }
-
-      if (left < padding) {
-        left = padding;
-      } else if (left + submenuRect.width > viewport.width - padding) {
-        left = viewport.width - submenuRect.width - padding;
-      }
-    }
-
-    return { top, left, side, align };
-  };
+  }, [side, align, sideOffset, collisionPadding, orientation, adjustForViewport]);
 
   // Calcular posição quando o submenu é mostrado
   useEffect(() => {

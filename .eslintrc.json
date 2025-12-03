@@ -34,7 +34,26 @@
     "@typescript-eslint/no-require-imports": "off",
     "no-unreachable": "off",
     "react/react-in-jsx-scope": "off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error"
+  },
+  "overrides": [
+    {
+      "files": ["hooks/src/**/*.ts"],
+      "rules": {
+        "react-hooks/exhaustive-deps": "warn"
+      }
+    }
+  ],
+  "globals": {
+    "React": "readonly",
+    "NodeJS": "readonly"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2020": true
   },
   "settings": {
     "react": {

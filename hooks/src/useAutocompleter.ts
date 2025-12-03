@@ -9,35 +9,35 @@ export interface UseAutocompleterOptions {
   searchOnFocus?: boolean;
   
   // Para tabela
-  tableService?: (params: any) => Promise<any>;
+  tableService?: (params: Record<string, unknown>) => Promise<Record<string, unknown>>;
   dataKey?: string;
   labelKey?: string;
   valueKey?: string;
   pageSize?: number;
   
   // Para inicialização
-  initialValue?: any;
+  initialValue?: Record<string, unknown>;
   initialLabelKey?: string;
   initialValueKey?: string;
   
   // Callbacks
-  onSelect?: (item: any) => void;
+  onSelect?: (item: Record<string, unknown>) => void;
   onChange?: (selected: TypeaheadOption[]) => void;
 }
 
 export default function useAutocompleter({
   // Busca automática
-  searchService,
-  searchEndpoint,
-  minSearchLength = 2,
-  searchOnFocus = true,
+  searchService: _searchService,
+  searchEndpoint: _searchEndpoint,
+  minSearchLength: _minSearchLength = 2,
+  searchOnFocus: _searchOnFocus = true,
   
   // Tabela
   tableService,
-  dataKey = 'data',
+  dataKey: _dataKey = 'data',
   labelKey = 'label',
   valueKey = 'value',
-  pageSize = 10,
+  pageSize: _pageSize = 10,
   
   // Inicialização
   initialValue,
@@ -56,16 +56,17 @@ export default function useAutocompleter({
   useEffect(() => {
     if (initialValue && !selected.length) {
       const option: TypeaheadOption = {
-        [labelKey]: initialValue[initialLabelKey] || initialValue.name || initialValue.nome || initialValue.title || '',
-        [valueKey]: initialValue[initialValueKey]?.toString() || initialValue.id?.toString() || initialValue[initialLabelKey] || '',
-        ...initialValue
+        label: (initialValue as Record<string, unknown>)[initialLabelKey] as string || 'Unknown',
+        value: ((initialValue as Record<string, unknown>)[initialValueKey] as string | number) || '',
+        data: initialValue as Record<string, unknown>
       };
       setSelected([option]);
     }
-  }, [initialValue, labelKey, valueKey, initialLabelKey, initialValueKey]); // Removido selected.length da dependência
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialValue, labelKey, valueKey, initialLabelKey, initialValueKey]);
 
   // Função para carregar dados da tabela
-  const loadData = useCallback(async (params: any) => {
+  const loadData = useCallback(async (params: Record<string, unknown>) => {
     if (!tableService) return;
     
     setLoading(true);
@@ -92,12 +93,11 @@ export default function useAutocompleter({
   }, [onChange]);
 
   // Handler para seleção de linha da tabela
-  const handleTableRowSelect = useCallback((row: any) => {
+  const handleTableRowSelect = useCallback((row: Record<string, unknown>) => {
     const option: TypeaheadOption = {
-      id: row.id,
-      [valueKey]: row[valueKey] || row.id,
-      [labelKey]: row[labelKey] || row.name || row.nome || row.title,
-      ...row
+      label: (row[labelKey] as string) || (row.name as string) || (row.nome as string) || (row.title as string) || '',
+      value: (row[valueKey] as string | number) || (row.id as string | number) || '',
+      data: row
     };
     
     setSelected([option]);

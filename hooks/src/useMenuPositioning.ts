@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 export interface MenuPosition {
   top: number;
@@ -142,8 +142,8 @@ export const useMenuPositioning = ({
   // Recalcular posição quando necessário
   useEffect(() => {
     if (isOpen) {
-      // Calcular posição imediatamente (usando dimensões estimadas)
-      calculatePosition();
+      // Calcular posição após render para ter dimensões corretas
+      const immediateTimeout = setTimeout(() => calculatePosition(), 0);
       
       // Recalcular com dimensões reais após renderização
       const timeoutId = setTimeout(() => {
@@ -164,6 +164,7 @@ export const useMenuPositioning = ({
       window.addEventListener('scroll', handleScroll, true);
       
       return () => {
+        clearTimeout(immediateTimeout);
         clearTimeout(timeoutId);
         window.removeEventListener('resize', handleResize);
         window.removeEventListener('scroll', handleScroll, true);

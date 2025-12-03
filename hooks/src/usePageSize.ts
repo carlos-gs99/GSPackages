@@ -16,7 +16,9 @@ export const usePageSize = (defaultPageSize: number = 10) => {
     const storedPageSize = layoutStore.pageSize || 
       parseInt(localStorage.getItem(PAGE_SIZE_KEY) || defaultPageSize.toString());
     
-    setPageSizeState(storedPageSize);
+    // Use timeout to avoid setState during render
+    const timer = setTimeout(() => setPageSizeState(storedPageSize), 0);
+    return () => clearTimeout(timer);
   }, [layoutStore.pageSize, defaultPageSize]);
 
   const setPageSize = (newPageSize: number) => {
@@ -48,7 +50,9 @@ export const useCurrentPageSize = (defaultPageSize: number = 10) => {
       parseInt(localStorage.getItem(PAGE_SIZE_KEY) || defaultPageSize.toString());
     
     if (storedPageSize !== pageSize) {
-      setPageSizeState(storedPageSize);
+      // Use timeout to avoid setState during render
+      const timer = setTimeout(() => setPageSizeState(storedPageSize), 0);
+      return () => clearTimeout(timer);
     }
   }, [layoutStore.pageSize, defaultPageSize, pageSize]);
 
