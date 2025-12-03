@@ -1,0 +1,8 @@
+{
+  "label": "Spinner",
+  "aria": {
+    "loading": "Loading",
+    "spinner": "Loading spinner"
+  }
+}
+

@@ -1,0 +1,61 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(2px);
+  z-index: 9999;
+}
+
+.centered {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.fullHeight {
+  min-height: 100vh;
+}
+
+.spinner {
+  border-radius: 50%;
+  animation: gsSpinnerSpin 1s linear infinite;
+}
+
+.message {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-neutral-600);
+  text-align: center;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@keyframes gsSpinnerSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
