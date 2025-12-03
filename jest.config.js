@@ -39,7 +39,7 @@ module.exports = {
     '!**/*.config.{js,ts}',
   ],
   
-  coverageThresholds: {
+  coverageThreshold: {
     global: {
       branches: 80,
       functions: 80,

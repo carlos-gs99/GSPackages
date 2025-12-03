@@ -1,16 +1,16 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render } from '../../../tests/test-utils.js';
+import React from 'react';
+import { render } from '@testing-library/react';
 import { GSBadge } from '../src/GSBadge';
 
 // Simple mocks
-vi.mock('../src/i18n', () => ({
+jest.mock('../src/i18n', () => ({
   GS_BADGE_NAMESPACE: 'gsbadge',
-  registerGSBadgeI18n: vi.fn(),
+  registerGSBadgeI18n: jest.fn(),
 }));
 
 describe('GSBadge - Simple Tests', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   describe('Basic Rendering', () => {
@@ -93,7 +93,7 @@ describe('GSBadge - Simple Tests', () => {
       );
       
       const indicator = container.querySelector('[data-gs-el="indicator"]');
-      expect(indicator).toHaveClass('hidden');
+      expect(indicator).not.toBeInTheDocument();
     });
 
     it('shows zero when showZero is true', () => {
@@ -271,4 +271,3 @@ describe('GSBadge - Simple Tests', () => {
     });
   });
 });
-
