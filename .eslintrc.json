@@ -26,13 +26,16 @@
   ],
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-unused-vars": ["warn", { 
+    "@typescript-eslint/no-unused-vars": ["error", { 
       "argsIgnorePattern": "^_",
-      "varsIgnorePattern": "^_"
+      "varsIgnorePattern": "^_",
+      "ignoreRestSiblings": true,
+      "caughtErrors": "all",
+      "caughtErrorsIgnorePattern": "^_"
     }],
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-require-imports": "off",
-    "no-unreachable": "off",
+    "no-unreachable": "warn",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "react-hooks/exhaustive-deps": "warn",
