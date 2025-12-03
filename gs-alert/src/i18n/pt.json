@@ -1,0 +1,9 @@
+{
+  "alert": {
+    "label": "Alerta",
+    "aria": {
+      "closeButton": "Fechar alerta"
+    }
+  }
+}
+
