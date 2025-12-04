@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { createPortal } from 'react-dom';
 import clsx from 'clsx';
+import { Popper } from '@carlos-gs99/primitives';
 import { useGSTooltipTranslation } from './i18n';
 import styles from './styles.module.css';
 import type { GSTooltipProps } from './types';
@@ -92,12 +92,18 @@ export const GSTooltip: React.FC<GSTooltipProps> = ({
   return (
     <>
       {clonedChild}
-      {createPortal(
+      <Popper
+        anchorRef={triggerRef}
+        open={isOpen && !disabled}
+        placement={placement as any}
+        offset={8}
+        flip={true}
+        collisionPadding={8}
+      >
         <div
           ref={tooltipRef}
           className={clsx(styles.tooltip, className)}
           data-gs="GSTooltip"
-          data-placement={placement}
           data-variant={variant}
           data-color={color}
           data-size={size}
@@ -111,10 +117,9 @@ export const GSTooltip: React.FC<GSTooltipProps> = ({
           <div className={clsx(styles.content, contentClassName)}>
             {content}
           </div>
-          {arrow && <div className={styles.arrow} data-placement={placement} />}
-        </div>,
-        document.body
-      )}
+          {arrow && <div className={styles.arrow} />}
+        </div>
+      </Popper>
     </>
   );
 };
