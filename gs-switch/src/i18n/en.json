@@ -1,0 +1,10 @@
+{
+  "label": "Switch",
+  "aria": {
+    "on": "On",
+    "off": "Off",
+    "loading": "Loading...",
+    "disabled": "Disabled"
+  }
+}
+

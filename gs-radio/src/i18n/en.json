@@ -1,0 +1,11 @@
+{
+  "label": "Radio",
+  "aria": {
+    "radio": "Radio button",
+    "checked": "Selected",
+    "unchecked": "Not selected",
+    "required": "Required field",
+    "helperText": "Helper text"
+  }
+}
+

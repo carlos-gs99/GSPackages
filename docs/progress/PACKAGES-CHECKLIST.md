@@ -52,9 +52,9 @@
 
 #### 4.1. Alta prioridade (Tier 2)
 
-- [ ] `gs-radio`
-- [ ] `gs-switch`
-- [ ] `gs-textarea`
+- [x] `gs-radio` – MIGRADO (GSRadioGroup, ripple, orientation, validation)
+- [x] `gs-switch` – MIGRADO (toggle switch, ripple, loading, spinner integration)
+- [x] `gs-textarea` – MIGRADO (auto-resize, counters, copy/clear, floating label, debounce)
 - [ ] `gs-table` (complexo – usa `@tanstack/react-table`)
 - [ ] `gs-autocomplete`
 

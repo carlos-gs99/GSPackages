@@ -1,0 +1,14 @@
+{
+  "label": "Área de texto",
+  "aria": {
+    "clear": "Limpar área de texto",
+    "copy": "Copiar para área de transferência",
+    "copied": "Copiado!"
+  },
+  "counters": {
+    "characters": "{{count}} caracteres",
+    "words": "{{count}} palavras",
+    "lines": "{{count}} linhas"
+  }
+}
+

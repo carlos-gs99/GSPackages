@@ -1,0 +1,214 @@
+/* GSTextArea - Package-ready CSS Modules */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.containerFloatingLabel {
+  position: relative;
+}
+
+.labelContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary, #111827);
+  transition: color 0.2s ease;
+}
+
+.labelRequired .required,
+.required {
+  color: var(--color-danger-500, #ef4444);
+}
+
+/* Floating label */
+.labelFloating {
+  position: absolute;
+  top: 1rem;
+  left: 0.75rem;
+  pointer-events: none;
+  z-index: 1;
+  transition: all 0.2s ease;
+  background-color: var(--background-surface, #ffffff);
+  padding: 0 0.25rem;
+  font-size: 1rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+.labelFloatingActive,
+.wrapper:focus-within .labelFloating {
+  top: -0.5rem;
+  left: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--color-primary-500, #3b82f6);
+}
+
+/* Textarea wrapper */
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 0.375rem;
+  background-color: var(--background-surface);
+  transition: all 0.2s ease;
+}
+
+.wrapper:focus-within {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.wrapper.error {
+  border-color: var(--color-danger-500);
+}
+
+.wrapper.disabled {
+  background-color: var(--color-neutral-50);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.wrapper.readonly {
+  background-color: var(--color-neutral-50);
+}
+
+/* Textarea input */
+.textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  resize: vertical;
+  min-height: 4.5rem;
+}
+
+.textarea::placeholder {
+  color: var(--text-tertiary, #9ca3af);
+}
+
+.textarea:disabled {
+  cursor: not-allowed;
+}
+
+/* Actions container (top right) */
+.actions {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: none;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  opacity: 0.6;
+  color: var(--text-secondary);
+}
+
+.actionButton:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.actionButton:focus {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+.validationIcon {
+  display: flex;
+  align-items: center;
+}
+
+/* Counters */
+.counters {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  padding: 0 0.25rem;
+}
+
+.counter {
+  display: inline-flex;
+  gap: 0.25rem;
+}
+
+/* Helper/Error text */
+.helperText {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.errorText {
+  font-size: 0.8125rem;
+  color: var(--color-danger-500);
+}
+
+/* Sizes */
+.wrapper--sm .textarea {
+  font-size: 0.8125rem;
+  padding: 0.5rem;
+  min-height: 3.5rem;
+}
+
+.wrapper--lg .textarea {
+  font-size: 1rem;
+  padding: 1rem;
+  min-height: 6rem;
+}
+
+/* Variants */
+.wrapper--filled {
+  background-color: var(--color-neutral-100);
+  border-color: transparent;
+}
+
+.wrapper--soft {
+  background-color: var(--color-primary-50);
+  border-color: transparent;
+}
+
+.wrapper--solid {
+  background-color: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+  color: #ffffff;
+}
+
+.wrapper--solid .textarea {
+  color: #ffffff;
+}
+
+.wrapper--solid .textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.wrapper--plain {
+  border-color: transparent;
+  background-color: transparent;
+}
+

@@ -1,0 +1,11 @@
+{
+  "label": "Radio",
+  "aria": {
+    "radio": "Botão de rádio",
+    "checked": "Selecionado",
+    "unchecked": "Não selecionado",
+    "required": "Campo obrigatório",
+    "helperText": "Texto de ajuda"
+  }
+}
+

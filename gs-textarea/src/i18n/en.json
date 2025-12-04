@@ -1,0 +1,14 @@
+{
+  "label": "Textarea",
+  "aria": {
+    "clear": "Clear textarea",
+    "copy": "Copy to clipboard",
+    "copied": "Copied!"
+  },
+  "counters": {
+    "characters": "{{count}} characters",
+    "words": "{{count}} words",
+    "lines": "{{count}} lines"
+  }
+}
+

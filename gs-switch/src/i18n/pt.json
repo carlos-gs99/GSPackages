@@ -1,0 +1,10 @@
+{
+  "label": "Interruptor",
+  "aria": {
+    "on": "Ligado",
+    "off": "Desligado",
+    "loading": "A carregar...",
+    "disabled": "Desativado"
+  }
+}
+

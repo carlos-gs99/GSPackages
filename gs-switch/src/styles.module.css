@@ -1,0 +1,225 @@
+/* GSSwitch - Package-ready CSS Modules */
+
+.switchWrapper {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.switchContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.switchContainer[data-label-position="start"] {
+  flex-direction: row-reverse;
+}
+
+.switchWrapper--disabled .switchContainer,
+.switchWrapper--readonly .switchContainer {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Hidden Input */
+.switchInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Track (background) */
+.switchTrack {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  border: 2px solid var(--color-neutral-300, #d1d5db);
+  background-color: var(--color-neutral-200, #e5e7eb);
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.switchTrack:focus-visible {
+  outline: 2px solid var(--color-primary-500, #3b82f6);
+  outline-offset: 2px;
+}
+
+.switchTrack--checked {
+  background-color: var(--color-primary-500, #3b82f6);
+  border-color: var(--color-primary-500, #3b82f6);
+}
+
+.switchTrack--disabled {
+  cursor: not-allowed;
+  background-color: var(--color-neutral-100, #f3f4f6);
+  border-color: var(--color-neutral-200, #e5e7eb);
+}
+
+/* Thumb (circle that moves) */
+.switchThumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.switchThumb--loading {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Sizes for track */
+.switchTrack--sm {
+  width: 2.25rem;
+  height: 1.25rem;
+  padding: 0.125rem;
+}
+
+.switchTrack--md {
+  width: 2.75rem;
+  height: 1.5rem;
+  padding: 0.125rem;
+}
+
+.switchTrack--lg {
+  width: 3.25rem;
+  height: 1.75rem;
+  padding: 0.1875rem;
+}
+
+/* Sizes for thumb */
+.switchThumb--sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+.switchThumb--md {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.switchThumb--lg {
+  width: 1.375rem;
+  height: 1.375rem;
+}
+
+/* Thumb position animation */
+.switchThumb {
+  transform: translateX(0);
+}
+
+.switchThumb--checked {
+  transform: translateX(100%);
+}
+
+.switchTrack--sm .switchThumb--checked {
+  transform: translateX(1rem);
+}
+
+.switchTrack--md .switchThumb--checked {
+  transform: translateX(1.25rem);
+}
+
+.switchTrack--lg .switchThumb--checked {
+  transform: translateX(1.5rem);
+}
+
+/* Color variants (checked state) */
+.switchTrack--primary.switchTrack--checked {
+  background-color: var(--color-primary-500, #3b82f6);
+  border-color: var(--color-primary-500, #3b82f6);
+}
+
+.switchTrack--success.switchTrack--checked {
+  background-color: var(--color-success-500, #10b981);
+  border-color: var(--color-success-500, #10b981);
+}
+
+.switchTrack--warning.switchTrack--checked {
+  background-color: var(--color-warning-500, #f59e0b);
+  border-color: var(--color-warning-500, #f59e0b);
+}
+
+.switchTrack--danger.switchTrack--checked {
+  background-color: var(--color-danger-500, #ef4444);
+  border-color: var(--color-danger-500, #ef4444);
+}
+
+.switchTrack--info.switchTrack--checked {
+  background-color: var(--color-info-500, #06b6d4);
+  border-color: var(--color-info-500, #06b6d4);
+}
+
+.switchTrack--secondary.switchTrack--checked {
+  background-color: var(--color-secondary-500, #6b7280);
+  border-color: var(--color-secondary-500, #6b7280);
+}
+
+.switchTrack--neutral.switchTrack--checked {
+  background-color: var(--color-neutral-500, #6b7280);
+  border-color: var(--color-neutral-500, #6b7280);
+}
+
+/* Label */
+.switchLabel {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-primary, #111827);
+}
+
+.switchHelper {
+  margin-left: calc(2.75rem + 0.75rem); /* switch width + gap */
+  font-size: 0.8125rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+.switchError {
+  margin-left: calc(2.75rem + 0.75rem);
+  font-size: 0.8125rem;
+  color: var(--color-danger-500, #ef4444);
+}
+
+.switchContainer[data-label-position="start"] .switchHelper,
+.switchContainer[data-label-position="start"] .switchError {
+  margin-left: 0;
+}
+
+/* Icon inside thumb */
+.switchIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Spinner inside thumb */
+.switchSpinner {
+  width: 100%;
+  height: 100%;
+}
+
+/* Ripple Effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  animation: rippleAnimation 0.6s ease-out;
+}
+
+@keyframes rippleAnimation {
+  to {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+

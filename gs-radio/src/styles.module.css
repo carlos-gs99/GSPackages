@@ -1,0 +1,266 @@
+/* GSRadio - Package-ready CSS Modules */
+
+/* Radio Wrapper */
+.radioWrapper {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.radioContainer {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.radioContainer[data-disabled],
+.radioContainer[data-readonly] {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Radio Control */
+.radioControl {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.radioInput {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.radioInput:disabled {
+  cursor: not-allowed;
+}
+
+/* Radio Box (circular!) */
+.radioBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-neutral-300, #d1d5db);
+  border-radius: 50%; /* Circular! */
+  background-color: var(--background-surface, #ffffff);
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.radioBox:hover {
+  border-color: var(--color-primary-500, #3b82f6);
+}
+
+.radioInput:focus-visible + .radioBox,
+.radioInput:focus + .radioBox {
+  outline: 2px solid var(--color-primary-500, #3b82f6);
+  outline-offset: 2px;
+}
+
+.radioBox[data-state="checked"] {
+  border-color: var(--color-primary-500, #3b82f6);
+  background-color: var(--color-primary-50, #eff6ff);
+}
+
+.radioBox[data-disabled] {
+  background-color: var(--color-neutral-100, #f3f4f6);
+  border-color: var(--color-neutral-200, #e5e7eb);
+}
+
+/* Radio Indicator (dot) */
+.radioIndicator {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.radioDot {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--color-primary-500, #3b82f6);
+  transition: all 0.2s ease;
+}
+
+/* Radio Label */
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-primary, #111827);
+}
+
+.radioRequired {
+  color: var(--color-danger-500, #ef4444);
+  font-weight: 600;
+}
+
+.radioHelper {
+  margin-left: calc(20px + 0.75rem); /* radio width + gap */
+  font-size: 0.8125rem;
+  color: var(--text-secondary, #6b7280);
+  margin-top: 0.125rem;
+}
+
+.radioError {
+  margin-left: calc(20px + 0.75rem);
+  font-size: 0.8125rem;
+  color: var(--color-danger-500, #ef4444);
+  margin-top: 0.125rem;
+}
+
+/* Ripple Effect */
+.rippleEffect {
+  position: absolute;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.3;
+  animation: ripple 0.6s ease-out;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+/* Screen Reader Only */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Group Wrapper */
+.groupWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.groupLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary, #111827);
+}
+
+.groupRequired {
+  color: var(--color-danger-500, #ef4444);
+  font-weight: 600;
+}
+
+.groupHelper {
+  font-size: 0.8125rem;
+  color: var(--text-secondary, #6b7280);
+  margin-top: -0.25rem;
+}
+
+.groupError {
+  font-size: 0.8125rem;
+  color: var(--color-danger-500, #ef4444);
+  margin-top: -0.25rem;
+}
+
+/* Options Container */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.optionsHorizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+/* Color Variants */
+[data-color="primary"] .radioBox[data-state="checked"] {
+  border-color: var(--color-primary-500, #3b82f6);
+  background-color: var(--color-primary-50, #eff6ff);
+}
+
+[data-color="primary"] .radioDot {
+  background-color: var(--color-primary-500, #3b82f6);
+}
+
+[data-color="success"] .radioBox[data-state="checked"] {
+  border-color: var(--color-success-500, #10b981);
+  background-color: var(--color-success-50, #ecfdf5);
+}
+
+[data-color="success"] .radioDot {
+  background-color: var(--color-success-500, #10b981);
+}
+
+[data-color="warning"] .radioBox[data-state="checked"] {
+  border-color: var(--color-warning-500, #f59e0b);
+  background-color: var(--color-warning-50, #fffbeb);
+}
+
+[data-color="warning"] .radioDot {
+  background-color: var(--color-warning-500, #f59e0b);
+}
+
+[data-color="danger"] .radioBox[data-state="checked"] {
+  border-color: var(--color-danger-500, #ef4444);
+  background-color: var(--color-danger-50, #fef2f2);
+}
+
+[data-color="danger"] .radioDot {
+  background-color: var(--color-danger-500, #ef4444);
+}
+
+/* Variant Solid */
+[data-variant="solid"] .radioBox[data-state="checked"] {
+  background-color: var(--color-primary-500, #3b82f6);
+  border-color: var(--color-primary-500, #3b82f6);
+}
+
+[data-variant="solid"] .radioDot {
+  background-color: #ffffff;
+}
+
+/* Variant Soft */
+[data-variant="soft"] .radioBox[data-state="checked"] {
+  background-color: var(--color-primary-100, #dbeafe);
+  border-color: var(--color-primary-300, #93c5fd);
+}
+
+/* Variant Plain */
+[data-variant="plain"] .radioBox {
+  border-color: var(--color-neutral-400, #9ca3af);
+}
+
+[data-variant="plain"] .radioBox[data-state="checked"] {
+  border-color: var(--color-primary-500, #3b82f6);
+  background-color: transparent;
+}
+
