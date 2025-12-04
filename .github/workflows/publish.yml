@@ -32,12 +32,19 @@ jobs:
       
       - name: Publish packages
         run: |
-          set -o pipefail
           echo "Publishing workspaces to GitHub Packages..."
+          # GitHub Actions usa 'bash -e' por defeito, o que faz o script sair
+          # imediatamente se o comando falhar. Para conseguirmos inspecionar o
+          # codigo de saida e tratar o erro 409 como sucesso, desativamos
+          # temporariamente o '-e' em torno do comando npm publish.
+
+          set -o pipefail
+          set +e
           npm publish --workspaces --access public 2>&1 | tee publish.log
           status=${PIPESTATUS[0]}
+          set -e
 
-          if [ $status -ne 0 ]; then
+          if [ "$status" -ne 0 ]; then
             echo "npm publish returned non-zero exit code: $status"
             echo "Analyzing publish.log for known non-fatal errors (E409)..."
 
