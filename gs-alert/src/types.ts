@@ -13,6 +13,12 @@ export interface GSAlertProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Color theme */
   color?: GSAlertColor;
   
+  /** Show severity icon */
+  showIcon?: boolean;
+  
+  /** Custom icon to override default severity icon */
+  icon?: React.ReactNode;
+  
   /** Show close button */
   dismissible?: boolean;
   

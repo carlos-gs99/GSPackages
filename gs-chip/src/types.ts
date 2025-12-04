@@ -10,11 +10,9 @@ export const GS_CHIP_SIZES = ['sm', 'md', 'lg'] as const;
 export type GSChipSize = (typeof GS_CHIP_SIZES)[number];
 
 /**
- * GSChip component props
+ * Base props for GSChip (non-polymorphic)
  */
-export interface GSChipProps extends React.HTMLAttributes<HTMLElement> {
-  /** Element type to render as (span, button, a, etc) */
-  as?: React.ElementType;
+export interface GSChipCommonProps {
   /** Chip content */
   children: React.ReactNode;
   
@@ -51,6 +49,32 @@ export interface GSChipProps extends React.HTMLAttributes<HTMLElement> {
   /** Enable debug mode */
   debug?: boolean;
 }
+
+type PropsToOmit = keyof GSChipCommonProps | 'as' | 'color' | 'size';
+
+/**
+ * Polymorphic GSChip props - allows rendering as any element type
+ * with full TypeScript support for that element's props
+ * 
+ * @example
+ * ```tsx
+ * // As span (default)
+ * <GSChip>Default</GSChip>
+ * 
+ * // As button
+ * <GSChip as="button" onClick={handler}>Clickable</GSChip>
+ * 
+ * // As anchor
+ * <GSChip as="a" href="/profile">Link Chip</GSChip>
+ * 
+ * // As custom component
+ * <GSChip as={RouterLink} to="/home">Router Link</GSChip>
+ * ```
+ */
+export type GSChipProps<T extends React.ElementType = 'span'> = GSChipCommonProps & {
+  /** Element type to render as (span, button, a, etc) */
+  as?: T;
+} & Omit<React.ComponentPropsWithoutRef<T>, PropsToOmit>;
 export interface GSChipRef {
   /** Focus the chip */
   focus: () => void;

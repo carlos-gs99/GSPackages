@@ -8,8 +8,8 @@ import styles from './styles.module.css';
 
 export type { GSChipProps, GSChipRef } from './types';
 
-const GSChipInner = ({
-  as = 'span',
+const GSChipInner = <T extends React.ElementType = 'span'>({
+  as: asProp,
   children,
   variant = 'soft',
   color = 'primary',
@@ -28,8 +28,8 @@ const GSChipInner = ({
   tabIndex,
   onKeyDown: onKeyDownProp,
   ...rest
-}: GSChipProps, ref: React.Ref<GSChipRef>) => {
-  const Component = (as || 'span') as React.ElementType;
+}: GSChipProps<T>, ref: React.Ref<GSChipRef>) => {
+  const Component = (asProp ?? 'span') as React.ElementType;
   const internalRef = useRef<HTMLElement | null>(null);
   const { t, i18n } = useTranslation(GS_CHIP_NAMESPACE);
 
@@ -174,10 +174,15 @@ const GSChipInner = ({
   );
 };
 
-const ForwardedGSChip = forwardRef<GSChipRef, GSChipProps>(GSChipInner);
+type GSChipComponent = (<T extends React.ElementType = 'span'>(
+  props: GSChipProps<T> & { ref?: React.Ref<GSChipRef> },
+) => React.ReactElement | null) & { displayName?: string };
+
+// Type assertion to resolve generic forwardRef issues with DTS build
+const ForwardedGSChip = forwardRef(GSChipInner as any) as GSChipComponent;
 ForwardedGSChip.displayName = 'GSChip';
 
-export const GSChip = React.memo(ForwardedGSChip);
+export const GSChip = React.memo(ForwardedGSChip) as GSChipComponent;
 
 export default GSChip;
 
