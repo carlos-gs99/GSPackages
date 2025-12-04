@@ -39,10 +39,13 @@
   "dependencies": {
     "clsx": "^2.1.0"
   },
+  "dependencies": {
+    "clsx": "^2.1.0"
+  },
   "peerDependencies": {
     "react": "^18.0.0",
     "react-i18next": "^15.0.0",
-    "@carlos-gs99/gs-icon": "workspace:*"
+    "@carlos-gs99/hooks": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.48",
