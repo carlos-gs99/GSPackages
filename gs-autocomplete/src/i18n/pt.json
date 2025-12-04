@@ -1,0 +1,9 @@
+{
+  "autocomplete": {
+    "placeholder": "Digite para pesquisar...",
+    "noResults": "Sem resultados",
+    "loading": "A pesquisar...",
+    "minLength": "Digite pelo menos {{count}} caracteres"
+  }
+}
+

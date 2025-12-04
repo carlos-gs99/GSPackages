@@ -1,0 +1,34 @@
+{
+  "table": {
+    "loading": "Loading...",
+    "empty": "No data available",
+    "error": "Error loading data",
+    "rowsPerPage": "Rows per page:",
+    "of": "of",
+    "page": "Page",
+    "previous": "Previous",
+    "next": "Next",
+    "first": "First",
+    "last": "Last",
+    "search": "Search...",
+    "filter": "Filter",
+    "clearFilters": "Clear filters",
+    "actions": "Actions",
+    "selected": "{{count}} selected"
+  },
+  "actions": {
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "cancel": "Cancel",
+    "save": "Save",
+    "confirm": "Confirm"
+  },
+  "aria": {
+    "sortAscending": "Sort ascending",
+    "sortDescending": "Sort descending",
+    "sortNone": "Remove sort"
+  }
+}
+

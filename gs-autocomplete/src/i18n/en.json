@@ -1,0 +1,9 @@
+{
+  "autocomplete": {
+    "placeholder": "Type to search...",
+    "noResults": "No results found",
+    "loading": "Searching...",
+    "minLength": "Type at least {{count}} characters"
+  }
+}
+

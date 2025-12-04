@@ -50,13 +50,13 @@
 
 ### 4. Componentes **ainda não migrados** (só planeados)
 
-#### 4.1. Alta prioridade (Tier 2)
+#### 4.1. Alta prioridade (Tier 2) - ✅ COMPLETO 100%!
 
-- [x] `gs-radio` – MIGRADO (GSRadioGroup, ripple, orientation, validation)
+- [x] `gs-radio` – MIGRADO (GSRadioGroup, ripple, orientation, validation, custom hooks)
 - [x] `gs-switch` – MIGRADO (toggle switch, ripple, loading, spinner integration)
-- [x] `gs-textarea` – MIGRADO (auto-resize, counters, copy/clear, floating label, debounce)
-- [ ] `gs-table` (complexo – usa `@tanstack/react-table`)
-- [ ] `gs-autocomplete`
+- [x] `gs-textarea` – MIGRADO (auto-resize, counters, copy/clear, floating label, debounce, GSIcon)
+- [x] `gs-table` – MIGRADO (pagination, sorting, filters, CRUD, @tanstack/react-table, hooks complexos)
+- [x] `gs-autocomplete` – MIGRADO (wrapper de GSSelect, search-optimized, i18n)
 
 #### 4.2. Prioridade média (Tier 3)
 

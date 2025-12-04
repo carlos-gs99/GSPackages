@@ -1,0 +1,34 @@
+{
+  "table": {
+    "loading": "A carregar...",
+    "empty": "Sem dados disponíveis",
+    "error": "Erro ao carregar dados",
+    "rowsPerPage": "Linhas por página:",
+    "of": "de",
+    "page": "Página",
+    "previous": "Anterior",
+    "next": "Próxima",
+    "first": "Primeira",
+    "last": "Última",
+    "search": "Pesquisar...",
+    "filter": "Filtrar",
+    "clearFilters": "Limpar filtros",
+    "actions": "Ações",
+    "selected": "{{count}} selecionados"
+  },
+  "actions": {
+    "view": "Ver",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "add": "Adicionar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "confirm": "Confirmar"
+  },
+  "aria": {
+    "sortAscending": "Ordenar ascendente",
+    "sortDescending": "Ordenar descendente",
+    "sortNone": "Remover ordenação"
+  }
+}
+

@@ -1,0 +1,137 @@
+/* GSTable - Package-ready CSS Modules (Simplified) */
+
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--background-surface, #ffffff);
+  border-radius: 0.5rem;
+}
+
+.searchInput {
+  flex: 1;
+  max-width: 400px;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-neutral-200, #e5e7eb);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--background-surface, #ffffff);
+}
+
+.tableHead {
+  background-color: var(--color-neutral-50, #f9fafb);
+}
+
+.tableRow {
+  border-bottom: 1px solid var(--color-neutral-200, #e5e7eb);
+}
+
+.tableRow:hover {
+  background-color: var(--color-neutral-50, #f9fafb);
+}
+
+.clickableRow {
+  cursor: pointer;
+}
+
+.tableCell {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+}
+
+.tableCellHeader {
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+  cursor: pointer;
+  user-select: none;
+}
+
+.tableCellHeader[data-sortable] {
+  cursor: pointer;
+}
+
+.tableCellHeader[data-sortable]:hover {
+  background-color: var(--color-neutral-100, #f3f4f6);
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.actionsColumn,
+.actionsCell {
+  width: 120px;
+  text-align: center;
+}
+
+.rowActions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--background-surface, #ffffff);
+  border-radius: 0.5rem;
+}
+
+.paginationInfo {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.paginationLabel {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.paginationSelect {
+  width: 80px;
+}
+
+.paginationButtons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.paginationPage {
+  font-size: 0.875rem;
+  padding: 0 0.5rem;
+}
+
+.loadingContainer,
+.errorContainer,
+.emptyState {
+  padding: 3rem;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
