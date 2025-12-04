@@ -1,0 +1,7 @@
+{
+  "aria": {
+    "label": "Rating",
+    "starLabel": "{{value}} out of {{max}} stars"
+  }
+}
+
