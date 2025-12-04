@@ -38,14 +38,20 @@ jobs:
           status=${PIPESTATUS[0]}
 
           if [ $status -ne 0 ]; then
-            if grep -q "Cannot publish over existing version" publish.log; then
-              echo "Detected existing versions in registry (409 Conflict)."
-              echo "This usually means this version is already published."
-              echo "Treating as success. Bump package versions to publish new releases."
+            echo "npm publish returned non-zero exit code: $status"
+            echo "Analyzing publish.log for known non-fatal errors (E409)..."
+
+            if grep -E -q "Cannot publish over existing version|E409|409 Conflict" publish.log; then
+              echo "Detected existing versions in registry (409 Conflict / E409)."
+              echo "This usually means these versions are already published."
+              echo "Treating this as SUCCESS. Bump package versions to publish new releases."
               exit 0
             fi
 
-            echo "Publish failed with an error other than 409 Conflict."
+            echo "Publish failed with an error other than version conflict (409)."
+            echo "---- PUBLISH LOG (last 40 lines) ----"
+            tail -n 40 publish.log || true
+            echo "--------------------------------------"
             exit $status
           fi
         env:
