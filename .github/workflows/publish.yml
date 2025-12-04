@@ -31,6 +31,22 @@ jobs:
         run: npm run build
       
       - name: Publish packages
-        run: npm publish --workspaces --access public
+        run: |
+          set -o pipefail
+          echo "Publishing workspaces to GitHub Packages..."
+          npm publish --workspaces --access public 2>&1 | tee publish.log
+          status=${PIPESTATUS[0]}
+
+          if [ $status -ne 0 ]; then
+            if grep -q "Cannot publish over existing version" publish.log; then
+              echo "Detected existing versions in registry (409 Conflict)."
+              echo "This usually means this version is already published."
+              echo "Treating as success. Bump package versions to publish new releases."
+              exit 0
+            fi
+
+            echo "Publish failed with an error other than 409 Conflict."
+            exit $status
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
