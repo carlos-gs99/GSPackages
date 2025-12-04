@@ -12,14 +12,23 @@ $ErrorActionPreference = "Continue"
 $global:hasErrors = $false
 
 # ===================================================
-# STEP 1: LIMPAR AMBIENTE (como no CI)
+# STEP 1: LIMPAR AMBIENTE (como no CI) - dist + node_modules
 # ===================================================
-Write-Host "`n[1/6] Limpando node_modules (como npm ci faz)..." -ForegroundColor Yellow
-if (Test-Path "node_modules") {
-    Remove-Item -Recurse -Force node_modules -ErrorAction SilentlyContinue
-    Write-Host "[OK] node_modules removido" -ForegroundColor Green
+Write-Host "`n[1/6] Limpando dist/ de TODOS os packages + node_modules (como no CI)..." -ForegroundColor Yellow
+
+# Usa o script oficial de clean da raiz, que já sabe limpar todos os workspaces
+if (Get-Command npm -ErrorAction SilentlyContinue) {
+    $cleanOutput = npm run clean 2>&1
+    $cleanExitCode = $LASTEXITCODE
+
+    if ($cleanExitCode -ne 0) {
+        Write-Host "[AVISO] npm run clean falhou, a continuar mesmo assim..." -ForegroundColor Yellow
+        $cleanOutput | Select-String "error" | Select-Object -First 5 | ForEach-Object { Write-Host $_ -ForegroundColor Yellow }
+    } else {
+        Write-Host "[OK] Ambiente limpo (dist + node_modules)" -ForegroundColor Green
+    }
 } else {
-    Write-Host "[OK] Ja estava limpo" -ForegroundColor Green
+    Write-Host "[AVISO] npm nao encontrado para correr npm run clean" -ForegroundColor Yellow
 }
 
 # ===================================================
