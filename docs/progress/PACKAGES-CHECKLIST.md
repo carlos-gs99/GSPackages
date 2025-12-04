@@ -33,28 +33,16 @@
 - [x] `@carlos-gs99/gs-tooltip` – FULL (Popper avançado: auto-flip, collision, 12 placements)
 - [x] `@carlos-gs99/gs-card` – avançado (collapsible, image, loading, interactive, GSIcon + GSLoading)
 - [x] `@carlos-gs99/gs-toast` – FULL (GSIcon severity auto-detect, animated progress bar, debug, i18n)
+- [x] `@carlos-gs99/gs-modal` – FULL (confirm mode com GSButton, animações entrada/saída, GSIcon close, debug)
+- [x] `@carlos-gs99/gs-checkbox` – FULL (GSCheckboxGroup, indeterminate, ripple, custom hooks, validation completa)
+- [x] `@carlos-gs99/gs-input` – avançado (GSIcon integration, debounce, copy button, floating label, validation icons)
+- [x] `@carlos-gs99/gs-tabs` – FULL (keyboard navigation completa, orientation, variants, keepMounted, icons, debug)
 
 > Estes já estão prontos para uso em produção no ecossistema GS Style.
 
 ---
 
 ### 3. GS Components – migrados mas **ainda simplificados** (precisam de mais features)
-
-- [ ] `@carlos-gs99/gs-modal`  
-  - Status: funcional (overlay, focus trap, tamanhos, onClose).  
-  - Falta: confirm mode com `GSButton`, animações completas, ícones, testes.
-
-- [ ] `@carlos-gs99/gs-input`  
-  - Status: input base funcional.  
-  - Falta: password strength, masks, debounce, copy, floating label, integração com `GSSelect` / `GSTooltip` / `GSIcon` / `GSLoading`, testes.
-
-- [ ] `@carlos-gs99/gs-checkbox`  
-  - Status: checkbox individual funcional.  
-  - Falta: `GSCheckboxGroup`, estado indeterminate, ripple, validação completa, testes.
-
-- [ ] `@carlos-gs99/gs-tabs`  
-  - Status: migrado, mas sem auditoria detalhada.  
-  - Falta: rever API, padrões GS Style, adicionar testes.
 
 > Sempre que um destes chegar a FULL, marcar aqui como `[x]` e, idealmente, mover para a secção de FULL/avançados.
 

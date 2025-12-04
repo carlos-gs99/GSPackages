@@ -3,7 +3,9 @@
   "aria": {
     "clear": "Clear input",
     "showPassword": "Show password",
-    "hidePassword": "Hide password"
+    "hidePassword": "Hide password",
+    "copy": "Copy to clipboard",
+    "copied": "Copied!"
   }
 }
 

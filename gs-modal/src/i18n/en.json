@@ -1,6 +1,10 @@
 {
   "aria": {
     "close": "Close modal"
+  },
+  "actions": {
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   }
 }
 

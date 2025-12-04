@@ -3,7 +3,9 @@
   "aria": {
     "clear": "Limpar campo",
     "showPassword": "Mostrar palavra-passe",
-    "hidePassword": "Esconder palavra-passe"
+    "hidePassword": "Esconder palavra-passe",
+    "copy": "Copiar para área de transferência",
+    "copied": "Copiado!"
   }
 }
 

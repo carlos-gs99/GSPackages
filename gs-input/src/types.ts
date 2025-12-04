@@ -71,5 +71,17 @@ export interface GSInputProps extends Omit<React.InputHTMLAttributes<HTMLInputEl
   
   /** Debug mode */
   debug?: boolean;
+  
+  /** Debounce delay in ms (0 = disabled) */
+  debounce?: number;
+  
+  /** Callback for debounced value changes */
+  onDebouncedChange?: (value: string) => void;
+  
+  /** Show copy to clipboard button */
+  copyable?: boolean;
+  
+  /** Floating label (label inside input, floats up on focus/value) */
+  floatingLabel?: boolean;
 }
 

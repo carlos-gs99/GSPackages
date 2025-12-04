@@ -1,9 +1,11 @@
-import React, { createContext, useContext, useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useCallback, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import clsx from 'clsx';
-import { useFocusTrap } from '@carlos-gs99/utils';
+import { useFocusTrap, useDebug } from '@carlos-gs99/utils';
 import { Overlay } from '@carlos-gs99/primitives';
 import { useTranslation } from '@carlos-gs99/hooks';
+import { GSIcon } from '@carlos-gs99/gs-icon';
+import { GSButton } from '@carlos-gs99/gs-button';
 import { GS_MODAL_NAMESPACE, registerGSModalI18n } from './i18n';
 import type {
   GSModalProps,
@@ -44,12 +46,30 @@ const GSModal: React.FC<GSModalProps> = ({
   ariaLabel,
   ariaLabelledBy,
   ariaDescribedBy,
+  animation = 'fade',
+  animationDuration = 200,
+  mode,
+  confirmText,
+  cancelText,
+  onConfirm,
+  onCancel,
+  confirmVariant = 'solid',
+  confirmColor,
+  cancelVariant = 'outlined',
+  cancelColor = 'neutral',
+  debug = false,
 }) => {
-  const { i18n } = useTranslation(GS_MODAL_NAMESPACE);
+  const { t, i18n } = useTranslation(GS_MODAL_NAMESPACE);
   registerGSModalI18n(i18n);
+
+  const debugTools = useDebug('GSModal', debug);
 
   const isOpen = show !== undefined ? show : open || false;
   const handleClose = useCallback(onHide || onClose || (() => {}), [onHide, onClose]);
+
+  // Animation state
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [shouldRender, setShouldRender] = useState(isOpen);
 
   const modalRef = useRef<HTMLDivElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
@@ -69,6 +89,28 @@ const GSModal: React.FC<GSModalProps> = ({
     }
   }, [backdrop, handleClose]);
 
+  // Handle confirm mode
+  const handleConfirmClick = useCallback(() => {
+    if (onConfirm) {
+      onConfirm();
+    }
+    handleClose();
+  }, [onConfirm, handleClose]);
+
+  const handleCancelClick = useCallback(() => {
+    if (onCancel) {
+      onCancel();
+    }
+    handleClose();
+  }, [onCancel, handleClose]);
+
+  // Determine final confirm color (defaults to 'danger' for danger-type confirms, 'primary' otherwise)
+  const resolvedConfirmColor = useMemo(() => {
+    if (confirmColor) return confirmColor;
+    if (mode === 'confirm' && color === 'danger') return 'danger';
+    return 'primary';
+  }, [confirmColor, mode, color]);
+
   const modalClasses = useMemo(() => clsx(
     styles.modal,
     styles[`modal--${size}`],
@@ -76,9 +118,32 @@ const GSModal: React.FC<GSModalProps> = ({
       [styles['modal--centered']]: centered,
       [styles[`modal--${variant}`]]: variant,
       [styles[`modal--${color}`]]: color,
+      [styles[`modal--${animation}`]]: animation,
+      [styles['modal--animating']]: isAnimating,
     },
     className
-  ), [size, centered, variant, color, className]);
+  ), [size, centered, variant, color, animation, isAnimating, className]);
+
+  // Animation lifecycle
+  useEffect(() => {
+    debugTools.log('isOpen changed', { isOpen, shouldRender, isAnimating });
+    
+    if (isOpen) {
+      setShouldRender(true);
+      // Trigger enter animation after render
+      requestAnimationFrame(() => {
+        setIsAnimating(true);
+      });
+    } else if (shouldRender) {
+      // Trigger exit animation
+      setIsAnimating(false);
+      // Wait for animation to complete before unmounting
+      const timer = setTimeout(() => {
+        setShouldRender(false);
+      }, animationDuration);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen, shouldRender, animationDuration, debugTools]);
 
   useEffect(() => {
     if (isOpen) {
@@ -96,11 +161,33 @@ const GSModal: React.FC<GSModalProps> = ({
     }
   }, [isOpen, handleKeyDown, restoreFocus]);
 
-  if (!isOpen) return null;
+  if (!shouldRender) return null;
+
+  // Render confirm mode footer if applicable
+  const renderConfirmFooter = mode === 'confirm' && (
+    <GSModalFooter>
+      <GSButton
+        variant={cancelVariant}
+        color={cancelColor}
+        onClick={handleCancelClick}
+        data-gs-el="cancel-button"
+      >
+        {cancelText || t('actions.cancel')}
+      </GSButton>
+      <GSButton
+        variant={confirmVariant}
+        color={resolvedConfirmColor}
+        onClick={handleConfirmClick}
+        data-gs-el="confirm-button"
+      >
+        {confirmText || t('actions.confirm')}
+      </GSButton>
+    </GSModalFooter>
+  );
 
   return createPortal(
     <GSModalContext.Provider value={{ onClose: handleClose }}>
-      <Overlay onClick={handleBackdropClick} data-gs="GSModal">
+      <Overlay onClick={handleBackdropClick} data-gs="GSModal" data-debug={debug ? 'true' : undefined}>
         <div
           ref={modalRef}
           className={modalClasses}
@@ -111,9 +198,14 @@ const GSModal: React.FC<GSModalProps> = ({
           aria-describedby={ariaDescribedBy}
           tabIndex={-1}
           data-gs-el="dialog"
+          data-debug={debug ? 'true' : undefined}
+          style={{
+            animationDuration: `${animationDuration}ms`,
+          }}
         >
           <div className={styles.content} ref={focusTrapRef} data-gs-el="content">
             {children}
+            {renderConfirmFooter}
           </div>
         </div>
       </Overlay>
@@ -142,7 +234,7 @@ export const GSModalHeader = React.memo<GSModalHeaderProps>(({
           aria-label={t('aria.close')}
           data-gs-el="close"
         >
-          ✕
+          <GSIcon name="close" size="sm" />
         </button>
       )}
     </div>

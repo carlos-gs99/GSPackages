@@ -44,43 +44,40 @@
   color: var(--color-danger-500);
 }
 
-/* Floating label adjustments - labelContainer needs special handling */
-.labelContainer:has(.labelFloating) {
-  margin-bottom: 0;
+/* Floating label */
+.containerFloatingLabel {
+  position: relative;
+}
+
+.containerFloatingLabel .wrapper {
+  padding-top: 0.5rem;
+}
+
+.labelFloating {
   position: absolute;
-  top: 0.75rem;
+  top: 50%;
   left: 0.75rem;
+  transform: translateY(-50%);
   pointer-events: none;
   z-index: 1;
   transition: all 0.2s ease;
-  background-color: var(--background-surface);
+  background-color: var(--background-surface, #ffffff);
   padding: 0 0.25rem;
-}
-
-.labelContainer:has(.labelFloatingActive),
-.wrapper:focus-within .labelContainer:has(.labelFloating) {
-  top: -0.5rem;
-  left: 0.5rem;
-}
-
-.labelContainer:has(.labelFloating) .label {
   font-size: 1rem;
   color: var(--text-secondary, #6b7280);
-  pointer-events: none;
 }
 
-.labelContainer:has(.labelFloatingActive) .label,
-.wrapper:focus-within .labelContainer:has(.labelFloating) .label {
+.labelFloatingActive,
+.wrapper:focus-within .labelFloating {
+  top: 0;
+  left: 0.5rem;
+  transform: translateY(-50%);
   font-size: 0.75rem;
   color: var(--color-primary-500);
 }
 
-.labelContainer:has(.labelFloating) .helperIcon {
-  pointer-events: auto;
-}
-
-.labelFloating {
-  /* Floating label styles are now handled by labelContainer */
+.labelFloating .required {
+  color: var(--color-danger-500);
 }
 
 /* Input wrapper */

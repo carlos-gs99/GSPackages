@@ -40,3 +40,6 @@ export { useMenuHover } from './useMenuHover';
 export { useMenuPositioning } from './useMenuPositioning';
 export { useMenuViewportDetection } from './useMenuViewportDetection';
 export { useSubmenuPosition } from './useSubmenuPosition';
+
+// Debounce
+export { useDebounce } from './useDebounce';

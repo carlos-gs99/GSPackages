@@ -14,6 +14,50 @@
 	outline: none;
 	position: relative;
 	z-index: var(--z-modal, 10500);
+	opacity: 0;
+	transform: scale(0.95);
+	transition: opacity var(--animation-duration, 200ms) ease-out, transform var(--animation-duration, 200ms) ease-out;
+}
+
+/* Animation states */
+.modal--animating {
+	opacity: 1;
+	transform: scale(1);
+}
+
+/* Animation variants */
+.modal--fade {
+	/* Default fade animation (already applied above) */
+}
+
+.modal--scale {
+	transform: scale(0.8);
+}
+
+.modal--scale.modal--animating {
+	transform: scale(1);
+}
+
+.modal--slide-up {
+	transform: translateY(100px);
+}
+
+.modal--slide-up.modal--animating {
+	transform: translateY(0);
+}
+
+.modal--slide-down {
+	transform: translateY(-100px);
+}
+
+.modal--slide-down.modal--animating {
+	transform: translateY(0);
+}
+
+.modal--none {
+	opacity: 1;
+	transform: none;
+	transition: none;
 }
 
 .content {

@@ -1,7 +1,8 @@
-import React, { useState, useCallback, useRef, useId } from 'react';
+import React, { useState, useCallback, useRef, useId, useEffect } from 'react';
 import clsx from 'clsx';
-import { useTranslation } from '@carlos-gs99/hooks';
+import { useTranslation, useDebounce } from '@carlos-gs99/hooks';
 import { useDebug } from '@carlos-gs99/utils';
+import { GSIcon } from '@carlos-gs99/gs-icon';
 import { GS_INPUT_NAMESPACE, registerGSInputI18n } from './i18n';
 import type { GSInputProps } from './types';
 import styles from './styles.module.css';
@@ -42,6 +43,10 @@ const GSInput = React.forwardRef<HTMLInputElement, GSInputProps>((props, ref) =>
     readOnly = false,
     id: idProp,
     type = 'text',
+    debounce = 0,
+    onDebouncedChange,
+    copyable = false,
+    floatingLabel = false,
     ...rest
   } = props;
 
@@ -56,10 +61,21 @@ const GSInput = React.forwardRef<HTMLInputElement, GSInputProps>((props, ref) =>
   const [internalValue, setInternalValue] = useState(value ?? defaultValue ?? '');
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
 
   const isControlled = value !== undefined;
   const currentValue = isControlled ? value : internalValue;
   const stringValue = String(currentValue ?? '');
+
+  // Debounce logic
+  const debouncedValue = useDebounce(stringValue, debounce);
+
+  useEffect(() => {
+    if (debounce > 0 && onDebouncedChange) {
+      onDebouncedChange(debouncedValue);
+      debugTools.log('debounced change', { debouncedValue });
+    }
+  }, [debouncedValue, debounce, onDebouncedChange, debugTools]);
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
@@ -94,6 +110,17 @@ const GSInput = React.forwardRef<HTMLInputElement, GSInputProps>((props, ref) =>
     setShowPassword(prev => !prev);
   }, []);
 
+  const handleCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(stringValue);
+      setCopySuccess(true);
+      debugTools.log('copy success', { value: stringValue });
+      setTimeout(() => setCopySuccess(false), 2000);
+    } catch (err) {
+      debugTools.log('copy error', { error: err });
+    }
+  }, [stringValue, debugTools]);
+
   const inputType = type === 'password' && showPassword ? 'text' : type;
   const charCount = stringValue.length;
   const hasError = Boolean(error);
@@ -116,19 +143,36 @@ const GSInput = React.forwardRef<HTMLInputElement, GSInputProps>((props, ref) =>
 
   const labelClasses = clsx(styles.label, labelClassName, {
     [styles.labelRequired]: required,
+    [styles.labelFloating]: floatingLabel,
+    [styles.labelFloatingActive]: floatingLabel && (isFocused || hasValue),
   });
 
+  const containerClasses = clsx(
+    styles.container, 
+    {
+      [styles.containerFloatingLabel]: floatingLabel,
+    },
+    className
+  );
+
   return (
-    <div className={clsx(styles.container, className)} data-gs="GSInput">
-      {label && (
-        <div className={styles.labelContainer}>
+    <div className={containerClasses} data-gs="GSInput" data-debug={debug ? 'true' : undefined}>
+      <div className={wrapperClasses} data-focused={isFocused || undefined}>
+        {label && floatingLabel && (
           <label htmlFor={inputId} className={labelClasses}>
             {label}
+            {required && <span className={styles.required}>*</span>}
           </label>
-        </div>
-      )}
-      
-      <div className={wrapperClasses} data-focused={isFocused || undefined}>
+        )}
+        
+        {label && !floatingLabel && (
+          <div className={styles.labelContainer}>
+            <label htmlFor={inputId} className={labelClasses}>
+              {label}
+              {required && <span className={styles.required}>*</span>}
+            </label>
+          </div>
+        )}
         {prefix && <span className={styles.prefix}>{prefix}</span>}
         {startDecorator && <span className={styles.decorator}>{startDecorator}</span>}
         
@@ -157,22 +201,36 @@ const GSInput = React.forwardRef<HTMLInputElement, GSInputProps>((props, ref) =>
         {suffix && <span className={styles.suffix}>{suffix}</span>}
         
         {showValidationIcon && validationState && (
-          <span className={styles.validationIcon} data-state={validationState}>
-            {validationState === 'success' && '✓'}
-            {validationState === 'error' && '✕'}
-            {validationState === 'warning' && '⚠'}
+          <span className={styles.validationIcon} data-state={validationState} data-gs-el="validation">
+            {validationState === 'success' && <GSIcon name="check-circle" size="sm" color="success" />}
+            {validationState === 'error' && <GSIcon name="alert-circle" size="sm" color="danger" />}
+            {validationState === 'warning' && <GSIcon name="alert-triangle" size="sm" color="warning" />}
           </span>
         )}
         
-        {clearable && hasValue && !disabled && !readOnly && (
+        {copyable && hasValue && !disabled && !readOnly && (
+          <button
+            type="button"
+            className={styles.copyButton}
+            onClick={handleCopy}
+            aria-label={copySuccess ? t('aria.copied') : t('aria.copy')}
+            tabIndex={-1}
+            data-gs-el="copy"
+          >
+            <GSIcon name={copySuccess ? 'check' : 'content-copy'} size="sm" />
+          </button>
+        )}
+        
+        {clearable && hasValue && !disabled && !readOnly && !copyable && (
           <button
             type="button"
             className={styles.clearButton}
             onClick={handleClear}
             aria-label={t('aria.clear')}
             tabIndex={-1}
+            data-gs-el="clear"
           >
-            ✕
+            <GSIcon name="close" size="sm" />
           </button>
         )}
         
@@ -183,8 +241,9 @@ const GSInput = React.forwardRef<HTMLInputElement, GSInputProps>((props, ref) =>
             onClick={togglePasswordVisibility}
             aria-label={showPassword ? t('aria.hidePassword') : t('aria.showPassword')}
             tabIndex={-1}
+            data-gs-el="password-toggle"
           >
-            {showPassword ? '👁' : '👁‍🗨'}
+            <GSIcon name={showPassword ? 'eye-off' : 'eye'} size="sm" />
           </button>
         )}
         
