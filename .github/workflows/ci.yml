@@ -17,9 +17,13 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@carlos-gs99'
       
       - name: Install dependencies
         run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Lint
         run: npm run lint || echo "Linting completed with warnings"
@@ -34,9 +38,13 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@carlos-gs99'
       
       - name: Install dependencies
         run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Type check
         run: npm run typecheck
@@ -51,11 +59,15 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@carlos-gs99'
       
       - name: Install dependencies
         run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Build packages
+      - name: Build packages (required for tests)
         run: npm run build
       
       - name: Run tests
@@ -71,9 +83,13 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@carlos-gs99'
       
       - name: Install dependencies
         run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Build all packages
         run: npm run build
@@ -81,4 +97,4 @@ jobs:
       - name: Check build artifacts
         run: |
           echo "Checking dist folders..."
-          find . -name "dist" -type d
+          find . -name "dist" -type d | head -20
