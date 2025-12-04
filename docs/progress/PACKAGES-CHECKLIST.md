@@ -58,14 +58,14 @@
 - [x] `gs-table` – MIGRADO (pagination, sorting, filters, CRUD, @tanstack/react-table, hooks complexos)
 - [x] `gs-autocomplete` – MIGRADO (wrapper de GSSelect, search-optimized, i18n)
 
-#### 4.2. Prioridade média (Tier 3)
+#### 4.2. Prioridade média (Tier 3) - ✅ COMPLETO 100%!
 
-- [ ] `gs-drawer`
-- [ ] `gs-accordion`
-- [ ] `gs-breadcrumbs`
-- [ ] `gs-stepper`
-- [ ] `gs-pagination`
-- [ ] `gs-dropdown`
+- [x] `gs-drawer` – MIGRADO (offcanvas, 4 placements, animations, focus trap)
+- [x] `gs-accordion` – MIGRADO (collapsible panels, multi/single, GSIcon)
+- [x] `gs-breadcrumbs` – MIGRADO (compound Item, separator custom, a11y)
+- [x] `gs-stepper` – MIGRADO (wizard multi-step, visual progress, GSIcon)
+- [x] `gs-pagination` – MIGRADO (page navigation, GSButton integration)
+- [x] `gs-dropdown` – MIGRADO (menu dropdown, useDropdown hook, GSList)
 
 #### 4.3. Prioridade baixa (Tier 4+)
 
