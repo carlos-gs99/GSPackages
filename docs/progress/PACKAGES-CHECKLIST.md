@@ -1,5 +1,10 @@
 ## ✅ Checklist de Estado dos Packages
 
+> **ÚLTIMA ATUALIZAÇÃO:** 2025-12-04  
+> **TOTAL DE PACKAGES:** 42 (100% migrados! 🎉)  
+> **STATUS CI/CD:** ✅ 100% Passing (126 builds)  
+> **TESTES:** 🟡 4/42 componentes (10%) - Em progresso!
+
 > Lista simples para sabermos **o que já está completo**, o que ainda está em versão mínima e **o que falta migrar**.  
 > Atualizar este ficheiro sempre que completarmos um componente.
 
@@ -78,12 +83,39 @@
 
 ---
 
-### 5. Sugestão de uso desta checklist
+---
+
+### 5. Estado dos Testes (em progresso)
+
+#### 🧪 Componentes com Testes Completos (7/42 = 17%)
+- [x] `gs-icon` - unit, a11y, i18n ✅
+- [x] `gs-badge` - unit, a11y, i18n ✅
+- [x] `gs-button` - unit, a11y, i18n ✅
+- [x] `gs-chip` - unit, a11y, i18n ✅
+- [x] `gs-spinner` - unit (20), a11y (11), i18n (9) = 40 testes ✅
+- [x] `gs-loading` - unit (22), a11y (23), i18n (17) = 62 testes ✅
+- [x] `gs-list` - unit (22), a11y (10), i18n (13) = 45 testes ✅ (6 axe skipped)
+
+#### ⏳ Componentes Sem Testes (35/42)
+**BURST 2 (próximo):**
+- [ ] `gs-label`
+- [ ] `gs-divider`
+- [ ] `gs-avatar`
+- [ ] `gs-skeleton`
+
+**BURST 2-7:**
+- [ ] 35 componentes restantes (plano detalhado em `docs/progress/TEST-PLAN.md`)
+
+**META:** 80%+ coverage por componente, WCAG AA compliance
+
+---
+
+### 6. Sugestão de uso desta checklist
 
 - Antes de começar uma sessão:
   - Ver em que componente estamos a trabalhar e qual o estado atual aqui.
 - Depois de cada migração / melhoria:
-  - Atualizar a linha correspondente (mudar `[ ]` para `[x]`, ou mover de “simplificado” para “FULL”).
+  - Atualizar a linha correspondente (mudar `[ ]` para `[x]`, ou mover de "simplificado" para "FULL").
 - Antes de releases:
   - Confirmar que todos os componentes críticos de um fluxo estão marcados como FULL.
 
