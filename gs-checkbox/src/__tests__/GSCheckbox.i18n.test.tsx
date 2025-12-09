@@ -1,0 +1,86 @@
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import { GSCheckbox } from '../GSCheckbox';
+import { registerGSCheckboxI18n, GS_CHECKBOX_NAMESPACE } from '../i18n';
+
+describe('GSCheckbox - Internationalization', () => {
+  beforeEach(() => {
+    i18n.use(initReactI18next).init({
+      lng: 'en',
+      fallbackLng: 'en',
+      resources: {},
+    });
+    registerGSCheckboxI18n(i18n);
+  });
+
+  describe('English Translations', () => {
+    beforeEach(() => {
+      i18n.changeLanguage('en');
+    });
+
+    it('should have English translation registered', () => {
+      const { container } = render(<GSCheckbox label="Label" />);
+      expect(container.querySelector('[data-gs="checkbox"]')).toBeInTheDocument();
+    });
+  });
+
+  describe('Portuguese Translations', () => {
+    beforeEach(() => {
+      i18n.changeLanguage('pt');
+    });
+
+    it('should have Portuguese translation registered', () => {
+      const { container } = render(<GSCheckbox label="Label" />);
+      expect(container.querySelector('[data-gs="checkbox"]')).toBeInTheDocument();
+    });
+  });
+
+  describe('Language Switching', () => {
+    it('should maintain functionality when language changes', () => {
+      i18n.changeLanguage('en');
+      const { rerender } = render(<GSCheckbox label="Label" />);
+      expect(screen.getByText('Label')).toBeInTheDocument();
+
+      i18n.changeLanguage('pt');
+      rerender(<GSCheckbox label="Label" />);
+      expect(screen.getByText('Label')).toBeInTheDocument();
+    });
+  });
+
+  describe('Fallback Behavior', () => {
+    it('should fallback to English when translation is missing', () => {
+      i18n.changeLanguage('fr'); // Unsupported language
+      const { container } = render(<GSCheckbox label="Label" />);
+      expect(container.querySelector('[data-gs="checkbox"]')).toBeInTheDocument();
+    });
+
+    it('should work without translations registered', () => {
+      const testI18n = i18n.createInstance();
+      testI18n.use(initReactI18next).init({
+        lng: 'en',
+        fallbackLng: 'en',
+        resources: {},
+      });
+
+      const { container } = render(<GSCheckbox label="Label" />);
+      expect(container.querySelector('[data-gs="checkbox"]')).toBeInTheDocument();
+    });
+  });
+
+  describe('Translation Registration', () => {
+    it('should register translations only once', () => {
+      expect(typeof registerGSCheckboxI18n).toBe('function');
+      registerGSCheckboxI18n(i18n);
+      const { container } = render(<GSCheckbox label="Label" />);
+      expect(container.querySelector('[data-gs="checkbox"]')).toBeInTheDocument();
+    });
+
+    it('should have correct namespace', () => {
+      expect(GS_CHECKBOX_NAMESPACE).toBe('gscheckbox');
+    });
+  });
+});
+

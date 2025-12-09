@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React from 'react';
 import { GSSelect } from '@carlos-gs99/gs-select';
 import { useTranslation } from '@carlos-gs99/hooks';
 import { registerGSAutocompleteI18n, GS_AUTOCOMPLETE_NAMESPACE } from './i18n';
