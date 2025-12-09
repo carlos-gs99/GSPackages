@@ -1,2 +1,53 @@
-{"name":"@carlos-gs99/gs-timepicker","version":"1.0.0","type":"module","main":"./dist/index.cjs","module":"./dist/index.js","types":"./dist/index.d.ts","exports":{".":{"import":"./dist/index.js","require":"./dist/index.cjs"}},"scripts":{"build":"tsup"},"dependencies":{"clsx":"^2.1.0"},"peerDependencies":{"react":"^18.0.0","@carlos-gs99/gs-input":"^1.0.0"},"devDependencies":{"@types/react":"^18.2.48","react":"^18.3.1","tsup":"^8.0.1","typescript":"^5.3.3","@carlos-gs99/gs-input":"^1.0.0"},"publishConfig":{"registry":"https://npm.pkg.github.com"}}
-
+{
+    "name":  "@carlos-gs99/gs-timepicker",
+    "version":  "1.0.1",
+    "description":  "Time picker input component wrapper",
+    "type":  "module",
+    "main":  "./dist/index.cjs",
+    "module":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "import":  "./dist/index.js",
+                              "require":  "./dist/index.cjs"
+                          }
+                },
+    "scripts":  {
+                    "build":  "tsup"
+                },
+    "keywords":  [
+                     "react",
+                     "timepicker",
+                     "ui",
+                     "component",
+                     "typescript",
+                     "a11y"
+                 ],
+    "author":  {
+                   "name":  "Carlos Braga",
+                   "email":  "carlos.braga@grupoglobalsoft.pt"
+               },
+    "license":  "MIT",
+    "repository":  {
+                       "type":  "git",
+                       "url":  "https://github.com/carlos-gs99/GSPackages.git",
+                       "directory":  "gs-timepicker"
+                   },
+    "dependencies":  {
+                         "clsx":  "^2.1.0"
+                     },
+    "peerDependencies":  {
+                             "react":  "^18.0.0",
+                             "@carlos-gs99/gs-input":  "^1.0.0"
+                         },
+    "devDependencies":  {
+                            "@types/react":  "^18.2.48",
+                            "react":  "^18.3.1",
+                            "tsup":  "^8.0.1",
+                            "typescript":  "^5.3.3",
+                            "@carlos-gs99/gs-input":  "^1.0.0"
+                        },
+    "publishConfig":  {
+                          "registry":  "https://npm.pkg.github.com"
+                      }
+}
