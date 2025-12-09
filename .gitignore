@@ -39,6 +39,13 @@ pnpm-debug.log*
 .cache/
 .temp/
 
+# Test outputs and temporary files
+*.txt
+!README.txt
+test-output.txt
+*-test.txt
+*-final.txt
+
 # Package tarballs
 *.tgz
 
