@@ -1,3 +1,6 @@
+// React import required for JSX transform in test environment (Jest/jsdom)
+// @ts-ignore - React is required in scope for JSX transform, even if not directly used
+import React from 'react';
 import { GSSelect } from '@carlos-gs99/gs-select';
 import { useTranslation } from '@carlos-gs99/hooks';
 import { registerGSAutocompleteI18n, GS_AUTOCOMPLETE_NAMESPACE } from './i18n';

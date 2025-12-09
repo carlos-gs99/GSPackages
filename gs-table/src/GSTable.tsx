@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+// React import required for JSX transform in test environment (Jest/jsdom)
+// @ts-ignore - React is required in scope for JSX transform, even if not directly used
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { useTranslation } from '@carlos-gs99/hooks';
 import { useDebug } from '@carlos-gs99/utils';
