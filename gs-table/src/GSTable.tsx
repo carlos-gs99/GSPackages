@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import clsx from 'clsx';
 import { useTranslation } from '@carlos-gs99/hooks';
 import { useDebug } from '@carlos-gs99/utils';
